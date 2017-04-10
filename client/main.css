@@ -1,0 +1,21 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #edecec;
+}
+a {
+    text-decoration: none;
+    color: rgb(117, 117, 117);
+}
+a:active, a:visited, a:hover {
+    text-decoration: none;
+    color: rgb(0, 188, 212);
+}
+
+/* path plot */
+.pathplot path {stroke-width:2px;stroke:steelblue}
+.planned {stroke-dasharray:9, 5}
+
+#demo {
+    text-align: center;
+}
