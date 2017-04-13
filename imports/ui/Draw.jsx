@@ -4,6 +4,12 @@ import d3 from 'd3';
 
 export default class Draw extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.handleAddLayer = this.handleAddLayer.bind(this);
+    }
+
     InitView(){
 
         // d3 floorplan v0.1.0
@@ -456,7 +462,7 @@ export default class Draw extends Component {
             mapdata = {};
 
         mapdata[imagelayer.id()] = [{
-            url: 'http://115.159.35.244/ext/js/QQ20170408-0.png',
+            url: 'http://localhost/QQ20170408-0.png',
             x: 0,
             y: 0,
             height: 33.79,
@@ -476,7 +482,7 @@ export default class Draw extends Component {
         console.log("background-image:","finished");
     }
 
-    addLayer() {
+    handleAddLayer(event) {
 
         d3.floorplan = function() {
             function a(a) {
@@ -621,6 +627,7 @@ export default class Draw extends Component {
             return a
         };
 
+
         var xscale = d3.scale.linear()
                 .domain([0,50.0])
                 .range([0,720]),
@@ -631,20 +638,36 @@ export default class Draw extends Component {
             pathplot = d3.floorplan.pathplot(),
             mapdata = {};
 
-        // 负责初始图层绘制
-        map.addLayer(pathplot)
 
-        mapdata[pathplot.id()] = [{"id": "flt-1", "classes": "planned",
-            "points": [{"x": 12.9, "y": 25}, {"x": 12.9, "y": 20},
-                {"x": 8.95, "y": 17.3}, {"x": 8.95, "y": 11.3}]}]; // 蓝色虚线绘制
+
+        // 负责初始图层绘制
+        map.addLayer(pathplot);
+
+
+        console.log(pathplot);
+
+        var pathData;
+
+        if (event.target.name === "first") {
+            pathData = [{"id": "flt-1", "classes": "planned",
+                "points": [{"x": 12.9, "y": 25}, {"x": 12.9, "y": 20},
+                    {"x": 8.95, "y": 17.3}, {"x": 8.95, "y": 11.3}]}];
+        } else {
+            pathData = [{"id": "flt-1", "classes": "planned",
+                "points": [{"x": 0, "y": 0}, {"x": 15.9, "y": 21},
+                    {"x": 9.5, "y": 7.3}, {"x": 5.4, "y": 13}]}];
+        }
+
+        mapdata[pathplot.id()] = pathData; // 蓝色虚线绘制
 
         d3.select("#draw").append("g")
-            .attr("height", 339).attr("width",720).attr("id", "wang")
+            .attr("height", 339).attr("width",720).attr("id", event.target.name)
             .datum(mapdata).call(map);
 
         d3.select(".map-controls").remove();
 
         console.log("add-path:"+ " #wang "+ "finished");
+        console.log(event.target.name);
     }
 
     remove () {
@@ -670,9 +693,10 @@ export default class Draw extends Component {
             <Card id="error">
                 <CardHeader title="Welcome to the administration" />
                 <CardText>
-                    注意：绘图区鼠标滚轮会被 Canvans 监听，导致页面无法上下滑动！
+                    注意：绘图区鼠标滚轮会被 Canvas 监听，导致页面无法上下滑动！
                     <button onClick={this.getWidth}>calc</button>
-                    <button onClick={this.addLayer}>add</button>
+                    <button onClick={this.handleAddLayer} name='first'>add</button>
+                    <button onClick={this.handleAddLayer} name="new add">new add</button>
                     <button onClick={this.remove}>remove</button>
                     <div id="demo"></div>
                 </CardText>

@@ -70,14 +70,14 @@ class Login extends Component {
 
         // 判断用户的输入内容是否满足最小限制，如满足则让登陆按钮可以点击
         if (name === 'username') {
-            if (target.value.length < 4) {
+            if (value.length < 4) {
                 this.setState({usernameWarning: '用户不能少于四位'});
                 this.setState({submitButton: true});
             } else {
                 this.setState({usernameWarning: ''});
             }
         } else {
-            if (target.value.length < 6) {
+            if (value.length < 6) {
                 this.setState({passwordWarning: '密码不能少于六位'});
                 this.setState({submitButton: true});
             } else {
@@ -85,7 +85,7 @@ class Login extends Component {
             }
         }
 
-        if (name === 'password' && target.value.length >= 6 && this.state.username.length >= 4) {
+        if (name === 'password' && value.length >= 6 && this.state.username.length >= 4) {
             this.setState({submitButton: false});
         }
 

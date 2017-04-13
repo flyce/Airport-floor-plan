@@ -2,12 +2,10 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Link, IndexRoute, Redirect, Switch } from 'react-router-dom';
 
 import App from './App.jsx';
-
 import Login from './Login.jsx';
-
 import Draw from './Draw.jsx';
-
 import Error from './Error.jsx';
+import User from './User.jsx';
 
 export const renderRoutes = () => (
     <Router>
@@ -16,9 +14,14 @@ export const renderRoutes = () => (
                 <Route exact path="/" component={Home}/>
                 <PrivateRoute path="/app" component={App} />
                 <Route path="/login" component={Login}/>
+                <Route path="/user" render={props => (
+                    <div>
+                        <App redirect="User"/>
+                    </div>
+                )} />
                 <Route path="/draw" render={props => (
                     <div>
-                        <App location="Draw"/>
+                        <App redirect="Draw"/>
                     </div>
                 )} />
                 <Route component={NoMatch}/>
@@ -60,6 +63,7 @@ const Home = () => (
             <li><Link to="/app">app</Link></li>
             <li><Link to="/login">login</Link></li>
             <li><Link to="/draw">test</Link></li>
+            <li><Link to="/user">user</Link></li>
             <li><Link to="/nomatch">404</Link></li>
             {/*<li>shǎ&nbsp;bī</li>*/}
             {/*<li>&nbsp;好 &nbsp;人</li>*/}

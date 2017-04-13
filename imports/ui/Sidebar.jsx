@@ -1,15 +1,19 @@
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import IconMenu from 'material-ui/IconMenu';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+
 
 // icon
-import LockIcon from 'material-ui/svg-icons/action/lock-outline';
+import PermIdentity from 'material-ui/svg-icons/action/perm-identity';
+import ExitToApp from 'material-ui/svg-icons/action/exit-to-app';
+import Place from 'material-ui/svg-icons/maps/place';
+import Home from 'material-ui/svg-icons/action/home';
+import People from 'material-ui/svg-icons/social/people';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import NavigationMenu from 'material-ui/svg-icons/navigation/menu';
 
@@ -17,6 +21,9 @@ import FlatButton from 'material-ui/FlatButton';
 
 // for test
 import RaisedButton from 'material-ui/RaisedButton';
+// import List from "./List";
+
+import {List, ListItem} from 'material-ui/List';
 
 
 export default class Sidebar extends React.Component {
@@ -43,7 +50,7 @@ export default class Sidebar extends React.Component {
                         iconElementRight={
                             <IconMenu
                                 iconButtonElement={
-                                    <IconButton><MoreVertIcon /></IconButton>
+                                    <IconButton><PermIdentity /></IconButton>
                                 }
                                 targetOrigin={{horizontal: 'right', vertical: 'top'}}
                                 anchorOrigin={{horizontal: 'right', vertical: 'top'}}
@@ -76,10 +83,25 @@ export default class Sidebar extends React.Component {
                             }
                     />
                     <MenuItem
-                        primaryText="标题一"
-                        leftIcon={<LockIcon />}
+                        primaryText="主页"
+                        leftIcon={<Home />}
+                        containerElement={<Link to="/"/>}
                     />
-                    <MenuItem>Menu Item 2</MenuItem>
+                    <MenuItem
+                        primaryText="活动轨迹监测"
+                        leftIcon={<Place />}
+                        containerElement={<Link to="/draw"/>}
+                    />
+                    <MenuItem
+                        primaryText="用户管理"
+                        leftIcon={<People />}
+                        containerElement={<Link to="/draw"/>}
+                    />
+                    <MenuItem
+                        primaryText="注销"
+                        leftIcon={<ExitToApp />}
+                        containerElement={<Link to="/login"/>}
+                    />
                 </Drawer>
             </div>
         );

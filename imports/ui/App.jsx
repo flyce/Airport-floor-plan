@@ -3,8 +3,9 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import CircularProgress from 'material-ui/CircularProgress';
 import Sidebar from './Sidebar';
 
-import List from './List.jsx'
-import Draw from './Draw.jsx'
+import List from './List.jsx';
+import Draw from './Draw.jsx';
+import User from './User.jsx';
 
 const styles = {
     wrapper: {
@@ -53,8 +54,9 @@ export default class App extends Component {
                         <Sidebar title="主页"/>
                         <div className="body" style={styles.body}>
                             <div style={styles.content}>
-                                {this.props.location === "Draw" ? <Draw /> : null}
-                                {this.props.location === "List" ? <List /> : null}
+                                {this.props.redirect === "Draw" ? <Draw /> : null}
+                                {this.props.redirect === "List" ? <List /> : null}
+                                {this.props.redirect === "User" ? <User /> : null}
                             </div>
                         </div>
                         {/* 右上加载 */}
@@ -72,5 +74,5 @@ export default class App extends Component {
 }
 
 PropTypes = {
-    location: PropTypes.string.isRequired,
+    redirect: PropTypes.string.isRequired,
 };

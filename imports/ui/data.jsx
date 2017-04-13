@@ -1,0 +1,58 @@
+const tableData = [
+    {
+        uid: '10001',
+        username: 'John Smith',
+        password: '123',
+        group: 'Admin',
+        regTime: '1492066702',
+    },
+    {
+        uid: '10002',
+        username: 'Randal White',
+        password: '123',
+        group: 'User',
+        regTime: '1492066702',
+    },
+    {
+        uid: '10003',
+        username: 'Stephanie Sanders',
+        password: '123',
+        group: 'User',
+        regTime: '1492066702',
+    },
+    {
+        uid: '10004',
+        username: 'Steve Brown',
+        password: '123',
+        group: 'User',
+        regTime: '1492066702',
+    },
+    {
+        uid: '10005',
+        username: 'John Smith',
+        password: '123',
+        group: 'Admin',
+        regTime: '1492066702',
+    },
+    {
+        uid: '10006',
+        username: 'Randal White',
+        password: '123',
+        group: 'User',
+        regTime: '1492066702',
+    },
+    {
+        uid: '10007',
+        username: 'Stephanie Sanders',
+        password: '123',
+        group: 'User',
+        regTime: '1492066702',
+    },
+    {
+        uid: '10008',
+        username: 'Steve Brown',
+        password: '123',
+        group: 'Admin',
+        regTime: '1492066702',
+    },
+];
