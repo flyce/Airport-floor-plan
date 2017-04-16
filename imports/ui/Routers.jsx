@@ -6,6 +6,7 @@ import Login from './Login.jsx';
 import Draw from './Draw.jsx';
 import Error from './Error.jsx';
 import User from './User.jsx';
+import Test from './Test.jsx'
 
 export const renderRoutes = () => (
     <Router>
@@ -14,6 +15,7 @@ export const renderRoutes = () => (
                 <Route exact path="/" component={Home}/>
                 <PrivateRoute path="/app" component={App} />
                 <Route path="/login" component={Login}/>
+                <Route path="/test" component={Test}/>
                 <Route path="/user" render={props => (
                     <div>
                         <App redirect="User"/>
@@ -62,7 +64,7 @@ const Home = () => (
             <li><Link to="/">Home</Link></li>
             <li><Link to="/app">app</Link></li>
             <li><Link to="/login">login</Link></li>
-            <li><Link to="/draw">test</Link></li>
+            <li><Link to="/test">test</Link></li>
             <li><Link to="/user">user</Link></li>
             <li><Link to="/nomatch">404</Link></li>
             {/*<li>shǎ&nbsp;bī</li>*/}

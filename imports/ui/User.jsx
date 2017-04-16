@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+import { createContainer } from 'meteor/react-meteor-data';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn, TableFooter } from 'material-ui/Table';
 import IconButton from 'material-ui/IconButton';
 import FlatButton from 'material-ui/FlatButton';
@@ -16,13 +17,12 @@ import Looks2 from 'material-ui/svg-icons/image/looks-two';
 import Looks3 from 'material-ui/svg-icons/image/looks-3';
 import Looks4 from 'material-ui/svg-icons/image/looks-4';
 import Looks5 from 'material-ui/svg-icons/image/looks-5';
-
 import ModeEdit from "material-ui/svg-icons/editor/mode-edit";
-import Avatar from 'material-ui/Avatar';
-import {pinkA200, transparent} from 'material-ui/styles/colors';
 
+import { Users } from '../api/users.js';
 
-const tableData = [
+// 测试数据
+const test = [
     {
         uid: '10001',
         username: 'John Smith',
@@ -73,7 +73,7 @@ const tableData = [
     },
 ];
 
-export default class User extends Component {
+class User extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -117,6 +117,20 @@ export default class User extends Component {
         this.setState({open: false});
         this.handleSnackBarOpen("保存成功");
         console.log(this.state.uid, this.state.username, this.state.password, this.state.group);
+        var doc = Users.find().fetch();
+        console.log(doc);
+        console.log(Users.update(
+            {
+                uid: this.state.uid
+            },
+            {
+                $set:{
+                    username: this.state.username,
+                    password: this.state.password,
+                    group: this.state.group,
+                }
+            }
+            ));
     };
 
     handleChange(event) {
@@ -230,15 +244,20 @@ export default class User extends Component {
                         showRowHover={true}
                         displayRowCheckbox={false}
                     >
-                        {tableData.map((row, index) => (
-                            <TableRow key={index} selected={row.selected}>
-                                <TableRowColumn>{index + 1}</TableRowColumn>
-                                <TableRowColumn>{row.uid}</TableRowColumn>
-                                <TableRowColumn>{row.username}</TableRowColumn>
-                                <TableRowColumn>{row.group}</TableRowColumn>
-                                <TableRowColumn>{row.regTime}</TableRowColumn>
-                                <TableRowColumn><IconButton onTouchTap={this.handleOpen.bind(this, row)}><ModeEdit color="#00bcd4"/></IconButton></TableRowColumn>
-                            </TableRow>
+
+                        {this.props.users.map((data, index) => (
+                        <TableRow key={index} selected={data.selected}>
+                            <TableRowColumn>{index + 1}</TableRowColumn>
+                            <TableRowColumn>{data.uid}</TableRowColumn>
+                            <TableRowColumn>{data.username}</TableRowColumn>
+                            <TableRowColumn>{data.group}</TableRowColumn>
+                            <TableRowColumn>{data.regTime.toLocaleString('chinese', {hour12:false})}</TableRowColumn>
+                            <TableRowColumn>
+                                <IconButton onTouchTap={this.handleOpen.bind(this, data)}>
+                                    <ModeEdit color="#00bcd4"/>
+                                </IconButton>
+                            </TableRowColumn>
+                        </TableRow>
                         ))}
                     </TableBody>
                     <TableFooter
@@ -306,3 +325,13 @@ export default class User extends Component {
 
     }
 }
+
+User.propTypes = {
+    users: PropTypes.array.isRequired,
+};
+
+export default createContainer(() => {
+    return {
+        users: Users.find().fetch(),
+    };
+}, User);
