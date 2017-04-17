@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import CircularProgress from 'material-ui/CircularProgress';
 import Sidebar from './Sidebar';
+import { Users } from '../api/users';
+
 
 import List from './List.jsx';
 import Draw from './Draw.jsx';

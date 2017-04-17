@@ -8,7 +8,7 @@ import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Snackbar from 'material-ui/Snackbar';
-
+import ContentAdd from 'material-ui/svg-icons/content/add';
 
 import NavigateNext from 'material-ui/svg-icons/image/navigate-next';
 import NavigateBefore from 'material-ui/svg-icons/image/navigate-before';
@@ -21,63 +21,12 @@ import ModeEdit from "material-ui/svg-icons/editor/mode-edit";
 
 import { Users } from '../api/users.js';
 
-// 测试数据
-const test = [
-    {
-        uid: '10001',
-        username: 'John Smith',
-        group: 'Admin',
-        regTime: '1492066702',
-    },
-    {
-        uid: '10002',
-        username: 'Randal White',
-        group: 'User',
-        regTime: '1492066702',
-    },
-    {
-        uid: '10003',
-        username: 'Stephanie Sanders',
-        group: 'User',
-        regTime: '1492066702',
-    },
-    {
-        uid: '10004',
-        username: 'Steve Brown',
-        group: 'User',
-        regTime: '1492066702',
-    },
-    {
-        uid: '10005',
-        username: 'John Smith',
-        group: 'Admin',
-        regTime: '1492066702',
-    },
-    {
-        uid: '10006',
-        username: 'Randal White',
-        group: 'User',
-        regTime: '1492066702',
-    },
-    {
-        uid: '10007',
-        username: 'Stephanie Sanders',
-        group: 'User',
-        regTime: '1492066702',
-    },
-    {
-        uid: '10008',
-        username: 'Steve Brown',
-        group: 'Admin',
-        regTime: '1492066702',
-    },
-];
-
 class User extends Component {
     constructor(props) {
         super(props);
         this.state = {
             open: false,
+            userId: null,
             uid: null,
             password: null,
             username: null,
@@ -97,11 +46,13 @@ class User extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSnackBarOpen = this.handleSnackBarOpen.bind(this);
         this.handleSnackBarClose = this.handleSnackBarClose.bind(this);
+        this.handleAddUser =this.handleAddUser.bind(this);
     }
 
     handleOpen(row, event) {
         this.setState({
             open: true,
+            userId: row._id,
             uid: row.uid,
             username: row.username,
             originalUsername: row.username,
@@ -115,13 +66,12 @@ class User extends Component {
 
     handleConfirm() {
         this.setState({open: false});
-        this.handleSnackBarOpen("保存成功");
         console.log(this.state.uid, this.state.username, this.state.password, this.state.group);
         var doc = Users.find().fetch();
         console.log(doc);
-        console.log(Users.update(
+        if (Users.update(
             {
-                uid: this.state.uid
+                _id: this.state.userId,
             },
             {
                 $set:{
@@ -130,7 +80,11 @@ class User extends Component {
                     group: this.state.group,
                 }
             }
-            ));
+            )) {
+            this.handleSnackBarOpen("保存成功");
+        } else {
+            this.handleSnackBarOpen("保存失败");
+        }
     };
 
     handleChange(event) {
@@ -203,6 +157,10 @@ class User extends Component {
         });
     }
 
+    handleAddUser() {
+        this.handleSnackBarOpen("开发中...");
+    }
+
     render() {
         const actions = [
             <FlatButton
@@ -264,7 +222,8 @@ class User extends Component {
                         adjustForCheckbox={false}
                     >
                         <TableRow>
-                            <TableRowColumn colSpan="6" style={{textAlign: 'center'}}>
+                            <TableRowColumn/>
+                            <TableRowColumn colSpan="4" style={{textAlign: 'center'}}>
                                 <IconButton><NavigateBefore color="#757575" hoverColor="#00bcd4"/></IconButton>
                                 <IconButton><Looks1 color="#00bcd4" hoverColor="#00bcd4"/></IconButton>
                                 <IconButton><Looks2 color="#757575" hoverColor="#00bcd4"/></IconButton>
@@ -272,6 +231,9 @@ class User extends Component {
                                 <IconButton><Looks4 color="#757575" hoverColor="#00bcd4"/></IconButton>
                                 <IconButton><Looks5 color="#757575" hoverColor="#00bcd4"/></IconButton>
                                 <IconButton><NavigateNext color="#00bcd4" hoverColor="#00bcd4"/></IconButton>
+                            </TableRowColumn>
+                            <TableRowColumn>
+                                <IconButton onTouchTap={this.handleAddUser}><ContentAdd color="#ff4081"/></IconButton>
                             </TableRowColumn>
                         </TableRow>
                     </TableFooter>
