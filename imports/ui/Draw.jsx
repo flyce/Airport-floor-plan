@@ -1,6 +1,48 @@
 import React, {Component} from 'react';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
+import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn, TableFooter } from 'material-ui/Table';
+import IconButton from 'material-ui/IconButton';
 import d3 from 'd3';
+
+// icon
+import ModeEdit from "material-ui/svg-icons/editor/mode-edit";
+import Clear from "material-ui/svg-icons/content/clear";
+
+// 测试数据
+const testData = [
+    {
+        id: '10001',
+        mac: 'e0:db:55:f9:2f:51',
+        getIn: '2017-03-17 11:32',
+        depart: '2017-03-17 11:32',
+        isExit: '是'
+    },
+    {
+        id: '10002',
+        mac: 'e1:cb:25:f4:1f:5a',
+        getIn: '2017-03-17 11:32',
+        depart: '2017-03-17 11:32',
+        isExit: '是'
+    },{
+        id: '10003',
+        mac: 'e0:db:55:f9:2f:51',
+        getIn: '2017-03-17 11:32',
+        depart: '2017-03-17 11:32',
+        isExit: '是'
+    },{
+        id: '10004',
+        mac: '30:fb:54:59:ff:31',
+        getIn: '2017-03-17 11:32',
+        depart: '2017-03-17 11:32',
+        isExit: '是'
+    },{
+        id: '10005',
+        mac: 'f0:df:25:9f:31:e1',
+        getIn: '2017-03-17 11:32',
+        depart: '2017-03-17 11:32',
+        isExit: '是'
+    },
+];
 
 export default class Draw extends Component {
 
@@ -462,7 +504,7 @@ export default class Draw extends Component {
             mapdata = {};
 
         mapdata[imagelayer.id()] = [{
-            url: 'http://localhost/QQ20170408-0.png',
+            url: 'http://localhost:81/QQ20170408-0.png',
             x: 0,
             y: 0,
             height: 33.79,
@@ -482,7 +524,7 @@ export default class Draw extends Component {
         console.log("background-image:","finished");
     }
 
-    handleAddLayer(event) {
+    handleAddLayer(row, event) {
 
         d3.floorplan = function() {
             function a(a) {
@@ -646,22 +688,37 @@ export default class Draw extends Component {
 
         console.log(pathplot);
 
-        var pathData;
+        var pathData
 
-        if (event.target.name === "first") {
-            pathData = [{"id": "flt-1", "classes": "planned",
-                "points": [{"x": 12.9, "y": 25}, {"x": 12.9, "y": 20},
-                    {"x": 8.95, "y": 17.3}, {"x": 8.95, "y": 11.3}]}];
-        } else {
-            pathData = [{"id": "flt-1", "classes": "planned",
-                "points": [{"x": 0, "y": 0}, {"x": 15.9, "y": 21},
-                    {"x": 9.5, "y": 7.3}, {"x": 5.4, "y": 13}]}];
+        switch (row) {
+            case 1: pathData = [{"id": "flt-1", "classes": "planned",
+                        "points": [{"x": 12.9, "y": 25}, {"x": 12.9, "y": 20},
+                            {"x": 8.95, "y": 17.3}, {"x": 8.95, "y": 11.3}]}];
+            break;
+            case 2: pathData = [{"id": "flt-1", "classes": "planned",
+                        "points": [{"x": 15, "y": 15}, {"x": 15.9, "y": 21},
+                            {"x": 19.5, "y": 22}, {"x": 20.4, "y": 13}]}];
+            break;
+            case 3: pathData = [{"id": "flt-1", "classes": "planned",
+                "points": [{"x": 1, "y": 2}, {"x": 1.9, "y": 2.1},
+                    {"x": 9.5, "y": 9.3}, {"x": 5.4, "y": 1.3}]}];
+            break;
+            case 4: pathData = [{"id": "flt-1", "classes": "planned",
+                "points": [{"x": 25, "y": 0}, {"x": 2.9, "y": 2.9},
+                    {"x": 7, "y": 7}, {"x": 6, "y": 6}]}];
+            break;
+            default:
+                pathData = [{"id": "flt-1", "classes": "planned",
+                    "points": [{"x": 30, "y": 30}, {"x": 30, "y": 21},
+                        {"x": 16.66, "y": 7.36}, {"x": 17.4, "y": 13}]}];
         }
+
+        console.log(row);
 
         mapdata[pathplot.id()] = pathData; // 蓝色虚线绘制
 
         d3.select("#draw").append("g")
-            .attr("height", 339).attr("width",720).attr("id", event.target.name)
+            .attr("height", 339).attr("width",720).attr("id", "test" + row)
             .datum(mapdata).call(map);
 
         d3.select(".map-controls").remove();
@@ -670,8 +727,8 @@ export default class Draw extends Component {
         console.log(event.target.name);
     }
 
-    remove () {
-        d3.select("#wang").remove();
+    remove (row, event) {
+        d3.select("#test" + row).remove();
         console.log("remove-path: #wang finished");
     }
 
@@ -691,13 +748,55 @@ export default class Draw extends Component {
     render() {
         return (
             <Card id="error">
-                <CardHeader title="Welcome to the administration" />
+                {/*<CardHeader title="Welcome to the administration" />*/}
                 <CardText>
-                    注意：绘图区鼠标滚轮会被 Canvas 监听，导致页面无法上下滑动！
-                    <button onClick={this.getWidth}>calc</button>
-                    <button onClick={this.handleAddLayer} name='first'>add</button>
-                    <button onClick={this.handleAddLayer} name="new add">new add</button>
-                    <button onClick={this.remove}>remove</button>
+                    <Table
+                        selectable={false} // 可选
+                        fixedHeader={false}
+                        multiSelectable={false}
+                    >
+                        <TableHeader
+                            displaySelectAll={false}
+                            adjustForCheckbox={false}
+                            enableSelectAll={false}
+                        >
+                            <TableRow>
+                                <TableHeaderColumn>编号</TableHeaderColumn>
+                                <TableHeaderColumn>Mac</TableHeaderColumn>
+                                <TableHeaderColumn>进入时间</TableHeaderColumn>
+                                <TableHeaderColumn>离开时间</TableHeaderColumn>
+                                <TableHeaderColumn>是否离开</TableHeaderColumn>
+                                <TableHeaderColumn>绘制</TableHeaderColumn>
+                                <TableHeaderColumn>取消绘制</TableHeaderColumn>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody
+                            stripedRows={false} // 隔行高亮
+                            showRowHover={true}
+                            displayRowCheckbox={false}
+                        >
+
+                            {testData.map((data, index) => (
+                                <TableRow key={index} selected={data.selected}>
+                                    <TableRowColumn>{index + 1}</TableRowColumn>
+                                    <TableRowColumn>{data.mac}</TableRowColumn>
+                                    <TableRowColumn>{data.getIn}</TableRowColumn>
+                                    <TableRowColumn>{data.depart}</TableRowColumn>
+                                    <TableRowColumn>{data.isExit}</TableRowColumn>
+                                    <TableRowColumn>
+                                        <IconButton onTouchTap={this.handleAddLayer.bind(this, index + 1)}>
+                                            <ModeEdit color="#00bcd4"/>
+                                        </IconButton>
+                                    </TableRowColumn>
+                                    <TableRowColumn>
+                                        <IconButton onTouchTap={this.remove.bind(this, index + 1)}>
+                                            <Clear color="#00bcd4"/>
+                                        </IconButton>
+                                    </TableRowColumn>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
                     <div id="demo"></div>
                 </CardText>
             </Card>
