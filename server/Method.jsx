@@ -3,38 +3,46 @@ import { Users } from '../imports/api/users.js';
 import bcrypt from 'bcrypt';
 
 
+// 数据二次验证，数据库操作
 Meteor.methods({
     userLogin: (username, password) => {
-        let user = Users.find({username: username}).fetch()[0];
-        let info;
+        if (username, password) {
+            let user = Users.find({username: username}).fetch()[0];
+            let info;
 
-        if (bcrypt.compareSync(password, user.password)) {
-            info = {
-                status: 1,
-                data: [{
-                    _id: user._id._str,
-                    uid: user.uid,
-                    username: user.username,
-                    group: user.group
-                }]
-            };
-        } else {
-            info = {
-                status: 0,
-                data: "username or password invalid"
-            };
+            if (bcrypt.compareSync(password, user.password)) {
+                info = {
+                    status: 1,
+                    data: [{
+                        _id: user._id._str,
+                        uid: user.uid,
+                        username: user.username,
+                        group: user.group
+                    }]
+                };
+            } else {
+                info = {
+                    status: 0,
+                    data: "username or password invalid"
+                };
+            }
+            return info;
         }
-        return info;
+        return false;
     },
 
     addUser: (uid, username, password, group) => {
-        return Users.insert({
-            uid: uid,
-            username: username,
-            password: bcrypt.hashSync(password, 10),
-            group: group,
-            regTime: new Date()
-        });
+        if(uid && username && password, group) {
+            return Users.insert({
+                uid: uid,
+                username: username,
+                password: bcrypt.hashSync(password, 10),
+                group: group,
+                regTime: new Date()
+            });
+        }
+
+        return false;
     },
 
     updateUser: (uid, username, password, group) => {
@@ -49,5 +57,40 @@ Meteor.methods({
             g = Users.update({uid:uid},  {$set: {group: group}});
         }
         return (u || p || g);
+    },
+
+    deleteUser: (uid) => {
+        if (uid) {
+            return Users.remove({uid: uid});
+        }
+        return false;
+    },
+
+    selfUpdatePassword(username, oldPassword, newPassword) {
+        if(username && oldPassword && newPassword) {
+            let user = Users.find({username: username}).fetch()[0];
+            let info;
+
+            if (bcrypt.compareSync(oldPassword, user.password)) {
+                if (Users.update({username: username},  {$set: {password: bcrypt.hashSync(newPassword, 10)}})) {
+                    info = [{
+                        status: 1,
+                        info: "update password success"
+                    }];
+                } else {
+                    info = [{
+                        status: 0,
+                        info: "database update failed"
+                    }];
+                }
+            } else {
+                info = {
+                    status: 0,
+                    data: "password invalid"
+                };
+            }
+            return info;
+        }
+        return false;
     }
 });

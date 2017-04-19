@@ -26,6 +26,7 @@ class User extends Component {
         super(props);
         this.state = {
             open: false,
+            deleteOpen: false,
             userId: null,
             uid: null,
             password: null,
@@ -47,9 +48,13 @@ class User extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSnackBarOpen = this.handleSnackBarOpen.bind(this);
         this.handleSnackBarClose = this.handleSnackBarClose.bind(this);
-        this.handleAddUser =this.handleAddUser.bind(this);
+        this.handleAddUser = this.handleAddUser.bind(this);
+        this.handleDeleteUser = this.handleDeleteUser.bind(this);
+        this.handleDeleteClose = this.handleDeleteClose.bind(this);
+        this.handleDeleteConfirm = this.handleDeleteConfirm.bind(this);
     }
 
+    // update User && Dialoger open
     handleOpen(row, event) {
         this.setState({
             open: true,
@@ -74,7 +79,7 @@ class User extends Component {
                     if (result) {
                         this.handleSnackBarOpen("添加成功！");
                     }  else {
-                        this.handleSnackBarOpen("添加失败！");
+                        this.handleSnackBarOpen("添加失败！请重试。");
                     }
                 }.bind(this)
             );
@@ -84,7 +89,7 @@ class User extends Component {
                     if (result) {
                         this.handleSnackBarOpen("修改成功！");
                     } else {
-                        this.handleSnackBarOpen("修改失败！");
+                        this.handleSnackBarOpen("修改失败！请重试。");
                     }
             }.bind(this));
         }
@@ -168,11 +173,14 @@ class User extends Component {
         }
     }
 
+    // SnackBar
     handleSnackBarOpen(info) {
-        this.setState({
-            snackBarInfo: info,
-            snackBarOpen: true,
-        });
+        setTimeout(function() {
+            this.setState({
+                snackBarInfo: info,
+                snackBarOpen: true,
+            });
+        }.bind(this), 500);
     }
 
     handleSnackBarClose() {
@@ -181,6 +189,7 @@ class User extends Component {
         });
     }
 
+    // Add User
     handleAddUser() {
         this.setState({
             open: true,
@@ -190,6 +199,35 @@ class User extends Component {
             group: 'User',
             addUser: true
         });
+    }
+
+    // Delete User
+    handleDeleteUser() {
+        //this.setState({open: false});
+        this.setState({
+            open: false,
+            deleteOpen: true
+        });
+    }
+
+    handleDeleteClose() {
+        this.setState({
+            deleteOpen: false,
+        });
+    }
+
+    handleDeleteConfirm() {
+        this.setState({
+            deleteOpen: false,
+        });
+        Meteor.call("deleteUser", this.state.uid, function (err, result) {
+            if (result) {
+                this.handleSnackBarOpen("删除成功");
+            } else {
+                this.handleSnackBarOpen("删除失败！请重试");
+            }
+        }.bind(this))
+
     }
 
     render() {
@@ -204,6 +242,38 @@ class User extends Component {
                 primary={true}
                 disabled={this.state.confirmButton}
                 onTouchTap={this.handleConfirm}
+            />,
+        ];
+
+        const modeifyActions = [
+            <FlatButton
+                label="删除"
+                secondary={true}
+                onTouchTap={this.handleDeleteUser}
+            />,
+            <FlatButton
+                label="取消"
+                primary={true}
+                onTouchTap={this.handleClose}
+            />,
+            <FlatButton
+                label="保存"
+                primary={true}
+                disabled={this.state.confirmButton}
+                onTouchTap={this.handleConfirm}
+            />
+        ];
+
+        const deleteAction = [
+            <FlatButton
+                label="取消"
+                primary={true}
+                onTouchTap={this.handleDeleteClose}
+            />,
+            <FlatButton
+                label="删除"
+                secondary={true}
+                onTouchTap={this.handleDeleteConfirm}
             />,
         ];
 
@@ -271,7 +341,7 @@ class User extends Component {
                 </Table>
                 <Dialog
                     title="修改用户信息"
-                    actions={actions}
+                    actions={this.state.addUser ? actions : modeifyActions}
                     modal={false}
                     open={this.state.open}
                     onRequestClose={this.handleClose}
@@ -307,6 +377,14 @@ class User extends Component {
                         errorText={this.state.passwordWarning}
                         fullWidth
                     /><br />
+                </Dialog>
+                <Dialog
+                    actions={deleteAction}
+                    modal={false}
+                    open={this.state.deleteOpen}
+                    onRequestClose={this.handleDeleteClose}
+                >
+                    确定删除用户<strong style={{color: "#ff4081"}}> {this.state.username}</strong> ? 此操作不可逆！！！
                 </Dialog>
                 <Snackbar
                     open={this.state.snackBarOpen}

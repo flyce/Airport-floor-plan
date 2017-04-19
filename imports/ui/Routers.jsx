@@ -15,7 +15,7 @@ export const renderRoutes = () => (
                 <Route exact path="/" component={Home}/>
                 <PrivateRoute path="/app" component={App} />
                 <Route path="/login" component={Login}/>
-                <Route path="/test" component={Test}/>
+                {/*<Route path="/test" component={Test}/>*/}
                 <Route path="/user" render={props => (
                     <div>
                         <App redirect="User"/>
