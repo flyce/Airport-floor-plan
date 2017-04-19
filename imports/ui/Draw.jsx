@@ -685,10 +685,7 @@ export default class Draw extends Component {
         // 负责初始图层绘制
         map.addLayer(pathplot);
 
-
-        console.log(pathplot);
-
-        var pathData
+        var pathData;
 
         switch (row) {
             case 1: pathData = [{"id": "flt-1", "classes": "planned",
@@ -713,8 +710,6 @@ export default class Draw extends Component {
                         {"x": 16.66, "y": 7.36}, {"x": 17.4, "y": 13}]}];
         }
 
-        console.log(row);
-
         mapdata[pathplot.id()] = pathData; // 蓝色虚线绘制
 
         d3.select("#draw").append("g")
@@ -723,13 +718,12 @@ export default class Draw extends Component {
 
         d3.select(".map-controls").remove();
 
-        console.log("add-path:"+ " #wang "+ "finished");
-        console.log(event.target.name);
+        console.log("add-path: #test"+ row + " finished");
     }
 
     remove (row, event) {
         d3.select("#test" + row).remove();
-        console.log("remove-path: #wang finished");
+        console.log("remove-path: #test" + row + " finished");
     }
 
     removeMapControls() {
@@ -741,8 +735,26 @@ export default class Draw extends Component {
         this.InitView();
     }
 
+    // 用于自动获取高和宽
     getWidth() {
         console.log(document.getElementById('demo').parentNode.offsetHeight,document.getElementById('demo').parentNode.offsetWidth);
+    }
+
+    fullScreen() {
+        const elem = document.getElementById("demo");
+        this.requestFullScreen(elem);
+    }
+
+    requestFullScreen(element) {
+        var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
+        if (requestMethod) {
+            requestMethod.call(element);
+        } else if (typeof window.ActiveXObject !== "undefined") {
+            var wscript = new ActiveXObject("WScript.Shell");
+            if (wscript !== null) {
+                wscript.SendKeys("{F11}");
+            }
+        }
     }
 
     render() {
@@ -797,6 +809,7 @@ export default class Draw extends Component {
                             ))}
                         </TableBody>
                     </Table>
+                    <button onClick={this.fullScreen.bind(this)}>全屏</button>
                     <div id="demo"></div>
                 </CardText>
             </Card>

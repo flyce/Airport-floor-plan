@@ -1,29 +1,21 @@
 import React, { Component, PropTypes } from 'react';
+import {  Link } from 'react-router-dom';
 import { createContainer } from 'meteor/react-meteor-data';
-import { Users } from '../api/users.js';
 
-class Test extends Component {
+export default class Test extends Component {
     test() {
-        console.log(this.props.users);
-
+        console.log(Meteor.call("getUserId", (err, result) => {
+            console.log(result);
+        }));
     }
     render() {
         return (
-            <div>
+            <div style={{textAlign: 'center', color: "rgb(0, 188, 212)"}}>
                 {this.test()}
-                {console.log("hello")}
+                本页面用于测试数据库的 CURD<br />
+                <Link  to="/" style={{color: "#ffffff"}}>回到主页</Link>
             </div>
         );
     }
 }
-
-Test.propTypes = {
-    users: PropTypes.array.isRequired,
-};
-
-export default createContainer(() => {
-    return {
-        users: Users.find().fetch(),
-    };
-}, Test);
 

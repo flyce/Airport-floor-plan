@@ -1,5 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import { Link } from 'react-router-dom';
+import { Session } from 'meteor/session';
+import { Redirect } from 'react-router-dom';
 
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
@@ -19,12 +21,6 @@ import NavigationMenu from 'material-ui/svg-icons/navigation/menu';
 
 import FlatButton from 'material-ui/FlatButton';
 
-// for test
-import RaisedButton from 'material-ui/RaisedButton';
-// import List from "./List";
-
-import {List, ListItem} from 'material-ui/List';
-
 
 export default class Sidebar extends React.Component {
 
@@ -32,7 +28,7 @@ export default class Sidebar extends React.Component {
         super(props);
         this.state = {
             open: false,
-            logged: true,
+            isLogin: Session.get("uid") ? true :false
         };
 
         this.handleToggle = this.handleToggle.bind(this);
@@ -41,8 +37,23 @@ export default class Sidebar extends React.Component {
     handleToggle() {
         this.setState({open: !this.state.open});
     }
+    handleLogout() {
+        Session.set({
+            _id: null,
+            uid: null,
+            username: null,
+            group: null
+        });
+        this.setState({isLogin: Session.get("uid")  ? true : false});
+        console.log(this.state.isLogin);
+    }
 
     render() {
+        if ( !this.state.isLogin ) {
+            return (
+                <Redirect to="/login"/>
+            );
+        }
         return (
             <div>
                 <AppBar title={this.props.title}
@@ -55,9 +66,10 @@ export default class Sidebar extends React.Component {
                                 targetOrigin={{horizontal: 'right', vertical: 'top'}}
                                 anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                             >
+                                <MenuItem primaryText={"你好！" + Session.get("username")} />
                                 <MenuItem primaryText="个人中心" />
                                 <MenuItem primaryText="修改密码" />
-                                <MenuItem primaryText="注销" />
+                                <MenuItem onTouchTap={this.handleLogout.bind(this)} primaryText="注销" />
                             </IconMenu>
                         }
 
@@ -68,12 +80,6 @@ export default class Sidebar extends React.Component {
                             </IconButton>
                         }
                 />
-                {/* 用于测试 Drawer 的 Button */}
-                {/*<RaisedButton*/}
-                    {/*label="Toggle Drawer"*/}
-                    {/*onTouchTap={this.handleToggle}*/}
-                    {/*fullWidth*/}
-                {/*/>*/}
                 <Drawer open={this.state.open}>
                     <AppBar title="Echo's Panel"
                             iconElementLeft={
@@ -92,11 +98,11 @@ export default class Sidebar extends React.Component {
                         leftIcon={<Place />}
                         containerElement={<Link to="/draw"/>}
                     />
-                    <MenuItem
+                    {Session.get("group") === "Admin" ? <MenuItem
                         primaryText="用户管理"
                         leftIcon={<People />}
-                        containerElement={<Link to="/draw"/>}
-                    />
+                        containerElement={<Link to="/user"/>}
+                    /> : null}
                     <MenuItem
                         primaryText="注销"
                         leftIcon={<ExitToApp />}

@@ -1,4 +1,6 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+import { Session } from 'meteor/session';
 import { Meteor } from 'meteor/meteor';
 
 
@@ -7,7 +9,6 @@ import Avatar from 'material-ui/Avatar';
 import RaisedButton from 'material-ui/RaisedButton';
 import Snackbar from 'material-ui/Snackbar';
 import TextField from 'material-ui/TextField';
-import CircularProgress from 'material-ui/CircularProgress';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import LockIcon from 'material-ui/svg-icons/action/lock-outline';
@@ -48,9 +49,8 @@ class Login extends Component {
             usernameWarning: '',
             passwordWarning:'',
             submitButton: true,
-            isLogin: false,
             loginCount: 0,
-            // isLogin: Session.get('currentUserId') ? true : false,
+            isLogin: Session.get("uid") == null ? false : true
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -107,39 +107,29 @@ class Login extends Component {
                 this.setState({warning: '密码不能小于六位'});
                 this.handleTouchTap();
             } else {
-                this.setState({warning: '忘记密码？请与管理员联系'});
-                this.handleTouchTap();
-                // 登陆
-                // Meteor.loginWithPassword(this.state.username, this.state.password, function(error) {
-                //     if (error) {
-                //         this.setState({warning: '用户名或密码不正确'});
-                //         this.handleTouchTap();
-                //     } else {
-                //         Session.set({
-                //             'currentUserId': Meteor.user()._id,
-                //             'currentUsername': Meteor.user().username,
-                //         });
-                //         // location.href = 'http://localhost:3000/';
-                //         this.setState({isLogin: true});
-                //     }
-                // }.bind(this));
+                Meteor.call("userLogin" ,this.state.username, this.state.password, (err, result) => {
+                    if(!err) {
+                        if(result.status === 1) {
+                            Session.set({
+                                _id: result.data[0]._id,
+                                uid: result.data[0].uid,
+                                username: result.data[0].username,
+                                group: result.data[0].group
+                            });
+                            this.setState({isLogin: true});
+                        } else {
+                            this.setState({loginCount: this.state.loginCount + 1});
+                            if(this.state.loginCount < 4) {
+                                this.setState({warning: '用户名或密码错误！'});
+                            } else {
+                                this.setState({warning: '忘记用户名或密码？请与管理员联系'});
+                            }
+                            this.handleTouchTap();
+                        }
+                    }
+                });
             }
         }
-        // console.log(Session.get('currentUsername'));
-
-        // 创建用户
-        // Accounts.createUser({
-        //         username: this.state.username,
-        //         password: this.state.password
-        //     },
-        //     function(error) {
-        //         if (error) {
-        //             console.log("there was an error: " + error.reason);
-        //         } else {
-        //            alert("注册成功，即将跳转到主页");
-        //         }
-        //     }
-        // );
     }
 
     handleTouchTap() {
@@ -155,21 +145,20 @@ class Login extends Component {
     }
 
     handleClick() {
-        Meteor.logout();
         Session.set({
-            'currentUsername': '',
-            'currentUserId': '',
-        })
+            'uid': '',
+            'username': '',
+        });
         this.setState({isLogin: false});
     }
 
     render() {
         if (this.state.isLogin) {
-            return (
-                <div>
-                    <h1>{Session.get('currentUsername')} 你好, <a onClick={this.handleClick}>注销</a></h1>
-                </div>
-            );
+           return (
+               <div>
+                   <Redirect to="/app"/>
+               </div>
+           );
         }
         return (
             <MuiThemeProvider muiTheme={getMuiTheme()} >

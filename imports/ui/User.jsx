@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
-import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn, TableFooter } from 'material-ui/Table';
+import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn, TableFooter } from 'material-ui/Table';
 import IconButton from 'material-ui/IconButton';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
@@ -34,9 +34,10 @@ class User extends Component {
             group: null,
             usernameWarning: null,
             passwordWarning: null,
-            confirmButton: true,
+            confirmButton: false,
             snackBarOpen: false,
             snackBarInfo: '保存成功',
+            addUser: false,
         };
 
         this.handleOpen = this.handleOpen.bind(this);
@@ -52,6 +53,7 @@ class User extends Component {
     handleOpen(row, event) {
         this.setState({
             open: true,
+            addUser: false,
             userId: row._id,
             uid: row.uid,
             username: row.username,
@@ -66,25 +68,46 @@ class User extends Component {
 
     handleConfirm() {
         this.setState({open: false});
-        console.log(this.state.uid, this.state.username, this.state.password, this.state.group);
-        var doc = Users.find().fetch();
-        console.log(doc);
-        if (Users.update(
-            {
-                _id: this.state.userId,
-            },
-            {
-                $set:{
-                    username: this.state.username,
-                    password: this.state.password,
-                    group: this.state.group,
-                }
-            }
-            )) {
-            this.handleSnackBarOpen("保存成功");
+        if(this.state.addUser) {
+            Meteor.call("addUser", this.state.uid, this.state.username, this.state.password, this.state.group,
+                function (err, result) {
+                    if (result) {
+                        this.handleSnackBarOpen("添加成功！");
+                    }  else {
+                        this.handleSnackBarOpen("添加失败！");
+                    }
+                }.bind(this)
+            );
         } else {
-            this.handleSnackBarOpen("保存失败");
+            Meteor.call("updateUser", this.state.uid, this.state.username, this.state.password, this.state.group,
+                function (err, result) {
+                    if (result) {
+                        this.handleSnackBarOpen("修改成功！");
+                    } else {
+                        this.handleSnackBarOpen("修改失败！");
+                    }
+            }.bind(this));
         }
+
+
+        //var doc = Users.find().fetch();
+        //console.log(doc);
+        // if (Users.update(
+        //     {
+        //         _id: this.state.userId,
+        //     },
+        //     {
+        //         $set:{
+        //             username: this.state.username,
+        //             password: this.state.password,
+        //             group: this.state.group,
+        //         }
+        //     }
+        //     )) {
+        //     this.handleSnackBarOpen("保存成功");
+        // } else {
+        //     this.handleSnackBarOpen("保存失败");
+        // }
     };
 
     handleChange(event) {
@@ -100,7 +123,7 @@ class User extends Component {
             if (value.length < 4) {
                 this.setState({
                     usernameWarning: '用户不能少于四位',
-                    confirmButton: true,
+                    //confirmButton: true,
                 });
             } else {
                 this.setState({usernameWarning: ''});
@@ -111,7 +134,7 @@ class User extends Component {
             } else {
                 this.setState({
                     passwordWarning: '密码不能少于六位',
-                    confirmButton: true,
+                    // confirmButton: true,
                 });
             }
         }
@@ -120,20 +143,21 @@ class User extends Component {
         // 1. 当前用户名被修改过且长度大于 4
         // 2. 密码被更改且长度大于 6
 
-        if(name === 'username') {
-            if (value !== this.state.originalUsername && value.length >= 4) {
-                this.setState({confirmButton: false});
-            } else {
-                this.setState({confirmButton: true});
-            }
-        } else {
-            if ((value.length >=6 || value.length === 0) &&
-                (this.state.username !== this.state.originalUsername && this.state.username.length >= 4)) {
-                this.setState({confirmButton: false});
-            } else {
-                this.setState({confirmButton: true});
-            }
-        }
+        //  此处有逻辑漏洞 组管理没有考虑进去
+        // if(name === 'username') {
+        //     if (value !== this.state.originalUsername && value.length >= 4) {
+        //         this.setState({confirmButton: false});
+        //     } else {
+        //         this.setState({confirmButton: true});
+        //     }
+        // } else {
+        //     if ((value.length >=6 || value.length === 0) &&
+        //         (this.state.username !== this.state.originalUsername && this.state.username.length >= 4)) {
+        //         this.setState({confirmButton: false});
+        //     } else {
+        //         this.setState({confirmButton: true});
+        //     }
+        // }
     }
 
     handleChoose(event, value) {
@@ -158,7 +182,14 @@ class User extends Component {
     }
 
     handleAddUser() {
-        this.handleSnackBarOpen("开发中...");
+        this.setState({
+            open: true,
+            uid: parseInt(Users.find().fetch()[Users.find().fetch().length-1].uid) + 1, // 用户ID 每次自加 1
+            username: '',
+            originalUsername: '',
+            group: 'User',
+            addUser: true
+        });
     }
 
     render() {
@@ -270,7 +301,8 @@ class User extends Component {
                     </SelectField><br />
                     <TextField
                         name="password"
-                        floatingLabelText="修改密码 (留空为不修改密码)"
+                        type="password"
+                        floatingLabelText={!this.state.addUser ? "修改密码(留空为不修改)" : "密码"}
                         onChange={this.handleChange}
                         errorText={this.state.passwordWarning}
                         fullWidth
