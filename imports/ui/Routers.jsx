@@ -13,9 +13,8 @@ export const renderRoutes = () => (
         <div>
             <Switch>
                 <Route exact path="/" component={Home}/>
-                <PrivateRoute path="/app" component={App} />
-                <Route path="/login" component={Login}/>
-                {/*<Route path="/test" component={Test}/>*/}
+                <Route path="/app" component={App} />
+                <Route path="/login" component={Login} />
                 <Route path="/user" render={props => (
                     <div>
                         <App redirect="User"/>
@@ -32,30 +31,30 @@ export const renderRoutes = () => (
     </Router>
 );
 
-const PrivateRoute = ({ component, ...rest }) => (
-    <Route {...rest} render={props => (
-        fakeAuth.isAuthenticated ? (
-            React.createElement(component, props)
-        ) : (
-            <Redirect to={{
-                pathname: '/login',
-                state: { from: props.location }
-            }}/>
-        )
-    )}/>
-)
+// const PrivateRoute = ({ component, ...rest }) => (
+//     <Route {...rest} render={props => (
+//         fakeAuth.isAuthenticated ? (
+//             React.createElement(component, props)
+//         ) : (
+//             <Redirect to={{
+//                 pathname: '/login',
+//                 state: { from: props.location }
+//             }}/>
+//         )
+//     )}/>
+// )
 
-const fakeAuth = {
-    isAuthenticated: true,
-    authenticate(cb) {
-        this.isAuthenticated = true
-        setTimeout(cb, 100) // fake async
-    },
-    signout(cb) {
-        this.isAuthenticated = false
-        setTimeout(cb, 100)
-    }
-}
+// const fakeAuth = {
+    // isAuthenticate d: true,
+    // authenticate(cb) {
+    //     this.isAuthenticated = true
+    //     setTimeout(cb, 100) // fake async
+    // },
+    // signout(cb) {
+    //     this.isAuthenticated = false
+    //     setTimeout(cb, 100)
+    // }
+// };
 
 const Home = () => (
     <div>

@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router-dom';
 import { Session } from 'meteor/session';
+import { Redirect} from 'react-router-dom';
 
 import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
@@ -40,6 +41,7 @@ export default class Sidebar extends React.Component {
             newPasswordWarning: '',
             confirmPasswordWarning: '',
             confirmButton: true,
+            isLogin: Session.get("username") ? Session.get("username") : false
         };
 
         this.handleDrawer = this.handleDrawer.bind(this);
@@ -56,6 +58,9 @@ export default class Sidebar extends React.Component {
             uid: null,
             username: null,
             group: null
+        });
+        this.setState({
+            isLogin: false
         });
     }
 
@@ -227,6 +232,9 @@ export default class Sidebar extends React.Component {
     }
 
     render() {
+        if (!this.state.isLogin) {
+            return (<Redirect to="/login"/>);
+        }
         const actions = [
             <FlatButton
                 label="取消"

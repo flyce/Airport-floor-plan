@@ -50,7 +50,7 @@ class Login extends Component {
             passwordWarning:'',
             submitButton: true,
             loginCount: 0,
-            isLogin: Session.get("uid") == null ? false : true
+            isLogin: Session.get("username") ? Session.get("username") : false
         };
 
         this.handleChange = this.handleChange.bind(this);
