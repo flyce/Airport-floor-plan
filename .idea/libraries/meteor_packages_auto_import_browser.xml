@@ -136,10 +136,12 @@
         <item url="file://$USER_HOME$/.meteor/packages/htmljs/1.0.11/web.browser/preamble.js" />
         <item url="file://$USER_HOME$/.meteor/packages/htmljs/1.0.11/web.browser/visitors.js" />
         <item url="file://$USER_HOME$/.meteor/packages/http/1.2.12/web.browser/deprecated.js" />
+        <item url="file://$USER_HOME$/.meteor/packages/u2622_persistent-session/0.4.4/web.browser/lib/persistent_session.js" />
         <item url="file://$USER_HOME$/.meteor/packages/http/1.2.12/web.browser/httpcall_tests.js" />
         <item url="file://$USER_HOME$/.meteor/packages/http/1.2.12/web.browser/test_responder.js" />
         <item url="file://$USER_HOME$/.meteor/packages/http/1.2.12/web.browser/httpcall_server.js" />
         <item url="file://$USER_HOME$/.meteor/packages/http/1.2.12/web.browser/httpcall_common.js" />
+        <item url="file://$USER_HOME$/.meteor/packages/amplify/1.0.0/web.browser/packages/amplify.js" />
         <item url="file://$USER_HOME$/.meteor/packages/http/1.2.12/web.browser/httpcall_client.js" />
         <item url="file://$USER_HOME$/.meteor/packages/id-map/1.0.9/web.browser/id-map.js" />
         <item url="file://$USER_HOME$/.meteor/packages/jquery/1.11.10/web.browser/main.js" />
@@ -308,10 +310,12 @@
       <root url="file://$USER_HOME$/.meteor/packages/htmljs/1.0.11/web.browser/preamble.js" />
       <root url="file://$USER_HOME$/.meteor/packages/htmljs/1.0.11/web.browser/visitors.js" />
       <root url="file://$USER_HOME$/.meteor/packages/http/1.2.12/web.browser/deprecated.js" />
+      <root url="file://$USER_HOME$/.meteor/packages/u2622_persistent-session/0.4.4/web.browser/lib/persistent_session.js" />
       <root url="file://$USER_HOME$/.meteor/packages/http/1.2.12/web.browser/httpcall_tests.js" />
       <root url="file://$USER_HOME$/.meteor/packages/http/1.2.12/web.browser/test_responder.js" />
       <root url="file://$USER_HOME$/.meteor/packages/http/1.2.12/web.browser/httpcall_server.js" />
       <root url="file://$USER_HOME$/.meteor/packages/http/1.2.12/web.browser/httpcall_common.js" />
+      <root url="file://$USER_HOME$/.meteor/packages/amplify/1.0.0/web.browser/packages/amplify.js" />
       <root url="file://$USER_HOME$/.meteor/packages/http/1.2.12/web.browser/httpcall_client.js" />
       <root url="file://$USER_HOME$/.meteor/packages/id-map/1.0.9/web.browser/id-map.js" />
       <root url="file://$USER_HOME$/.meteor/packages/jquery/1.11.10/web.browser/main.js" />

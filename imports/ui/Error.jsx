@@ -14,7 +14,7 @@ export default class Error extends Component {
         };
     }
 
-    // 让 404 Card 居中, 和有从下向上浮出的效果
+    // 让 404 Card 垂直居中, 和有从下向上浮出的效果
     componentDidMount() {
         this.setState({
             height: ((document.documentElement.clientHeight - document.getElementById('error').offsetHeight) / 2),

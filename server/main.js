@@ -1,5 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import '../imports/api/users.js';
+import '../imports/api/tracks.js';
+
+import { Tracks } from '../imports/api/tracks.js';
 
 Meteor.startup(() => {
   // code to run on server at startup

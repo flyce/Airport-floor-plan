@@ -4,6 +4,8 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 import IconButton from 'material-ui/IconButton';
 import d3 from 'd3';
 
+import { Tracks } from '../api/tracks.js';
+
 // icon
 import ModeEdit from "material-ui/svg-icons/editor/mode-edit";
 import Clear from "material-ui/svg-icons/content/clear";
@@ -746,15 +748,16 @@ export default class Draw extends Component {
     }
 
     requestFullScreen(element) {
-        var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
-        if (requestMethod) {
-            requestMethod.call(element);
-        } else if (typeof window.ActiveXObject !== "undefined") {
-            var wscript = new ActiveXObject("WScript.Shell");
-            if (wscript !== null) {
-                wscript.SendKeys("{F11}");
-            }
-        }
+        // var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
+        // if (requestMethod) {
+        //     requestMethod.call(element);
+        // } else if (typeof window.ActiveXObject !== "undefined") {
+        //     var wscript = new ActiveXObject("WScript.Shell");
+        //     if (wscript !== null) {
+        //         wscript.SendKeys("{F11}");
+        //     }
+        // }
+        console.log(Tracks.find().fetch());
     }
 
     render() {

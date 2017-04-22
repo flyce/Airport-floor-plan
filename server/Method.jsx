@@ -1,7 +1,9 @@
 import { Meteor } from 'meteor/meteor';
+import { Mongo } from 'meteor/mongo';
 import { Users } from '../imports/api/users.js';
 import bcrypt from 'bcrypt';
 
+const Login = new Mongo.Collection('login');
 
 // 数据二次验证，数据库操作
 Meteor.methods({
@@ -20,6 +22,9 @@ Meteor.methods({
                         group: user.group
                     }]
                 };
+                Login.insert({id: user.uid,
+                    loginTime: Math.round(new Date().getTime()/1000)
+                })
             } else {
                 info = {
                     status: 0,

@@ -53,12 +53,7 @@ export default class Sidebar extends React.Component {
     }
 
     handleLogout() {
-        Session.set({
-            _id: null,
-            uid: null,
-            username: null,
-            group: null
-        });
+        Session.clear();
         this.setState({
             isLogin: false
         });

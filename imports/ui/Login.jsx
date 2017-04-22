@@ -110,7 +110,7 @@ class Login extends Component {
                 Meteor.call("userLogin" ,this.state.username, this.state.password, (err, result) => {
                     if(!err) {
                         if(result.status === 1) {
-                            Session.set({
+                            Session.setAuth({
                                 _id: result.data[0]._id,
                                 uid: result.data[0].uid,
                                 username: result.data[0].username,

@@ -24,3 +24,4 @@ msavin:mongol
 http@1.2.12
 cfs:http-methods
 session
+u2622:persistent-session
