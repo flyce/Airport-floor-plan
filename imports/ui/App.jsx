@@ -52,6 +52,7 @@ export default class App extends Component {
         return (
             <MuiThemeProvider>
                 <div style={styles.wrapper}>
+                    {Session.get('expirationTime') < Math.round(new Date().getTime()/1000) ? Session.clear() : null}
                     <div style={styles.main}>
                         <Sidebar title="主页"/>
                         <div className="body" style={styles.body}>

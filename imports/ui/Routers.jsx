@@ -6,7 +6,8 @@ import Login from './Login.jsx';
 import Draw from './Draw.jsx';
 import Error from './Error.jsx';
 import User from './User.jsx';
-import Test from './Test.jsx'
+import Test from './Test.jsx';
+import Page from './Page.jsx';
 
 export const renderRoutes = () => (
     <Router>
@@ -15,6 +16,7 @@ export const renderRoutes = () => (
                 <Route exact path="/" component={Home}/>
                 <Route path="/app" component={App} />
                 <Route path="/login" component={Login} />
+                <Route path="/page" component={Page}/>
                 <Route path="/user" render={props => (
                     <div>
                         <App redirect="User"/>

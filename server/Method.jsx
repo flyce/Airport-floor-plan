@@ -97,5 +97,9 @@ Meteor.methods({
             return info;
         }
         return false;
+    },
+
+    getLimitData(skipPageNum) {
+        return Users.find().limit(10).skip(skipPageNum);
     }
 });

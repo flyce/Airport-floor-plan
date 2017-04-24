@@ -114,7 +114,8 @@ class Login extends Component {
                                 _id: result.data[0]._id,
                                 uid: result.data[0].uid,
                                 username: result.data[0].username,
-                                group: result.data[0].group
+                                group: result.data[0].group,
+                                expirationTime: Math.round(new Date().getTime()/1000) + 7200
                             });
                             this.setState({isLogin: true});
                         } else {

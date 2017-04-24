@@ -1,8 +1,11 @@
 import { Meteor } from 'meteor/meteor';
 import '../imports/api/users.js';
 import '../imports/api/tracks.js';
+import { Users } from '../imports/api/users.js';
 
 import { Tracks } from '../imports/api/tracks.js';
+
+// console.log(Users.find().fetch());
 
 Meteor.startup(() => {
   // code to run on server at startup

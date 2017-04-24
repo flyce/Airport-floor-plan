@@ -39,6 +39,11 @@ class User extends Component {
             snackBarOpen: false,
             snackBarInfo: '保存成功',
             addUser: false,
+            skipPageNum: 0,
+            currentPage: 0,
+            beforeButton: true,
+            nextButton: false,
+            activeNum: 1,
         };
 
         this.handleOpen = this.handleOpen.bind(this);
@@ -230,6 +235,73 @@ class User extends Component {
 
     }
 
+    // pager
+    handlePageBefore() {
+        if(this.state.skipPageNum > 0) {
+            this.setState({
+                skipPageNum: this.state.skipPageNum - 1,
+                activeNum: this.state.activeNum - 1,
+                beforeButton: true,
+                nextButton: false,
+            });
+        } else {
+            this.setState({
+                beforeButton: true
+            });
+        }
+    }
+
+    handlePageNext() {
+        if(parseInt(this.getDbCount()/10) > this.state.skipPageNum) {
+            this.setState({
+                skipPageNum: this.state.skipPageNum + 1,
+                activeNum: this.state.activeNum + 1,
+                beforeButton: false,
+                nextButton: true,
+            });
+        } else {
+            this.setState({
+                nextButton: false
+            });
+        }
+    }
+
+    handlePageNumClicked(page, event) {
+        this.setState({
+            skipPageNum: page - 1,
+            activeNum: page,
+        });
+
+        if (page === 1) {
+            this.setState({
+                beforeButton: true,
+            });
+        } else {
+            this.setState({
+                beforeButton: false,
+            });
+        }
+
+        if (page === parseInt(this.getDbCount()/10 + 1)) {
+            this.setState({
+                nextButton: true,
+            });
+        } else {
+            this.setState({
+                nextButton: false,
+            });
+        }
+    }
+
+    // 异步，不能直接给赋值
+    getDbData() {
+        return Users.find({},{skip:this.state.skipPageNum * 10, limit: 10});
+    }
+
+    getDbCount() {
+        return Users.find().count();
+    }
+
     render() {
         const actions = [
             <FlatButton
@@ -304,7 +376,7 @@ class User extends Component {
                         displayRowCheckbox={false}
                     >
 
-                        {this.props.users.map((data, index) => (
+                        {this.getDbData().map((data, index) => (
                         <TableRow key={index} selected={data.selected}>
                             <TableRowColumn>{index + 1}</TableRowColumn>
                             <TableRowColumn>{data.uid}</TableRowColumn>
@@ -319,19 +391,39 @@ class User extends Component {
                         </TableRow>
                         ))}
                     </TableBody>
+
+
                     <TableFooter
-                        adjustForCheckbox={false}
+                        // adjustForCheckbox={false}
                     >
                         <TableRow>
                             <TableRowColumn/>
                             <TableRowColumn colSpan="4" style={{textAlign: 'center'}}>
-                                <IconButton><NavigateBefore color="#757575" hoverColor="#00bcd4"/></IconButton>
-                                <IconButton><Looks1 color="#00bcd4" hoverColor="#00bcd4"/></IconButton>
-                                <IconButton><Looks2 color="#757575" hoverColor="#00bcd4"/></IconButton>
-                                <IconButton><Looks3 color="#757575" hoverColor="#00bcd4"/></IconButton>
-                                <IconButton><Looks4 color="#757575" hoverColor="#00bcd4"/></IconButton>
-                                <IconButton><Looks5 color="#757575" hoverColor="#00bcd4"/></IconButton>
-                                <IconButton><NavigateNext color="#00bcd4" hoverColor="#00bcd4"/></IconButton>
+                                <IconButton
+                                    onTouchTap={this.handlePageBefore.bind(this)}
+                                    disabled={this.state.beforeButton}
+                                >
+                                    <NavigateBefore color="#757575" hoverColor="#00bcd4"/>
+                                </IconButton>
+                                <IconButton
+                                    onTouchTap={this.handlePageNumClicked.bind(this,1)}
+                                >
+                                    <Looks1 color={this.state.activeNum === 1? "#00bcd4" : "#757575" } hoverColor="#00bcd4"/>
+                                </IconButton>
+                                <IconButton
+                                    onTouchTap={this.handlePageNumClicked.bind(this,2)}
+                                >
+                                    <Looks2 color={this.state.activeNum === 2? "#00bcd4" : "#757575" } hoverColor="#00bcd4"/>
+                                </IconButton>
+                                {/*<IconButton><Looks3 color="#757575" hoverColor="#00bcd4"/></IconButton>*/}
+                                {/*<IconButton><Looks4 color="#757575" hoverColor="#00bcd4"/></IconButton>*/}
+                                {/*<IconButton><Looks5 color="#757575" hoverColor="#00bcd4"/></IconButton>*/}
+                                <IconButton
+                                    onTouchTap={this.handlePageNext.bind(this)}
+                                    disabled={this.state.nextButton}
+                                >
+                                    <NavigateNext color="#757575" hoverColor="#00bcd4"/>
+                                </IconButton>
                             </TableRowColumn>
                             <TableRowColumn>
                                 <IconButton onTouchTap={this.handleAddUser}><ContentAdd color="#ff4081"/></IconButton>
