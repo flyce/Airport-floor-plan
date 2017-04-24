@@ -6,6 +6,8 @@ import d3 from 'd3';
 
 import { Tracks } from '../api/tracks.js';
 
+import { Peoples } from '../api/peoples.js';
+
 // icon
 import ModeEdit from "material-ui/svg-icons/editor/mode-edit";
 import Clear from "material-ui/svg-icons/content/clear";
@@ -759,6 +761,8 @@ export default class Draw extends Component {
         // }
         console.log(Tracks.find().fetch());
     }
+
+
 
     render() {
         return (

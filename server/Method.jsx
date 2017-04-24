@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { Users } from '../imports/api/users.js';
+import {Tracks} from '../imports/api/tracks.js';
 import bcrypt from 'bcrypt';
 
 const Login = new Mongo.Collection('login');
@@ -101,5 +102,9 @@ Meteor.methods({
 
     getLimitData(skipPageNum) {
         return Users.find().limit(10).skip(skipPageNum);
+    },
+
+    getNoRepeatMacAddress() {
+        Tracks.mapReduce(function() {emit(this.macAddress,1);},function(key,values) {return Array.sum(values)},{out: 'peoples'} ).find()
     }
 });

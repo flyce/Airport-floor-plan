@@ -8,6 +8,7 @@ import Error from './Error.jsx';
 import User from './User.jsx';
 import Test from './Test.jsx';
 import Page from './Page.jsx';
+import People from './PeopleTest.jsx';
 
 export const renderRoutes = () => (
     <Router>
@@ -17,6 +18,7 @@ export const renderRoutes = () => (
                 <Route path="/app" component={App} />
                 <Route path="/login" component={Login} />
                 <Route path="/page" component={Page}/>
+                <Route path="/people" component={People}/>
                 <Route path="/user" render={props => (
                     <div>
                         <App redirect="User"/>

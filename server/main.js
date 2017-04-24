@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import '../imports/api/users.js';
 import '../imports/api/tracks.js';
+import '../imports/api/peoples.js';
 import { Users } from '../imports/api/users.js';
 
 import { Tracks } from '../imports/api/tracks.js';
