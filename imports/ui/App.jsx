@@ -1,13 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import CircularProgress from 'material-ui/CircularProgress';
+
+// import CircularProgress from 'material-ui/CircularProgress';
+
+// 侧边栏
 import Sidebar from './Sidebar';
-import { Users } from '../api/users';
 
-
-import List from './List.jsx';
+// 其他引入的组件
 import Draw from './Draw.jsx';
 import User from './User.jsx';
+import Index from "./Index";
 
 const styles = {
     wrapper: {
@@ -54,11 +56,11 @@ export default class App extends Component {
                 <div style={styles.wrapper}>
                     {Session.get('expirationTime') < Math.round(new Date().getTime()/1000) ? Session.clear() : null}
                     <div style={styles.main}>
-                        <Sidebar title="主页"/>
+                        <Sidebar title={this.props.title ? this.props.title : "主页"}/>
                         <div className="body" style={styles.body}>
                             <div style={styles.content}>
+                                {this.props.redirect ? null : <Index />}
                                 {this.props.redirect === "Draw" ? <Draw /> : null}
-                                {this.props.redirect === "List" ? <List /> : null}
                                 {this.props.redirect === "User" ? <User /> : null}
                             </div>
                         </div>
@@ -77,5 +79,6 @@ export default class App extends Component {
 }
 
 PropTypes = {
+    title: PropTypes.string.isRequired,
     redirect: PropTypes.string.isRequired,
 };

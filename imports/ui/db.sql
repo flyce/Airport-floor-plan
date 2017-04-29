@@ -1,5 +1,5 @@
 db.users.insert({uid: "10007", username: "Echo", password: "$2a$10$G/M6faO1h1FNLE84IHQMm.FWsOBT13vUwuNzlovvQpDdU4fW41Y8a", group: "Admin", regTime: new Date() });
-db.users.update({username: "Echo"}, {$set: { password: "$2a$10$G/M6faO1h1FNLE84IHQMm.FWsOBT13vUwuNzlovvQpDdU4fW41Y8a" },});
+db.tracks.update({macAddress: "00-01-6C-06-A6-29"}, {$set: { "macAddress" : "00:01:6C:06:A6:29" },});
 
 db.tracks.insert({macAddress: "3d:3c:5f:f9:2f:23",point: '1,2',timeStamp: Math.round(new Date().getTime()/1000) });
 
@@ -37,4 +37,4 @@ tracks
 { "_id" : ObjectId("58fb3fa1cd32dfa563ddd06d"), "macAddress" : "ec:db:5f:f9:2f:d1", "point" : "1,2", "timeStamp" : 1492860834 }
 
 
-db.tracks.insert({ "macAddress" : "ec:db:5f:f9:2f:d1", "point" : "1,2", "timeStamp" : 1492860834 })
+db.tracks.insert({ "macAddress" : "00-01-6C-06-A6-29", "point" : "2,3", "timeStamp" : Math.round(new Date().getTime()/1000) })

@@ -52,6 +52,7 @@ class Login extends Component {
             loginCount: 0,
             isLogin: Session.get("username") ? Session.get("username") : false
         };
+        console.log(this.props)
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -60,6 +61,10 @@ class Login extends Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
+    /***
+     * 根据用户输入来控制提交能否被点击
+     * @param event
+     */
     handleChange(event) {
         const target = event.target;
         const name = target.name;

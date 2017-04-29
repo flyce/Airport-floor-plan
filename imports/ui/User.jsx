@@ -8,8 +8,10 @@ import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Snackbar from 'material-ui/Snackbar';
-import ContentAdd from 'material-ui/svg-icons/content/add';
+import { Card, CardHeader, CardText } from 'material-ui/Card';
 
+// icon
+import ContentAdd from 'material-ui/svg-icons/content/add';
 import NavigateNext from 'material-ui/svg-icons/image/navigate-next';
 import NavigateBefore from 'material-ui/svg-icons/image/navigate-before';
 import Looks1 from 'material-ui/svg-icons/image/looks-one';
@@ -19,6 +21,7 @@ import Looks4 from 'material-ui/svg-icons/image/looks-4';
 import Looks5 from 'material-ui/svg-icons/image/looks-5';
 import ModeEdit from "material-ui/svg-icons/editor/mode-edit";
 
+// db
 import { Users } from '../api/users.js';
 
 class User extends Component {
@@ -59,7 +62,12 @@ class User extends Component {
         this.handleDeleteConfirm = this.handleDeleteConfirm.bind(this);
     }
 
-    // update User && Dialoger open
+    /***
+     * 将用户数据保存到 state ，便于在 dialog 中调用
+     * update User && Dialog open
+     * @param row
+     * @param event
+     */
     handleOpen(row, event) {
         this.setState({
             open: true,
@@ -178,7 +186,11 @@ class User extends Component {
         }
     }
 
-    // SnackBar
+    /***
+     * 底部提示条
+     * SnackBar
+     * @param info
+     */
     handleSnackBarOpen(info) {
         setTimeout(function() {
             this.setState({
@@ -194,7 +206,10 @@ class User extends Component {
         });
     }
 
-    // Add User
+    /***
+     * 添加用户
+     * Add user
+     */
     handleAddUser() {
         this.setState({
             open: true,
@@ -206,7 +221,10 @@ class User extends Component {
         });
     }
 
-    // Delete User
+    /***
+     * 删除用户
+     * Delete User
+     */
     handleDeleteUser() {
         //this.setState({open: false});
         this.setState({
@@ -235,7 +253,11 @@ class User extends Component {
 
     }
 
-    // pager
+    /***
+     * 分页功能相关方法
+     * Pager
+     */
+
     handlePageBefore() {
         if(this.state.skipPageNum > 0) {
             this.setState({
@@ -293,7 +315,7 @@ class User extends Component {
         }
     }
 
-    // 异步，不能直接给赋值
+    // 异步，不能在render直接赋值,否则取不到内容
     getDbData() {
         return Users.find({},{skip:this.state.skipPageNum * 10, limit: 10});
     }
@@ -350,141 +372,143 @@ class User extends Component {
         ];
 
         return (
-            <div>
-                <Table
-                    selectable={false} // 可选
-                    fixedHeader={false}
-                    multiSelectable={false}
-                >
-                    <TableHeader
-                        displaySelectAll={false}
-                        adjustForCheckbox={false}
-                        enableSelectAll={false}
+            <Card>
+                <CardText>
+                    <Table
+                        selectable={false} // 可选
+                        fixedHeader={false}
+                        multiSelectable={false}
                     >
-                        <TableRow>
-                            <TableHeaderColumn>编号</TableHeaderColumn>
-                            <TableHeaderColumn>用户 ID</TableHeaderColumn>
-                            <TableHeaderColumn>用户名</TableHeaderColumn>
-                            <TableHeaderColumn>群组</TableHeaderColumn>
-                            <TableHeaderColumn>注册时间</TableHeaderColumn>
-                            <TableHeaderColumn>操作</TableHeaderColumn>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody
-                        stripedRows={false} // 隔行高亮
-                        showRowHover={true}
-                        displayRowCheckbox={false}
-                    >
+                        <TableHeader
+                            displaySelectAll={false}
+                            adjustForCheckbox={false}
+                            enableSelectAll={false}
+                        >
+                            <TableRow>
+                                <TableHeaderColumn>编号</TableHeaderColumn>
+                                <TableHeaderColumn>用户 ID</TableHeaderColumn>
+                                <TableHeaderColumn>用户名</TableHeaderColumn>
+                                <TableHeaderColumn>群组</TableHeaderColumn>
+                                <TableHeaderColumn>注册时间</TableHeaderColumn>
+                                <TableHeaderColumn>操作</TableHeaderColumn>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody
+                            stripedRows={false} // 隔行高亮
+                            showRowHover={true}
+                            displayRowCheckbox={false}
+                        >
 
-                        {this.getDbData().map((data, index) => (
-                        <TableRow key={index} selected={data.selected}>
-                            <TableRowColumn>{index + 1}</TableRowColumn>
-                            <TableRowColumn>{data.uid}</TableRowColumn>
-                            <TableRowColumn>{data.username}</TableRowColumn>
-                            <TableRowColumn>{data.group}</TableRowColumn>
-                            <TableRowColumn>{data.regTime.toLocaleString('chinese', {hour12:false})}</TableRowColumn>
-                            <TableRowColumn>
-                                <IconButton onTouchTap={this.handleOpen.bind(this, data)}>
-                                    <ModeEdit color="#00bcd4"/>
-                                </IconButton>
-                            </TableRowColumn>
-                        </TableRow>
-                        ))}
-                    </TableBody>
+                            {this.getDbData().map((data, index) => (
+                                <TableRow key={index} selected={data.selected}>
+                                    <TableRowColumn>{this.state.skipPageNum* 10 + index + 1}</TableRowColumn>
+                                    <TableRowColumn>{data.uid}</TableRowColumn>
+                                    <TableRowColumn>{data.username}</TableRowColumn>
+                                    <TableRowColumn>{data.group}</TableRowColumn>
+                                    <TableRowColumn>{data.regTime.toLocaleString('chinese', {hour12:false})}</TableRowColumn>
+                                    <TableRowColumn>
+                                        <IconButton onTouchTap={this.handleOpen.bind(this, data)}>
+                                            <ModeEdit color="#00bcd4"/>
+                                        </IconButton>
+                                    </TableRowColumn>
+                                </TableRow>
+                            ))}
+                        </TableBody>
 
 
-                    <TableFooter
-                        // adjustForCheckbox={false}
+                        <TableFooter
+                            // adjustForCheckbox={false}
+                        >
+                            <TableRow>
+                                <TableRowColumn/>
+                                <TableRowColumn colSpan="4" style={{textAlign: 'center'}}>
+                                    <IconButton
+                                        onTouchTap={this.handlePageBefore.bind(this)}
+                                        disabled={this.state.beforeButton}
+                                    >
+                                        <NavigateBefore color="#757575" hoverColor="#00bcd4"/>
+                                    </IconButton>
+                                    <IconButton
+                                        onTouchTap={this.handlePageNumClicked.bind(this,1)}
+                                    >
+                                        <Looks1 color={this.state.activeNum === 1? "#00bcd4" : "#757575" } hoverColor="#00bcd4"/>
+                                    </IconButton>
+                                    <IconButton
+                                        onTouchTap={this.handlePageNumClicked.bind(this,2)}
+                                    >
+                                        <Looks2 color={this.state.activeNum === 2? "#00bcd4" : "#757575" } hoverColor="#00bcd4"/>
+                                    </IconButton>
+                                    {/*<IconButton><Looks3 color="#757575" hoverColor="#00bcd4"/></IconButton>*/}
+                                    {/*<IconButton><Looks4 color="#757575" hoverColor="#00bcd4"/></IconButton>*/}
+                                    {/*<IconButton><Looks5 color="#757575" hoverColor="#00bcd4"/></IconButton>*/}
+                                    <IconButton
+                                        onTouchTap={this.handlePageNext.bind(this)}
+                                        disabled={this.state.nextButton}
+                                    >
+                                        <NavigateNext color="#757575" hoverColor="#00bcd4"/>
+                                    </IconButton>
+                                </TableRowColumn>
+                                <TableRowColumn>
+                                    <IconButton onTouchTap={this.handleAddUser}><ContentAdd color="#ff4081"/></IconButton>
+                                </TableRowColumn>
+                            </TableRow>
+                        </TableFooter>
+                    </Table>
+                    <Dialog
+                        title="修改用户信息"
+                        actions={this.state.addUser ? actions : modeifyActions}
+                        modal={false}
+                        open={this.state.open}
+                        onRequestClose={this.handleClose}
                     >
-                        <TableRow>
-                            <TableRowColumn/>
-                            <TableRowColumn colSpan="4" style={{textAlign: 'center'}}>
-                                <IconButton
-                                    onTouchTap={this.handlePageBefore.bind(this)}
-                                    disabled={this.state.beforeButton}
-                                >
-                                    <NavigateBefore color="#757575" hoverColor="#00bcd4"/>
-                                </IconButton>
-                                <IconButton
-                                    onTouchTap={this.handlePageNumClicked.bind(this,1)}
-                                >
-                                    <Looks1 color={this.state.activeNum === 1? "#00bcd4" : "#757575" } hoverColor="#00bcd4"/>
-                                </IconButton>
-                                <IconButton
-                                    onTouchTap={this.handlePageNumClicked.bind(this,2)}
-                                >
-                                    <Looks2 color={this.state.activeNum === 2? "#00bcd4" : "#757575" } hoverColor="#00bcd4"/>
-                                </IconButton>
-                                {/*<IconButton><Looks3 color="#757575" hoverColor="#00bcd4"/></IconButton>*/}
-                                {/*<IconButton><Looks4 color="#757575" hoverColor="#00bcd4"/></IconButton>*/}
-                                {/*<IconButton><Looks5 color="#757575" hoverColor="#00bcd4"/></IconButton>*/}
-                                <IconButton
-                                    onTouchTap={this.handlePageNext.bind(this)}
-                                    disabled={this.state.nextButton}
-                                >
-                                    <NavigateNext color="#757575" hoverColor="#00bcd4"/>
-                                </IconButton>
-                            </TableRowColumn>
-                            <TableRowColumn>
-                                <IconButton onTouchTap={this.handleAddUser}><ContentAdd color="#ff4081"/></IconButton>
-                            </TableRowColumn>
-                        </TableRow>
-                    </TableFooter>
-                </Table>
-                <Dialog
-                    title="修改用户信息"
-                    actions={this.state.addUser ? actions : modeifyActions}
-                    modal={false}
-                    open={this.state.open}
-                    onRequestClose={this.handleClose}
-                >
-                    <TextField
-                        disabled={true}
-                        defaultValue={this.state.uid}
-                        floatingLabelText="用户 ID (系统自动生成，不可修改)"
-                        fullWidth
-                    /><br />
-                    <TextField
-                        name="username"
-                        defaultValue={this.state.username}
-                        floatingLabelText="用户名"
-                        onChange={this.handleChange}
-                        errorText={this.state.usernameWarning}
-                        fullWidth
-                    /><br />
-                    <SelectField
-                        floatingLabelText="群组"
-                        value={this.state.group}
-                        onChange={this.handleChoose}
-                        fullWidth
+                        <TextField
+                            disabled={true}
+                            defaultValue={this.state.uid}
+                            floatingLabelText="用户 ID (系统自动生成，不可修改)"
+                            fullWidth
+                        /><br />
+                        <TextField
+                            name="username"
+                            defaultValue={this.state.username}
+                            floatingLabelText="用户名"
+                            onChange={this.handleChange}
+                            errorText={this.state.usernameWarning}
+                            fullWidth
+                        /><br />
+                        <SelectField
+                            floatingLabelText="群组"
+                            value={this.state.group}
+                            onChange={this.handleChoose}
+                            fullWidth
+                        >
+                            <MenuItem value="Admin" primaryText="Admin" />
+                            <MenuItem value="User" primaryText="User" />
+                        </SelectField><br />
+                        <TextField
+                            name="password"
+                            type="password"
+                            floatingLabelText={!this.state.addUser ? "修改密码(留空为不修改)" : "密码"}
+                            onChange={this.handleChange}
+                            errorText={this.state.passwordWarning}
+                            fullWidth
+                        /><br />
+                    </Dialog>
+                    <Dialog
+                        actions={deleteAction}
+                        modal={false}
+                        open={this.state.deleteOpen}
+                        onRequestClose={this.handleDeleteClose}
                     >
-                        <MenuItem value="Admin" primaryText="Admin" />
-                        <MenuItem value="User" primaryText="User" />
-                    </SelectField><br />
-                    <TextField
-                        name="password"
-                        type="password"
-                        floatingLabelText={!this.state.addUser ? "修改密码(留空为不修改)" : "密码"}
-                        onChange={this.handleChange}
-                        errorText={this.state.passwordWarning}
-                        fullWidth
-                    /><br />
-                </Dialog>
-                <Dialog
-                    actions={deleteAction}
-                    modal={false}
-                    open={this.state.deleteOpen}
-                    onRequestClose={this.handleDeleteClose}
-                >
-                    确定删除用户<strong style={{color: "#ff4081"}}> {this.state.username}</strong> ? 此操作不可逆！！！
-                </Dialog>
-                <Snackbar
-                    open={this.state.snackBarOpen}
-                    message={this.state.snackBarInfo}
-                    autoHideDuration={2000}
-                    onRequestClose={this.handleSnackBarClose}
-                />
-            </div>
+                        确定删除用户<strong style={{color: "#ff4081"}}> {this.state.username}</strong> ? 此操作不可逆！！！
+                    </Dialog>
+                    <Snackbar
+                        open={this.state.snackBarOpen}
+                        message={this.state.snackBarInfo}
+                        autoHideDuration={2000}
+                        onRequestClose={this.handleSnackBarClose}
+                    />
+                </CardText>
+            </Card>
         );
 
     }

@@ -19,8 +19,10 @@
     "react-router-dom": "^4.0.0",
     "react-router-redux": "^4.0.8",
     "react-tap-event-plugin": "^2.0.1",
+    "readfile": "^1.0.1",
     "recompose": "^0.23.0",
     "redux": "^3.6.0",
-    "redux-form": "^6.6.2"
+    "redux-form": "^6.6.2",
+    "utils-fs-read-file": "^1.0.0"
   }
 }

@@ -270,7 +270,7 @@ export default class Sidebar extends React.Component {
                 />
 
                 <Drawer open={this.state.drawerOpen}>
-                    <AppBar title="Echo's Panel"
+                    <AppBar title="控制面板"
                             iconElementLeft={
                                 <IconButton tooltip="关闭菜单" onTouchTap={this.handleDrawer}>
                                     <NavigationClose />
@@ -280,23 +280,26 @@ export default class Sidebar extends React.Component {
                     <MenuItem
                         primaryText="主页"
                         leftIcon={<Home />}
+                        onTouchTap={this.handleDrawer}
                         containerElement={<Link to="/"/>}
                     />
                     <MenuItem
                         primaryText="活动轨迹监测"
                         leftIcon={<Place />}
+                        onTouchTap={this.handleDrawer}
                         containerElement={<Link to="/draw"/>}
                     />
                     {Session.get("group") === "Admin" ? <MenuItem
                         primaryText="用户管理"
                         leftIcon={<People />}
+                        onTouchTap={this.handleDrawer}
                         containerElement={<Link to="/user"/>}
                     /> : null}
                     <MenuItem
                         primaryText="注销"
                         leftIcon={<ExitToApp />}
                         onTouchTap={this.handleLogout.bind(this)}
-                        // containerElement={<Link to="/login"/>}
+                        containerElement={<Link to="/logout"/>}
                     />
                 </Drawer>
                 <Dialog

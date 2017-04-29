@@ -45,7 +45,7 @@ export default class Error extends Component {
                             />
                         </List>
                         <CardText style={{textAlign: "center"}}>
-                            <Link to={"/"} style={{clolr: 'rgb(0, 188, 212)'}}>返回主页</Link>
+                            <Link to={"/app"} style={{clolr: 'rgb(0, 188, 212)'}}>返回主页</Link>
                         </CardText>
                     </Card>
                 </div>

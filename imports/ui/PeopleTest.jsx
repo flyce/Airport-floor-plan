@@ -98,9 +98,11 @@ class PeopleTest extends Component {
 
     // 异步，不能直接给赋值
     getDbData() {
-        Meteor.call("getNoRepeatMacAddress");
+        // Meteor.call("getNoRepeatMacAddress");
         let result = Peoples.find({},{skip:this.state.skipPageNum * 10, limit: 10});
-        console.log(result.fetch());
+        //Tracks.mapReduce(function() {emit(this.macAddress,1);},function(key,values) {return Array.sum(values)},{out: 'peoples'} ).find()
+        //
+        // console.log(result.fetch());
         return result;
     }
 
@@ -109,11 +111,11 @@ class PeopleTest extends Component {
     }
 
     getEnterTime(macAddress) {
-        return Tracks.find({macAddress: macAddress}, {timeStamp:1}).fetch()[0].timeStamp.toString() ;
+        return new Date(Tracks.find({macAddress: macAddress}, {timeStamp:1}).fetch()[0].timeStamp * 1000).toLocaleString('chinese', {hour12:false}) ;
     }
 
     getExitTime(macAddress) {
-        return Tracks.find({macAddress: macAddress}, {timeStamp:1, sort: { timeStamp: -1 } }).fetch()[0].timeStamp.toString();
+        return new Date(Tracks.find({macAddress: macAddress}, {timeStamp:1, sort: { timeStamp: -1 } }).fetch()[0].timeStamp * 1000).toLocaleString('chinese', {hour12:false});
     }
 
     render() {
@@ -132,9 +134,8 @@ class PeopleTest extends Component {
                         <TableRow>
                             <TableHeaderColumn>编号</TableHeaderColumn>
                             <TableHeaderColumn>Mac</TableHeaderColumn>
-                            <TableHeaderColumn>进入时间</TableHeaderColumn>
-                            <TableHeaderColumn>离开时间</TableHeaderColumn>
-                            <TableHeaderColumn>是否离开</TableHeaderColumn>
+                            <TableHeaderColumn>首次出现时间</TableHeaderColumn>
+                            <TableHeaderColumn>最后出现时间</TableHeaderColumn>
                             <TableHeaderColumn>绘制</TableHeaderColumn>
                             <TableHeaderColumn>取消绘制</TableHeaderColumn>
                         </TableRow>
@@ -150,7 +151,6 @@ class PeopleTest extends Component {
                                 <TableRowColumn>{data._id}</TableRowColumn>
                                 <TableRowColumn>{this.getEnterTime(data._id)}</TableRowColumn>
                                 <TableRowColumn>{this.getExitTime(data._id)}</TableRowColumn>
-                                <TableRowColumn>{data.isExit}</TableRowColumn>
                                 <TableRowColumn>
                                     <IconButton>
                                         <ModeEdit color="#00bcd4"/>
@@ -214,6 +214,6 @@ Peoples.propTypes = {
 
 export default createContainer(() => {
     return {
-        users: Peoples.find().fetch(),
+        peoples: Peoples.find().fetch(),
     };
 }, PeopleTest);

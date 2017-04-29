@@ -3,12 +3,10 @@ import { BrowserRouter as Router, Route, Link, IndexRoute, Redirect, Switch } fr
 
 import App from './App.jsx';
 import Login from './Login.jsx';
-import Draw from './Draw.jsx';
 import Error from './Error.jsx';
-import User from './User.jsx';
-import Test from './Test.jsx';
-import Page from './Page.jsx';
 import People from './PeopleTest.jsx';
+import Similar from './Similar.jsx';
+import Plot from './Plot.jsx';
 
 export const renderRoutes = () => (
     <Router>
@@ -17,16 +15,17 @@ export const renderRoutes = () => (
                 <Route exact path="/" component={Home}/>
                 <Route path="/app" component={App} />
                 <Route path="/login" component={Login} />
-                <Route path="/page" component={Page}/>
                 <Route path="/people" component={People}/>
+                <Route path="/similar" component={Similar}/>
+                <Route path="/plot" component={Plot}/>
                 <Route path="/user" render={props => (
                     <div>
-                        <App redirect="User"/>
+                        <App redirect="User" title="用户管理"/>
                     </div>
                 )} />
                 <Route path="/draw" render={props => (
                     <div>
-                        <App redirect="Draw"/>
+                        <App redirect="Draw" title="活动轨迹监测"/>
                     </div>
                 )} />
                 <Route component={NoMatch}/>
@@ -34,31 +33,6 @@ export const renderRoutes = () => (
         </div>
     </Router>
 );
-
-// const PrivateRoute = ({ component, ...rest }) => (
-//     <Route {...rest} render={props => (
-//         fakeAuth.isAuthenticated ? (
-//             React.createElement(component, props)
-//         ) : (
-//             <Redirect to={{
-//                 pathname: '/login',
-//                 state: { from: props.location }
-//             }}/>
-//         )
-//     )}/>
-// )
-
-// const fakeAuth = {
-    // isAuthenticate d: true,
-    // authenticate(cb) {
-    //     this.isAuthenticated = true
-    //     setTimeout(cb, 100) // fake async
-    // },
-    // signout(cb) {
-    //     this.isAuthenticated = false
-    //     setTimeout(cb, 100)
-    // }
-// };
 
 const Home = () => (
     <div>
