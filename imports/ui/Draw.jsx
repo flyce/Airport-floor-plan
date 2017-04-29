@@ -502,11 +502,11 @@ export default class Draw extends Component {
             heatmap = d3.floorplan.heatmap(),
             vectorfield = d3.floorplan.vectorfield(),
             pathplot = d3.floorplan.pathplot(),
-            overlays = d3.floorplan.overlays().editMode(true),
+            overlays = d3.floorplan.overlays().editMode(false),
             mapdata = {};
 
         mapdata[imagelayer.id()] = [{
-            url: '/download',
+            url: '/backgroundImage',
             x: 0,
             y: 0,
             height: 33.79,
@@ -514,12 +514,20 @@ export default class Draw extends Component {
         }];
 
         // 负责初始图层绘制
-        map//.addLayer(imagelayer)
+        map//.addLayer(imagelayer) // 背景图片 使用的时候打开即可
             .addLayer(overlays);
 
-        d3.select("#demo").append("svg")
-            .attr("height", this.getHeight()).attr("width",this.getWidth()).attr("id", "draw")
-            .datum(mapdata).call(map);
+        d3.json("/data", function(data) {
+            console.log(data);
+            //mapdata[heatmap.id()] = data.overlays; // 渲染淡红色的区域
+            mapdata[overlays.id()] = data.overlays; // 渲染淡红色后的背景
+            //mapdata[vectorfield.id()] = data.vectorfield; // Entrance 区域的斜线
+            //mapdata[pathplot.id()] = data.pathplot; // 蓝色虚线绘制
+
+            d3.select("#demo").append("svg")
+                .attr("height", this.getHeight()).attr("width",this.getWidth()).attr("id", "draw")
+                .datum(mapdata).call(map);
+        }.bind(this));
 
         // 移除右上角的 控制条
         this.removeMapControls();
