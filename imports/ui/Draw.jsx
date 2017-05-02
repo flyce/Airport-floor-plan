@@ -49,8 +49,15 @@ export default class Draw extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+           isShowMonitor: false
+        };
 
         this.handleAddLayer = this.handleAddLayer.bind(this);
+    }
+
+    componentDidMount() {
+        this.InitView();
     }
 
     InitView(){
@@ -302,7 +309,6 @@ export default class Draw extends Component {
 
             return map;
         };
-        d3.floorplan.version = "0.1.0";
         d3.floorplan.imagelayer = function() {
             function a(a) {
                 a.each(function(a) {
@@ -334,127 +340,6 @@ export default class Draw extends Component {
             a.title = function(e) {
                 if (!arguments.length) return h;
                 h = e;
-                return a };
-            return a
-        };
-        d3.floorplan.heatmap = function() {
-            function a(a) {
-                a.each(function(a) {
-                    if (a && a.map) {
-                        var d = d3.select(this);
-                        a.units ? " " != a.units.charAt(0) && (a.units = " " + a.units) : a.units = "";
-                        var b = a.map.map(function(a) {
-                                return a.value }).sort(d3.ascending),
-                            g, j;
-                        switch (f) {
-                            case "quantile":
-                                g = d3.scale.quantile().range([1, 2, 3, 4, 5, 6]).domain(b);
-                                j = g.quantiles();
-                                break;
-                            case "quantized":
-                                g = d3.scale.quantize().range([1, 2, 3, 4, 5, 6]).domain([b[0], b[b.length - 1]]);
-                                b = (g.domain()[1] - g.domain()[0]) / 6;
-                                j = [b, 2 * b, 3 * b, 4 * b, 5 * b];
-                                break;
-                            case "normal":
-                                var m =
-                                        d3.mean(b),
-                                    b = Math.sqrt(d3.sum(b, function(a) {
-                                            return Math.pow(a - m, 2) }) / b.length);
-                                g = d3.scale.quantile().range([1, 2, 3, 4, 5, 6]).domain([m - 6 * b, m - 2 * b, m - b, m, m + b, m + 2 * b, m + 6 * b]);
-                                j = g.quantiles();
-                                break;
-                            default:
-                                customThresholds || (customThresholds = j), b = customThresholds, b.push(b[b.length - 1]), b.unshift(b[0]), g = d3.scale.quantile().range([1, 2, 3, 4, 5, 6]).domain(b), customThresholds = j = g.quantiles()
-                        }
-                        d = d.selectAll("g.heatmap").data([0]);
-                        d.enter().append("g").attr("class", "heatmap");
-                        this.__colors__ && this.__colors__ != e && d.classed(this.__colors__, !1);
-                        d.classed(e, !0);
-                        this.__colors__ = e;
-                        b = d.selectAll("rect").data(a.map.filter(function(a) {
-                            return !a.points }), function(a) {
-                            return a.x + "," + a.y });
-                        j = b.enter().append("rect").style("opacity", 1E-6);
-                        b.exit().transition().style("opacity", 1E-6).remove();
-                        j.append("title");
-                        b.attr("x", function(a) {
-                            return i(a.x) }).attr("y", function(a) {
-                            return h(a.y) }).attr("height", Math.abs(h(a.binSize) - h(0))).attr("width", Math.abs(i(a.binSize) - i(0))).attr("class", function(a) {
-                            return "d6-" + g(a.value) }).select("title").text(function(b) {
-                            return "value: " +
-                                c(b.value) + a.units
-                        });
-                        j.transition().style("opacity", 0.6);
-                        b = d.selectAll("path").data(a.map.filter(function(a) {
-                            return a.points }), function(a) {
-                            return JSON.stringify(a.points) });
-                        j = b.enter().append("path").attr("d", function(a) {
-                            return l(a.points) + "Z" }).style("opacity", 1E-6);
-                        b.exit().transition().style("opacity", 1E-6).remove();
-                        j.append("title");
-                        b.attr("class", function(a) {
-                            return "d6-" + g(a.value) }).select("title").text(function(b) {
-                            return "value: " + c(b.value) + a.units });
-                        j.transition().style("opacity", 0.6);
-                        d = d.selectAll("text").data(a.map.filter(function(a) {
-                                return a.points }),
-                            function(a) {
-                                return JSON.stringify(a.points) });
-                        b = d.enter().append("text").style("font-weight", "bold").attr("text-anchor", "middle").style("opacity", 1E-6);
-                        d.exit().transition().style("opacity", 1E-6).remove();
-                        d.attr("transform", function(a) {
-                            for (var b = 0, d = 0, j = 0, g = 0; g < a.points.length; ++g) var c = a.points[g],
-                                k = a.points[g + 1] || a.points[0],
-                                e = c.x * k.y - k.x * c.y,
-                                b = b + (c.x + k.x) * e,
-                                d = d + (c.y + k.y) * e,
-                                j = j + e;
-                            j = j / 2;
-                            d = d / (6 * j);
-                            return "translate(" + i(b / (6 * j)) + "," + h(d) + ")" }).text(function(b) {
-                            return c(b.value) + a.units });
-                        b.transition().style("opacity",
-                            0.6)
-                    }
-                })
-            }
-            var e = "RdYlBu",
-                f = "quantile",
-                i = d3.scale.linear(),
-                h = d3.scale.linear(),
-                l = d3.svg.line().x(function(a) {
-                    return i(a.x) }).y(function(a) {
-                    return h(a.y) }),
-                c = d3.format(".4n"),
-                d = "fp-heatmap-" + (new Date).valueOf(),
-                n = "heatmap";
-            a.xScale = function(d) {
-                if (!arguments.length) return i;
-                i = d;
-                return a };
-            a.yScale = function(d) {
-                if (!arguments.length) return h;
-                h = d;
-                return a };
-            a.colorSet = function(d) {
-                if (!arguments.length) return e;
-                e = d;
-                return a };
-            a.colorMode = function(d) {
-                if (!arguments.length) return f;
-                f = d;
-                return a };
-            a.customThresholds =
-                function(d) {
-                    if (!arguments.length) return customThresholds;
-                    customThresholds = d;
-                    return a };
-            a.id = function() {
-                return d };
-            a.title = function(d) {
-                if (!arguments.length) return n;
-                n = d;
                 return a };
             return a
         };
@@ -687,125 +572,6 @@ export default class Draw extends Component {
 
             return overlays;
         };
-        d3.floorplan.vectorfield = function() {
-            function a(a) {
-                a.each(function(a) {
-                    if (a && a.map) {
-                        var c = d3.select(this).selectAll("path.vector").data(a.map, function(a) {
-                            return a.x + "," + a.y });
-                        c.exit().transition().style("opacity", 1E-6).remove();
-                        c.enter().append("path").attr("class", "vector").attr("vector-effect", "non-scaling-stroke").style("opacity", 1E-6).append("title");
-                        var e = a.binSize / 2 / d3.max(a.map, function(a) {
-                                return Math.max(Math.abs(a.value.x), Math.abs(a.value.y)) });
-                        c.attr("d", function(c) {
-                            var f = {
-                                x: c.x + a.binSize /
-                                2,
-                                y: c.y + a.binSize / 2
-                            };
-                            return i([f, { x: f.x + c.value.x * e, y: f.y + c.value.y * e }])
-                        }).select("title").text(function(c) {
-                            return Math.sqrt(c.value.x * c.value.x + c.value.y * c.value.y) + " " + a.units });
-                        c.transition().style("opacity", 1)
-                    }
-                })
-            }
-            var e = d3.scale.linear(),
-                f = d3.scale.linear(),
-                i = d3.svg.line().x(function(a) {
-                    return e(a.x) }).y(function(a) {
-                    return f(a.y) }),
-                h = "fp-vectorfield-" + (new Date).valueOf(),
-                l = "vectorfield";
-            a.xScale = function(c) {
-                if (!arguments.length) return e;
-                e = c;
-                return a };
-            a.yScale = function(c) {
-                if (!arguments.length) return f;
-                f = c;
-                return a
-            };
-            a.id = function() {
-                return h };
-            a.title = function(a) {
-                if (!arguments.length) return l;
-                l = a;
-                return images };
-            return a
-        };
-        d3.floorplan.pathplot = function() {
-            var x = d3.scale.linear(),
-                y = d3.scale.linear(),
-                line = d3.svg.line()
-                    .x(function(d) {
-                        return x(d.x); })
-                    .y(function(d) { return y(d.y); }),
-                id = "fp-pathplot-" + new Date().valueOf(),
-                name = "pathplot",
-                pointFilter = function(d) { return d.points; };
-
-            function pathplot(g) {
-                g.each(function(data) {
-                    if (!data) return;
-
-                    var g = d3.select(this),
-                        paths = g.selectAll("path")
-                            .data(data, function(d) { return d.id; });
-
-                    paths.exit().transition()
-                        .style("opacity", 1e-6).remove();
-
-                    paths.enter().append("path")
-                        .attr("vector-effect", "non-scaling-stroke")
-                        .attr("fill", "none")
-                        .style("opacity", 1e-6)
-                        .append("title");
-
-                    console.log(new Date());
-
-                    paths
-                        .attr("class", function(d) { return d.classes || d.id; })
-                        .attr("d", function(d,i) { line(pointFilter(d,i)); })
-                        .select("title")
-                        .text(function(d) { return d.title || d.id; });
-
-                    console.log(new Date());
-
-                    paths.transition().style("opacity", 1);
-                });
-            }
-
-            pathplot.xScale = function(scale) {
-                if (! arguments.length) return x;
-                x = scale;
-                return pathplot;
-            };
-
-            pathplot.yScale = function(scale) {
-                if (! arguments.length) return y;
-                y = scale;
-                return pathplot;
-            };
-
-            pathplot.id = function() {
-                return id;
-            };
-
-            pathplot.title = function(n) {
-                if (! arguments.length) return name;
-                name = n;
-                return pathplot;
-            };
-
-            pathplot.pointFilter = function(fn) {
-                if (! arguments.length) return pointFilter;
-                pointFilter = fn;
-                return pathplot;
-            };
-
-            return pathplot;
-        };
         /***
          * 自定义方法 用于在某个点放置一个三角形
          * @returns {monitor}
@@ -901,11 +667,7 @@ export default class Draw extends Component {
                 .range([0,this.getHeight()]), // 339
             map = d3.floorplan().xScale(xscale).yScale(yscale), // 设置平面图，使其有缩放／平移功能
             imagelayer = d3.floorplan.imagelayer(),             // 创建新的图像图层
-            // heatmap = d3.floorplan.heatmap(),
-            // vectorfield = d3.floorplan.vectorfield(),
-            // pathplot = d3.floorplan.pathplot(),
             overlays = d3.floorplan.overlays().editMode(false),
-            monitor = d3.floorplan.monitor(),
             mapdata = {};
 
         mapdata[imagelayer.id()] = [{
@@ -917,16 +679,11 @@ export default class Draw extends Component {
         }];
 
         // 负责初始图层绘制
-        map.addLayer(imagelayer) // 背景图片 使用的时候打开即可
-            .addLayer(overlays)
-            .addLayer(monitor);
+        map//.addLayer(imagelayer) // 背景图片 使用的时候打开即可
+            .addLayer(overlays);
 
         d3.json("/data", function(data) {
-            //mapdata[heatmap.id()] = data.overlays; // 渲染淡红色的区域
             mapdata[overlays.id()] = data.overlays; // 渲染淡红色后的背景
-            mapdata[monitor.id()] = data.monitor;
-            //mapdata[vectorfield.id()] = data.vectorfield; // Entrance 区域的斜线
-            //mapdata[pathplot.id()] = data.pathplot; // 蓝色虚线绘制
 
             d3.select("#demo").append("svg")
                 .attr("height", this.getHeight()).attr("width",this.getWidth()).attr("id", "draw")
@@ -1223,10 +980,6 @@ export default class Draw extends Component {
                         .delay(100)
                         .duration(1000)
                         .ease("linear")
-                        .each("start", function (d,i) {
-                            console.log(d + i);
-                            console.log("start");
-                        })
                         .style("opacity", 1);
                 });
             }
@@ -1262,71 +1015,436 @@ export default class Draw extends Component {
             return pathplot;
         };
 
+        if (!document.getElementById("test" + row)) {
+            var xscale = d3.scale.linear()
+                    .domain([0,50.0])
+                    .range([0,this.getWidth()]), //730
+                yscale = d3.scale.linear()
+                    .domain([0,33.79])
+                    .range([0,this.getHeight()]), //339
+                map = d3.floorplan().xScale(xscale).yScale(yscale), // 设置平面图，使其有缩放／平移功能
+                pathplot = d3.floorplan.pathplot(),
+                mapdata = {};
+
+
+
+            // 负责初始图层绘制
+            map.addLayer(pathplot);
+
+            var pathData;
+
+            switch (row) {
+                case 1: pathData = [{"id": "flt-2", "classes": "planned","title": "测试",
+                    "points": [{"x": 12.9, "y": 25}, {"x": 12.9, "y": 20},
+                        {"x": 8.95, "y": 17.3}, {"x": 8.95, "y": 11.3}]}];
+                    break;
+                case 2: pathData = [{"id": "flt-1", "classes": "planned",
+                    "points": [{"x": 15, "y": 15}, {"x": 15.9, "y": 21},
+                        {"x": 19.5, "y": 22}, {"x": 20.4, "y": 13}]}];
+                    break;
+                case 3: pathData = [{"id": "flt-1", "classes": "planned",
+                    "points": [{"x": 1, "y": 2}, {"x": 1.9, "y": 2.1},
+                        {"x": 9.5, "y": 9.3}, {"x": 5.4, "y": 1.3}]}];
+                    break;
+                case 4: pathData = [{"id": "flt-1", "classes": "planned",
+                    "points": [{"x": 25, "y": 0}, {"x": 2.9, "y": 2.9},
+                        {"x": 7, "y": 7}, {"x": 6, "y": 6}]}];
+                    break;
+                default:
+                    pathData = [{"id": "flt-1", "classes": "planned",
+                        "points": [{"x": 30, "y": 30}, {"x": 30, "y": 21},
+                            {"x": 16.66, "y": 7.36}, {"x": 17.4, "y": 13}]}];
+            }
+
+            mapdata[pathplot.id()] = pathData; // 蓝色虚线绘制
+
+            d3.select("#draw").append("g")
+                .attr("height", this.getHeight()).attr("width",this.getWidth()).attr("id", "test" + row)
+                .datum(mapdata).call(map);
+
+
+            console.log("add-path: #test"+ row + " finished");
+        }
+    }
+
+    handleRemoveLayer(row, event) {
+        if (document.getElementById("test" + row)) {
+            d3.select("#test" + row).remove();
+            console.log("remove-path: #test" + row + " finished");
+        }
+    }
+
+    /***
+     * 地图控制
+     ***/
+    handleMapToggle() {
+        if (this.state.isShowMonitor) {
+            this.handleRemoveMonitor();
+        } else {
+            this.handleAddMonitor();
+        }
+
+        this.setState({
+            isShowMonitor: !this.state.isShowMonitor
+        });
+    }
+
+    handleAddMonitor() {
+        d3.floorplan = function() {
+            var layers = [],
+                panZoomEnabled = true,
+                maxZoom = 5,
+                xScale = d3.scale.linear(),
+                yScale = d3.scale.linear();
+
+            function map(g) {
+                var width = xScale.range()[1] - xScale.range()[0],
+                    height = yScale.range()[1] - yScale.range()[0];
+
+                g.each(function(data){
+                    if (! data) return;
+
+                    var g = d3.select(this);
+
+                    // define common graphical elements
+                    __init_defs(g.selectAll("defs").data([0]).enter().append("defs"));
+
+                    // setup container for layers and area to capture events
+                    var vis = g.selectAll(".map-layers").data([0]),
+                        visEnter = vis.enter().append("g").attr("class","map-layers"),
+                        visUpdate = d3.transition(vis);
+
+                    visEnter.append("rect")
+                        .attr("class", "canvas")
+                        .attr("pointer-events","all")
+                        .style("opacity",0);
+
+                    visUpdate.attr("width", width)
+                        .attr("height", height)
+                        .attr("x",xScale.range()[0])
+                        .attr("y",yScale.range()[0]);
+
+
+                    // render and reorder layers
+                    var maplayers = vis.selectAll(".maplayer")
+                        .data(layers, function(l) {return l.id();});
+                    maplayers.enter()
+                        .append("g")
+                        .attr("class", function(l) {return "maplayer " + l.title();})
+                        .append("g")
+                        .attr("class", function(l) {return l.id();})
+                        .datum(null);
+                    maplayers.exit().remove();
+                    maplayers.order();
+
+                    // redraw layers
+                    maplayers.each(function(layer) {
+                        d3.select(this).select("g." + layer.id()).datum(data[layer.id()]).call(layer);
+                    });
+
+                    // add pan - zoom behavior
+                    g.call(d3.behavior.zoom().scaleExtent([1,maxZoom])
+                        .on("zoom", function() {
+                            if (panZoomEnabled) {
+                                __set_view(g, d3.event.scale, d3.event.translate);
+                            }
+                        }));
+
+                });
+            }
+
+            map.xScale = function(scale) {
+                if (! arguments.length) return xScale;
+                xScale = scale;
+                layers.forEach(function(l) { l.xScale(xScale); });
+                return map;
+            };
+
+            map.yScale = function(scale) {
+                if (! arguments.length) return yScale;
+                yScale = scale;
+                layers.forEach(function(l) { l.yScale(yScale); });
+                return map;
+            };
+
+            map.panZoom = function(enabled) {
+                if (! arguments.length) return panZoomEnabled;
+                panZoomEnabled = enabled;
+                return map;
+            };
+
+            map.addLayer = function(layer, index) {
+                layer.xScale(xScale);
+                layer.yScale(yScale);
+
+                if (arguments.length > 1 && index >=0) {
+                    layers.splice(index, 0, layer);
+                } else {
+                    layers.push(layer);
+                }
+
+                return map;
+            };
+
+            function __set_view(g, s, t) {
+                if (! g) return;
+                if (s) g.__scale__ = s;
+                if (t && t.length > 1) g.__translate__ = t;
+
+                // limit translate to edges of extents
+                var minXTranslate = (1 - g.__scale__) *
+                    (xScale.range()[1] - xScale.range()[0]);
+                var minYTranslate = (1 - g.__scale__) *
+                    (yScale.range()[1] - yScale.range()[0]);
+
+                g.__translate__[0] = Math.min(xScale.range()[0],
+                    Math.max(g.__translate__[0], minXTranslate));
+                g.__translate__[1] = Math.min(yScale.range()[0],
+                    Math.max(g.__translate__[1], minYTranslate));
+                g.selectAll(".map-layers")
+                    .attr("transform",
+                        "translate(" + g.__translate__ +
+                        ")scale(" + g.__scale__ + ")");
+            };
+
+            function __init_defs(selection) {
+                selection.each(function() {
+                    var defs = d3.select(this);
+
+                    var grad = defs.append("radialGradient")
+                        .attr("id","metal-bump")
+                        .attr("cx","50%")
+                        .attr("cy","50%")
+                        .attr("r","50%")
+                        .attr("fx","50%")
+                        .attr("fy","50%");
+
+                    grad.append("stop")
+                        .attr("offset","0%")
+                        .style("stop-color","rgb(170,170,170)")
+                        .style("stop-opacity",0.6);
+
+                    grad.append("stop")
+                        .attr("offset","100%")
+                        .style("stop-color","rgb(204,204,204)")
+                        .style("stop-opacity",0.5);
+
+                    var grip = defs.append("pattern")
+                        .attr("id", "grip-texture")
+                        .attr("patternUnits", "userSpaceOnUse")
+                        .attr("x",0)
+                        .attr("y",0)
+                        .attr("width",3)
+                        .attr("height",3);
+
+                    grip.append("rect")
+                        .attr("height",3)
+                        .attr("width",3)
+                        .attr("stroke","none")
+                        .attr("fill", "rgba(204,204,204,0.5)");
+
+                    grip.append("circle")
+                        .attr("cx", 1.5)
+                        .attr("cy", 1.5)
+                        .attr("r", 1)
+                        .attr("stroke", "none")
+                        .attr("fill", "url(#metal-bump)");
+                });
+            }
+
+            function __init_controls(selection) {
+                selection.each(function() {
+                    var controls = d3.select(this);
+
+                    controls.append("path")
+                        .attr("class", "ui-show-hide")
+                        .attr("d", "M10,3 v40 h-7 a3,3 0 0,1 -3,-3 v-34 a3,3 0 0,1 3,-3 Z")
+                        .attr("fill","url(#grip-texture)")
+                        .attr("stroke", "none")
+                        .style("opacity", 0.5);
+
+                    controls.append("path")
+                        .attr("class", "show ui-show-hide")
+                        .attr("d", "M2,23 l6,-15 v30 Z")
+                        .attr("fill","rgb(204,204,204)")
+                        .attr("stroke", "none")
+                        .style("opacity", 0.5);
+
+                    controls.append("path")
+                        .attr("class", "hide")
+                        .attr("d", "M8,23 l-6,-15 v30 Z")
+                        .attr("fill","rgb(204,204,204)")
+                        .attr("stroke", "none")
+                        .style("opacity", 0);
+
+                    controls.append("path")
+                        .attr("d", "M10,3 v40 h-7 a3,3 0 0,1 -3,-3 v-34 a3,3 0 0,1 3,-3 Z")
+                        .attr("pointer-events", "all")
+                        .attr("fill","none")
+                        .attr("stroke", "none")
+                        .style("cursor","pointer")
+                        .on("mouseover", function() {
+                            controls.selectAll("path.ui-show-hide").style("opacity", 1);
+                        })
+                        .on("mouseout", function() {
+                            controls.selectAll("path.ui-show-hide").style("opacity", 0.5);
+                        })
+                        .on("click", function() {
+                            if (controls.select(".hide").classed("ui-show-hide")) {
+                                controls.transition()
+                                    .duration(1000)
+                                    .attr("transform", "translate("+(controls.attr("view-width")-10)+",0)")
+                                    .each("end", function() {
+                                        controls.select(".hide")
+                                            .style("opacity",0)
+                                            .classed("ui-show-hide",false);
+                                        controls.select(".show")
+                                            .style("opacity",1)
+                                            .classed("ui-show-hide",true);
+                                        controls.selectAll("path.ui-show-hide")
+                                            .style("opacity",0.5);
+                                    });
+                            } else {
+                                controls.transition()
+                                    .duration(1000)
+                                    .attr("transform", "translate("+(controls.attr("view-width")-95)+",0)")
+                                    .each("end", function() {
+                                        controls.select(".show")
+                                            .style("opacity",0)
+                                            .classed("ui-show-hide",false);
+                                        controls.select(".hide")
+                                            .style("opacity",1)
+                                            .classed("ui-show-hide",true);
+                                        controls.selectAll("path.ui-show-hide")
+                                            .style("opacity",0.5);
+                                    });
+                            }
+                        });
+
+                    controls.append("rect")
+                        .attr("x",10)
+                        .attr("y",0)
+                        .attr("width", 85)
+                        .attr("fill", "rgba(204,204,204,0.9)")
+                        .attr("stroke", "none");
+
+                    controls.append("g")
+                        .attr("class", "layer-controls")
+                        .attr("transform", "translate(15,5)");
+                });
+            }
+
+            return map;
+        };
+        d3.floorplan.monitor = function() {
+            var x = d3.scale.linear(),
+                y = d3.scale.linear(),
+                id = "fp-overlays-" + new Date().valueOf(),
+                name = "monitor",
+                editMode = false,
+                pointPosition = [];
+
+            function monitor(g) {
+                g.each(function(data){
+                    if (! data) return;
+                    var g = d3.select(this);
+
+                    var pointData = [];
+                    if (data.polygons) {
+                        data.polygons.forEach(function(polygon) {
+                            polygon.points.forEach(function(pt, i) {
+                                pointData.push({"index":i,
+                                    "parent":polygon});
+                            });
+                        });
+                    }
+
+                    // determine current view scale to make appropriately
+                    // sized points to drag
+                    var scale = 1;
+
+
+                    var points = g.selectAll("circle.vertex")
+                        .data(pointData, function(d) {
+                            return d.parent.id + "-" + d.index;});
+
+                    points.enter().append("circle")
+                        .attr("class", "vertex")
+                        .attr("pointer-events", "all")
+                        .attr("vector-effect", "non-scaling-stroke")
+                        .style("cursor", "move")
+                        .attr("r", 1e-6)
+
+                    points
+                        .attr("cx", function(d) {
+                            pointPosition[d.index] = {x: d.parent.points[d.index].x, y: d.parent.points[d.index].y};
+                            return x(d.parent.points[d.index].x);
+                        })
+                        .attr("cy", function(d) { return y(d.parent.points[d.index].y); })
+                        .attr("r", 4/scale);
+
+                });
+            }
+
+            monitor.xScale = function(scale) {
+                if (! arguments.length) return x;
+                x = scale;
+                return monitor;
+            };
+
+            monitor.yScale = function(scale) {
+                if (! arguments.length) return y;
+                y = scale;
+                return monitor;
+            };
+
+            monitor.id = function() {
+                return id;
+            };
+
+            monitor.title = function(n) {
+                if (! arguments.length) return name;
+                name = n;
+                return monitor;
+            };
+
+            monitor.editMode = function(enable) {
+                if (! arguments.length) return editMode;
+                editMode = enable;
+                return monitor;
+            };
+
+
+            return monitor;
+        };
 
         var xscale = d3.scale.linear()
                 .domain([0,50.0])
-                .range([0,this.getWidth()]), //730
+                .range([0,this.getWidth()]), // 720
             yscale = d3.scale.linear()
                 .domain([0,33.79])
-                .range([0,this.getHeight()]), //339
+                .range([0,this.getHeight()]), // 339
             map = d3.floorplan().xScale(xscale).yScale(yscale), // 设置平面图，使其有缩放／平移功能
-            pathplot = d3.floorplan.pathplot(),
+            monitor = d3.floorplan.monitor(),
             mapdata = {};
 
-
-
         // 负责初始图层绘制
-        map.addLayer(pathplot);
+        map.addLayer(monitor);
 
-        var pathData;
+        d3.json("/data", function(data) {
+            mapdata[monitor.id()] = data.monitor;
+            d3.select("#draw").append("g")
+                .attr("height", this.getHeight()).attr("width",this.getWidth()).attr("id", "monitor")
+                .datum(mapdata).call(map);
+        }.bind(this));
 
-        switch (row) {
-            case 1: pathData = [{"id": "flt-2", "classes": "planned","title": "测试",
-                        "points": [{"x": 12.9, "y": 25}, {"x": 12.9, "y": 20},
-                            {"x": 8.95, "y": 17.3}, {"x": 8.95, "y": 11.3}]}];
-            break;
-            case 2: pathData = [{"id": "flt-1", "classes": "planned",
-                        "points": [{"x": 15, "y": 15}, {"x": 15.9, "y": 21},
-                            {"x": 19.5, "y": 22}, {"x": 20.4, "y": 13}]}];
-            break;
-            case 3: pathData = [{"id": "flt-1", "classes": "planned",
-                "points": [{"x": 1, "y": 2}, {"x": 1.9, "y": 2.1},
-                    {"x": 9.5, "y": 9.3}, {"x": 5.4, "y": 1.3}]}];
-            break;
-            case 4: pathData = [{"id": "flt-1", "classes": "planned",
-                "points": [{"x": 25, "y": 0}, {"x": 2.9, "y": 2.9},
-                    {"x": 7, "y": 7}, {"x": 6, "y": 6}]}];
-            break;
-            default:
-                pathData = [{"id": "flt-1", "classes": "planned",
-                    "points": [{"x": 30, "y": 30}, {"x": 30, "y": 21},
-                        {"x": 16.66, "y": 7.36}, {"x": 17.4, "y": 13}]}];
-        }
-
-        mapdata[pathplot.id()] = pathData; // 蓝色虚线绘制
-
-        d3.select("#draw").append("g")
-            .attr("height", this.getHeight()).attr("width",this.getWidth()).attr("id", "test" + row)
-            .datum(mapdata).call(map);
-
-        d3.select(".map-controls").remove();
-
-        console.log("add-path: #test"+ row + " finished");
+        console.log("monitor:"," add finished");
     }
 
-    handlePathToggle(row, event) {
-        console.log(row);
-        console.log(event.target.getAttribute("value"));
-    }
+    handleRemoveMonitor() {
+        d3.select("#monitor").remove();
 
-    remove (row, event) {
-        d3.select("#test" + row).remove();
-        console.log("remove-path: #test" + row + " finished");
-    }
-
-
-    componentDidMount() {
-        this.InitView();
+        console.log("monitor:","remove finished");
     }
 
     // svg 大小自适应
@@ -1338,6 +1456,7 @@ export default class Draw extends Component {
         return parseInt(this.getWidth() / 2.13) + 1;
     }
 
+    // 全屏幕
     fullScreen() {
         const elem = document.getElementById("demo");
         this.requestFullScreen(elem);
@@ -1393,16 +1512,12 @@ export default class Draw extends Component {
                                     <TableRowColumn>{data.depart}</TableRowColumn>
                                     <TableRowColumn>{data.isExit}</TableRowColumn>
                                     <TableRowColumn>
-                                        <Toggle
-                                            labelPosition="left"
-                                            onToggle={this.handlePathToggle.bind(this, index + 1 )}
-                                        />
-                                        {/*<IconButton onTouchTap={this.handleAddLayer.bind(this, index + 1)}>*/}
-                                            {/*<ModeEdit color="#00bcd4"/>*/}
-                                        {/*</IconButton>*/}
+                                        <IconButton onTouchTap={this.handleAddLayer.bind(this, index + 1)}>
+                                            <ModeEdit color="#00bcd4"/>
+                                        </IconButton>
                                     </TableRowColumn>
                                     <TableRowColumn>
-                                        <IconButton onTouchTap={this.remove.bind(this, index + 1)}>
+                                        <IconButton onTouchTap={this.handleRemoveLayer.bind(this, index + 1)}>
                                             <Clear color="#00bcd4"/>
                                         </IconButton>
                                     </TableRowColumn>
@@ -1410,8 +1525,12 @@ export default class Draw extends Component {
                             ))}
                         </TableBody>
                     </Table>
-                    <button onClick={this.fullScreen.bind(this)}>全屏</button>
-                    <button onClick={this.getWidth}>宽</button>
+                    {/*<button onClick={this.fullScreen.bind(this)}>全屏</button>*/}
+                    <Toggle
+                        label="显示采集设备位置"
+                        labelPosition="left"
+                        onToggle={this.handleMapToggle.bind(this)}
+                    />
                     <div id="demo"></div>
                 </CardText>
             </Card>

@@ -16,8 +16,13 @@ a:active, a:visited, a:hover {
 .pathplot path {stroke-width:2px;stroke:steelblue}
 .planned {stroke-dasharray:9, 5}
 
-/*.pathplot1 path {stroke-width:2px;stroke: #222}*/
-.newplanned {stroke-dasharray:9, 5}
+
+/* path plot color*/
+#test1 path{stroke-width:2px;stroke:blue}
+#test2 path{stroke-width:2px;stroke:chocolate}
+#test3 path{stroke-width:2px;stroke:darkviolet}
+#test4 path{stroke-width:2px;stroke: #7f821f}
+#test5 path{stroke-width:2px;stroke:green}
 
 #demo {
     text-align: center;
