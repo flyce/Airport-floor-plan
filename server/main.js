@@ -19,14 +19,14 @@ Meteor.startup(() => {
 HTTP.methods({
 
     // name RESTful API as "GET /download-meteor-logo"
-    '/download': function() {
+    '/backgroundImage': function() {
 
         // A file in streaming, so need to response to browser as a streaming.
         var res = this.createWriteStream();
 
         // Play as a HTTP client for requesting image.
         // It is Sync way
-        var result = fs.readFileSync("/Users/Echo/Desktop/Echo/imports/img/ZBAA.png");
+        var result = fs.readFileSync("/Users/Echo/Desktop/Echo/imports/img/backgroundImage.png");
 
         var buffer = result;
         // TODO: need to set header for response here which transfered by

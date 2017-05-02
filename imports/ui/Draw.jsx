@@ -1,10 +1,9 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn, TableFooter } from 'material-ui/Table';
 import IconButton from 'material-ui/IconButton';
+import Toggle from 'material-ui/Toggle';
 import d3 from 'd3';
-
-import { Tracks } from '../api/tracks.js';
 
 // icon
 import ModeEdit from "material-ui/svg-icons/editor/mode-edit";
@@ -58,111 +57,250 @@ export default class Draw extends Component {
 
         // d3 floorplan v0.1.0
         d3.floorplan = function() {
-            function a(a) {
-                var d = h.range()[1] - h.range()[0],
-                    n = l.range()[1] - l.range()[0];
-                a.each(function(a) {
-                    if (a) {
-                        var k = d3.select(this);
-                        k.selectAll("defs").data([0]).enter().append("defs").each(function() {
-                            var a = d3.select(this),
-                                b = a.append("radialGradient").attr("id", "metal-bump").attr("cx", "50%").attr("cy", "50%").attr("r", "50%").attr("fx", "50%").attr("fy", "50%");
-                            b.append("stop").attr("offset", "0%").style("stop-color", "rgb(170,170,170)").style("stop-opacity", 0.6);
-                            b.append("stop").attr("offset",
-                                "100%").style("stop-color", "rgb(204,204,204)").style("stop-opacity", 0.5);
-                            a = a.append("pattern").attr("id", "grip-texture").attr("patternUnits", "userSpaceOnUse").attr("x", 0).attr("y", 0).attr("width", 3).attr("height", 3);
-                            a.append("rect").attr("height", 3).attr("width", 3).attr("stroke", "none").attr("fill", "rgba(204,204,204,0.5)");
-                            a.append("circle").attr("cx", 1.5).attr("cy", 1.5).attr("r", 1).attr("stroke", "none").attr("fill", "url(#metal-bump)")
-                        });
-                        var c = k.selectAll(".map-layers").data([0]),
-                            b = c.enter().append("g").attr("class",
-                                "map-layers"),
-                            g = d3.transition(c);
-                        b.append("rect").attr("class", "canvas").attr("pointer-events", "all").style("opacity", 0);
-                        g.attr("width", d).attr("height", n).attr("x", h.range()[0]).attr("y", l.range()[0]);
-                        b = k.selectAll(".map-controls").data([0]);
-                        b.enter().append("g").attr("class", "map-controls").each(function() {
-                            var a = d3.select(this);
-                            a.append("path").attr("class", "ui-show-hide").attr("d", "M10,3 v40 h-7 a3,3 0 0,1 -3,-3 v-34 a3,3 0 0,1 3,-3 Z").attr("fill", "url(#grip-texture)").attr("stroke", "none").style("opacity",
-                                0.5);
-                            a.append("path").attr("class", "show ui-show-hide").attr("d", "M2,23 l6,-15 v30 Z").attr("fill", "rgb(204,204,204)").attr("stroke", "none").style("opacity", 0.5);
-                            a.append("path").attr("class", "hide").attr("d", "M8,23 l-6,-15 v30 Z").attr("fill", "rgb(204,204,204)").attr("stroke", "none").style("opacity", 0);
-                            a.append("path").attr("d", "M10,3 v40 h-7 a3,3 0 0,1 -3,-3 v-34 a3,3 0 0,1 3,-3 Z").attr("pointer-events", "all").attr("fill", "none").attr("stroke", "none").style("cursor", "pointer").on("mouseover", function() {
-                                a.selectAll("path.ui-show-hide").style("opacity",
-                                    1)
-                            }).on("mouseout", function() { a.selectAll("path.ui-show-hide").style("opacity", 0.5) }).on("click", function() {
-                                a.select(".hide").classed("ui-show-hide") ? a.transition().duration(1E3).attr("transform", "translate(" + (a.attr("view-width") - 10) + ",0)").each("end", function() { a.select(".hide").style("opacity", 0).classed("ui-show-hide", !1);
-                                    a.select(".show").style("opacity", 1).classed("ui-show-hide", !0);
-                                    a.selectAll("path.ui-show-hide").style("opacity", 0.5) }) : a.transition().duration(1E3).attr("transform", "translate(" +
-                                    (a.attr("view-width") - 95) + ",0)").each("end", function() { a.select(".show").style("opacity", 0).classed("ui-show-hide", !1);
-                                    a.select(".hide").style("opacity", 1).classed("ui-show-hide", !0);
-                                    a.selectAll("path.ui-show-hide").style("opacity", 0.5) })
-                            });
-                            a.append("rect").attr("x", 10).attr("y", 0).attr("width", 85).attr("fill", "rgba(204,204,204,0.9)").attr("stroke", "none");
-                            a.append("g").attr("class", "layer-controls").attr("transform", "translate(15,5)")
-                        });
-                        var g = b.select(".hide").classed("ui-show-hide") ? 95 : 10,
-                            p = Math.max(45,
-                                10 + 20 * e.length);
-                        b.attr("view-width", d).attr("transform", "translate(" + (d - g) + ",0)").select("rect").attr("height", p);
-                        b = b.select("g.layer-controls").selectAll("g").data(e, function(a) {
-                            return a.id() });
-                        g = b.enter().append("g").attr("class", "ui-active").style("cursor", "pointer").on("click", function(a) {
-                            var b = d3.select(this),
-                                a = k.selectAll("g." + a.id());
-                            b.classed("ui-active") ? (a.style("display", "none"), b.classed("ui-active", !1).classed("ui-default", !0)) : (a.style("display", "inherit"), b.classed("ui-active", !0).classed("ui-default", !1))
-                        });
-                        g.append("rect").attr("x", 0).attr("y", 1).attr("rx", 5).attr("ry", 5).attr("width", 75).attr("height", 18).attr("stroke-width", "1px");
-                        g.append("text").attr("x", 10).attr("y", 15).style("font-size", "12px").style("font-family", "Helvetica, Arial, sans-serif").text(function(a) {
-                            return a.title() });
-                        b.transition().duration(1E3).attr("transform", function(a, b) {
-                            return "translate(0," + 20 * (e.length - (b + 1)) + ")" });
-                        c = c.selectAll(".maplayer").data(e, function(a) {
-                            return a.id() });
-                        c.enter().append("g").attr("class", function(a) {
-                            return "maplayer " +
-                                a.title()
-                        }).append("g").attr("class", function(a) {
-                            return a.id() }).datum(null);
-                        c.exit().remove();
-                        c.order();
-                        c.each(function(b) { d3.select(this).select("g." + b.id()).datum(a[b.id()]).call(b) });
-                        k.call(d3.behavior.zoom().scaleExtent([1, i]).on("zoom", function() {
-                            if (f) {
-                                var a = d3.event.scale,
-                                    b = d3.event.translate;
-                                k && (a && (k.__scale__ = a), b && 1 < b.length && (k.__translate__ = b), a = (1 - k.__scale__) * (h.range()[1] - h.range()[0]), b = (1 - k.__scale__) * (l.range()[1] - l.range()[0]), k.__translate__[0] = Math.min(h.range()[0], Math.max(k.__translate__[0],
-                                    a)), k.__translate__[1] = Math.min(l.range()[0], Math.max(k.__translate__[1], b)), k.selectAll(".map-layers").attr("transform", "translate(" + k.__translate__ + ")scale(" + k.__scale__ + ")"))
+            var layers = [],
+                panZoomEnabled = true,
+                maxZoom = 5,
+                xScale = d3.scale.linear(),
+                yScale = d3.scale.linear();
+
+            function map(g) {
+                var width = xScale.range()[1] - xScale.range()[0],
+                    height = yScale.range()[1] - yScale.range()[0];
+
+                g.each(function(data){
+                    if (! data) return;
+
+                    var g = d3.select(this);
+
+                    // define common graphical elements
+                    __init_defs(g.selectAll("defs").data([0]).enter().append("defs"));
+
+                    // setup container for layers and area to capture events
+                    var vis = g.selectAll(".map-layers").data([0]),
+                        visEnter = vis.enter().append("g").attr("class","map-layers"),
+                        visUpdate = d3.transition(vis);
+
+                    visEnter.append("rect")
+                        .attr("class", "canvas")
+                        .attr("pointer-events","all")
+                        .style("opacity",0);
+
+                    visUpdate.attr("width", width)
+                        .attr("height", height)
+                        .attr("x",xScale.range()[0])
+                        .attr("y",yScale.range()[0]);
+
+
+                    // render and reorder layers
+                    var maplayers = vis.selectAll(".maplayer")
+                        .data(layers, function(l) {return l.id();});
+                    maplayers.enter()
+                        .append("g")
+                        .attr("class", function(l) {return "maplayer " + l.title();})
+                        .append("g")
+                        .attr("class", function(l) {return l.id();})
+                        .datum(null);
+                    maplayers.exit().remove();
+                    maplayers.order();
+
+                    // redraw layers
+                    maplayers.each(function(layer) {
+                        d3.select(this).select("g." + layer.id()).datum(data[layer.id()]).call(layer);
+                    });
+
+                    // add pan - zoom behavior
+                    g.call(d3.behavior.zoom().scaleExtent([1,maxZoom])
+                        .on("zoom", function() {
+                            if (panZoomEnabled) {
+                                __set_view(g, d3.event.scale, d3.event.translate);
                             }
-                        }))
-                    }
-                })
+                        }));
+
+                });
             }
-            var e = [],
-                f = !0,
-                i = 5,
-                h = d3.scale.linear(),
-                l = d3.scale.linear();
-            a.xScale = function(c) {
-                if (!arguments.length) return h;
-                h = c;
-                e.forEach(function(a) { a.xScale(h) });
-                return a };
-            a.yScale = function(c) {
-                if (!arguments.length) return l;
-                l = c;
-                e.forEach(function(a) { a.yScale(l) });
-                return a };
-            a.panZoom = function(c) {
-                if (!arguments.length) return f;
-                f = c;
-                return a
+
+            map.xScale = function(scale) {
+                if (! arguments.length) return xScale;
+                xScale = scale;
+                layers.forEach(function(l) { l.xScale(xScale); });
+                return map;
             };
-            a.addLayer = function(c, d) { c.xScale(h);
-                c.yScale(l);
-                1 < arguments.length && 0 <= d ? e.splice(d, 0, c) : e.push(c);
-                return a };
-            return a
+
+            map.yScale = function(scale) {
+                if (! arguments.length) return yScale;
+                yScale = scale;
+                layers.forEach(function(l) { l.yScale(yScale); });
+                return map;
+            };
+
+            map.panZoom = function(enabled) {
+                if (! arguments.length) return panZoomEnabled;
+                panZoomEnabled = enabled;
+                return map;
+            };
+
+            map.addLayer = function(layer, index) {
+                layer.xScale(xScale);
+                layer.yScale(yScale);
+
+                if (arguments.length > 1 && index >=0) {
+                    layers.splice(index, 0, layer);
+                } else {
+                    layers.push(layer);
+                }
+
+                return map;
+            };
+
+            function __set_view(g, s, t) {
+                if (! g) return;
+                if (s) g.__scale__ = s;
+                if (t && t.length > 1) g.__translate__ = t;
+
+                // limit translate to edges of extents
+                var minXTranslate = (1 - g.__scale__) *
+                    (xScale.range()[1] - xScale.range()[0]);
+                var minYTranslate = (1 - g.__scale__) *
+                    (yScale.range()[1] - yScale.range()[0]);
+
+                g.__translate__[0] = Math.min(xScale.range()[0],
+                    Math.max(g.__translate__[0], minXTranslate));
+                g.__translate__[1] = Math.min(yScale.range()[0],
+                    Math.max(g.__translate__[1], minYTranslate));
+                g.selectAll(".map-layers")
+                    .attr("transform",
+                        "translate(" + g.__translate__ +
+                        ")scale(" + g.__scale__ + ")");
+            };
+
+            function __init_defs(selection) {
+                selection.each(function() {
+                    var defs = d3.select(this);
+
+                    var grad = defs.append("radialGradient")
+                        .attr("id","metal-bump")
+                        .attr("cx","50%")
+                        .attr("cy","50%")
+                        .attr("r","50%")
+                        .attr("fx","50%")
+                        .attr("fy","50%");
+
+                    grad.append("stop")
+                        .attr("offset","0%")
+                        .style("stop-color","rgb(170,170,170)")
+                        .style("stop-opacity",0.6);
+
+                    grad.append("stop")
+                        .attr("offset","100%")
+                        .style("stop-color","rgb(204,204,204)")
+                        .style("stop-opacity",0.5);
+
+                    var grip = defs.append("pattern")
+                        .attr("id", "grip-texture")
+                        .attr("patternUnits", "userSpaceOnUse")
+                        .attr("x",0)
+                        .attr("y",0)
+                        .attr("width",3)
+                        .attr("height",3);
+
+                    grip.append("rect")
+                        .attr("height",3)
+                        .attr("width",3)
+                        .attr("stroke","none")
+                        .attr("fill", "rgba(204,204,204,0.5)");
+
+                    grip.append("circle")
+                        .attr("cx", 1.5)
+                        .attr("cy", 1.5)
+                        .attr("r", 1)
+                        .attr("stroke", "none")
+                        .attr("fill", "url(#metal-bump)");
+                });
+            }
+
+            function __init_controls(selection) {
+                selection.each(function() {
+                    var controls = d3.select(this);
+
+                    controls.append("path")
+                        .attr("class", "ui-show-hide")
+                        .attr("d", "M10,3 v40 h-7 a3,3 0 0,1 -3,-3 v-34 a3,3 0 0,1 3,-3 Z")
+                        .attr("fill","url(#grip-texture)")
+                        .attr("stroke", "none")
+                        .style("opacity", 0.5);
+
+                    controls.append("path")
+                        .attr("class", "show ui-show-hide")
+                        .attr("d", "M2,23 l6,-15 v30 Z")
+                        .attr("fill","rgb(204,204,204)")
+                        .attr("stroke", "none")
+                        .style("opacity", 0.5);
+
+                    controls.append("path")
+                        .attr("class", "hide")
+                        .attr("d", "M8,23 l-6,-15 v30 Z")
+                        .attr("fill","rgb(204,204,204)")
+                        .attr("stroke", "none")
+                        .style("opacity", 0);
+
+                    controls.append("path")
+                        .attr("d", "M10,3 v40 h-7 a3,3 0 0,1 -3,-3 v-34 a3,3 0 0,1 3,-3 Z")
+                        .attr("pointer-events", "all")
+                        .attr("fill","none")
+                        .attr("stroke", "none")
+                        .style("cursor","pointer")
+                        .on("mouseover", function() {
+                            controls.selectAll("path.ui-show-hide").style("opacity", 1);
+                        })
+                        .on("mouseout", function() {
+                            controls.selectAll("path.ui-show-hide").style("opacity", 0.5);
+                        })
+                        .on("click", function() {
+                            if (controls.select(".hide").classed("ui-show-hide")) {
+                                controls.transition()
+                                    .duration(1000)
+                                    .attr("transform", "translate("+(controls.attr("view-width")-10)+",0)")
+                                    .each("end", function() {
+                                        controls.select(".hide")
+                                            .style("opacity",0)
+                                            .classed("ui-show-hide",false);
+                                        controls.select(".show")
+                                            .style("opacity",1)
+                                            .classed("ui-show-hide",true);
+                                        controls.selectAll("path.ui-show-hide")
+                                            .style("opacity",0.5);
+                                    });
+                            } else {
+                                controls.transition()
+                                    .duration(1000)
+                                    .attr("transform", "translate("+(controls.attr("view-width")-95)+",0)")
+                                    .each("end", function() {
+                                        controls.select(".show")
+                                            .style("opacity",0)
+                                            .classed("ui-show-hide",false);
+                                        controls.select(".hide")
+                                            .style("opacity",1)
+                                            .classed("ui-show-hide",true);
+                                        controls.selectAll("path.ui-show-hide")
+                                            .style("opacity",0.5);
+                                    });
+                            }
+                        });
+
+                    controls.append("rect")
+                        .attr("x",10)
+                        .attr("y",0)
+                        .attr("width", 85)
+                        .attr("fill", "rgba(204,204,204,0.9)")
+                        .attr("stroke", "none");
+
+                    controls.append("g")
+                        .attr("class", "layer-controls")
+                        .attr("transform", "translate(15,5)");
+                });
+            }
+
+            return map;
         };
         d3.floorplan.version = "0.1.0";
         d3.floorplan.imagelayer = function() {
@@ -321,91 +459,233 @@ export default class Draw extends Component {
             return a
         };
         d3.floorplan.overlays = function() {
-            function a(a) {
-                a.each(function(a) {
-                    if (a) {
-                        var b = d3.select(this),
-                            g = b.selectAll("rect.overlay-canvas").data([0]);
-                        g.enter().append("rect").attr("class", "overlay-canvas").style("opacity", 0).attr("pointer-events", "all").on("click", function() {
-                            if (j) {
-                                var a = d3.mouse(this);
-                                c.forEach(function(b) { b(f.invert(a[0]), i.invert(a[1])) }) } }).on("mouseup.drag", e).on("touchend.drag", e);
-                        g.attr("x", f.range()[0]).attr("y", i.range()[0]).attr("height", i.range()[1] - i.range()[0]).attr("width", f.range()[1] -
-                            f.range()[0]);
-                        g = b.selectAll("path.polygon").data(a.polygons || [], function(a) {
-                            return a.id });
-                        g.enter().append("path").attr("class", "polygon").attr("vector-effect", "non-scaling-stroke").attr("pointer-events", "all").on("mousedown", function(a) { d.forEach(function(b) { b(a.id) }) }).call(o).append("title");
-                        g.exit().transition().style("opacity", 1E-6).remove();
-                        g.attr("d", function(a) {
-                            return k(a.points) + "Z" }).style("cursor", j ? "move" : "pointer").select("title").text(function(a) {
-                            return a.name || a.id });
-                        if (j) {
-                            var h = [];
-                            a.polygons && a.polygons.forEach(function(a) { a.points.forEach(function(b, d) { h.push({ index: d, parent: a }) }) });
-                            a = 1;
-                            for (g = b.node(); g.parentNode;)
-                                if (g = g.parentNode, g.__scale__) { a = g.__scale__;
-                                    break }
-                            b = b.selectAll("circle.vertex").data(h, function(a) {
-                                return a.parent.id + "-" + a.index });
-                            b.exit().transition().attr("r", 1E-6).remove();
-                            b.enter().append("circle").attr("class", "vertex").attr("pointer-events", "all").attr("vector-effect", "non-scaling-stroke").style("cursor", "move").attr("r", 1E-6).call(o);
-                            b.attr("cx", function(a) {
-                                return f(a.parent.points[a.index].x) }).attr("cy",
-                                function(a) {
-                                    return i(a.parent.points[a.index].y) }).attr("r", 4 / a)
-                        } else b.selectAll("circle.vertex").transition().attr("r", 1E-6).remove()
+            var x = d3.scale.linear(),
+                y = d3.scale.linear(),
+                id = "fp-overlays-" + new Date().valueOf(),
+                name = "overlays",
+                canvasCallbacks = [],
+                selectCallbacks = [],
+                moveCallbacks = [],
+                editMode = false,
+                line = d3.svg.line() // 新建一个线生成器
+                    .x(function(d) { return x(d.x); })
+                    .y(function(d) { return y(d.y); }),
+                dragBehavior = d3.behavior.drag() // 创建拖动行为
+                    .on("dragstart", __dragItem)
+                    .on("drag", __mousemove)
+                    .on("dragend", __mouseup),
+                dragged = null,
+                pointPosition = [];
+
+            function overlays(g) {
+                // console.log(g[0][0]);
+                // <g class="fp-overlays-1492436229741"><rect class="overlay-canvas" pointer-events="all" x="0" y="0" height="487" width="720" style="opacity: 0;"></rect><path class="polygon" vector-effect="non-scaling-stroke" pointer-events="all" d="M238.00000000000048,321.0000000000005L172.00000000000003,253.00000000000068L134.00000000000009,187.00000000000057L153,92.00000000000009L226.00000000000017,96.00000000000017L321,107.00000000000037L372.9999999999999,123.00000000000041L456.99999999999983,194.0000000000003L483.99999999999926,269.0000000000007L378,350.00000000000114Z" style="cursor: move;"><title>kitchen</title></path><circle class="vertex" pointer-events="all" vector-effect="non-scaling-stroke" r="4" cx="238.00000000000048" cy="321.0000000000005" style="cursor: move;"></circle><circle class="vertex" pointer-events="all" vector-effect="non-scaling-stroke" r="4" cx="172.00000000000003" cy="253.00000000000068" style="cursor: move;"></circle><circle class="vertex" pointer-events="all" vector-effect="non-scaling-stroke" r="4" cx="134.00000000000009" cy="187.00000000000057" style="cursor: move;"></circle><circle class="vertex" pointer-events="all" vector-effect="non-scaling-stroke" r="4" cx="153" cy="92.00000000000009" style="cursor: move;"></circle><circle class="vertex" pointer-events="all" vector-effect="non-scaling-stroke" r="4" cx="226.00000000000017" cy="96.00000000000017" style="cursor: move;"></circle><circle class="vertex" pointer-events="all" vector-effect="non-scaling-stroke" r="4" cx="321" cy="107.00000000000037" style="cursor: move;"></circle><circle class="vertex" pointer-events="all" vector-effect="non-scaling-stroke" r="4" cx="372.9999999999999" cy="123.00000000000041" style="cursor: move;"></circle><circle class="vertex" pointer-events="all" vector-effect="non-scaling-stroke" r="4" cx="456.99999999999983" cy="194.0000000000003" style="cursor: move;"></circle><circle class="vertex" pointer-events="all" vector-effect="non-scaling-stroke" r="4" cx="483.99999999999926" cy="269.0000000000007" style="cursor: move;"></circle><circle class="vertex" pointer-events="all" vector-effect="non-scaling-stroke" r="4" cx="378" cy="350.00000000000114" style="cursor: move;"></circle></g>
+                g.each(function(data){
+                    if (! data) return;
+                    var g = d3.select(this);
+
+                    // setup rectangle for capturing events
+                    // 设置用于捕获事件的矩形
+                    var canvas = g.selectAll("rect.overlay-canvas").data([0]);
+
+                    canvas.enter().append("rect") // .enter() 为缺失的元素返回占位符
+                        .attr("class", "overlay-canvas")
+                        .style("opacity", 0)
+                        .attr("pointer-events", "all")
+                        .on("click", function() {
+                            if (editMode) {
+                                var p = d3.mouse(this);
+                                canvasCallbacks.forEach(function(cb) {
+                                    cb(x.invert(p[0]), y.invert(p[1]));
+                                });
+                            }
+                        })
+                        .on("mouseup.drag", __mouseup)
+                        .on("touchend.drag", __mouseup);
+
+                    canvas.attr("x", x.range()[0])
+                        .attr("y", y.range()[0])
+                        .attr("height", y.range()[1] - y.range()[0])
+                        .attr("width", x.range()[1] - x.range()[0]);
+
+                    // draw polygons (currently only type supported) // 绘制多边形
+                    var polygons = g.selectAll("path.polygon")
+                        .data(data.polygons || [], function(d) {return d.id;});
+
+                    polygons.enter().append("path")
+                        .attr("class", "polygon")
+                        .attr("vector-effect", "non-scaling-stroke")
+                        .attr("pointer-events", "all")
+                        .on("mousedown", function(d) { // 为交互添加或移除事件监听器
+                            selectCallbacks.forEach(function(cb) {
+                                cb(d.id);
+                            });
+                        })
+                        .call(dragBehavior)
+                        .append("title");
+
+                    polygons.exit().transition().style("opacity", 1e-6).remove();
+
+                    polygons
+                        .attr("d", function(d) {return line(d.points) + "Z";})
+                        .style("cursor", editMode ? "move" : "pointer")
+                        .select("title")
+                        .text(function(d) { return d.name || d.id; });
+
+                    if (editMode) {
+                        var pointData = [];
+                        if (data.polygons) {
+                            data.polygons.forEach(function(polygon) {
+                                polygon.points.forEach(function(pt, i) {
+                                    pointData.push({"index":i,
+                                        "parent":polygon});
+                                });
+                            });
+                        }
+
+                        // determine current view scale to make appropriately
+                        // sized points to drag
+                        var scale = 1;
+                        var node = g.node();
+                        while (node.parentNode) {
+                            node = node.parentNode;
+                            if (node.__scale__) {
+                                scale = node.__scale__;
+                                break;
+                            }
+                        }
+
+                        var points = g.selectAll("circle.vertex")
+                            .data(pointData, function(d) {
+                                return d.parent.id + "-" + d.index;});
+
+                        points.exit().transition()
+                            .attr("r", 1e-6).remove();
+
+                        points.enter().append("circle")
+                            .attr("class", "vertex")
+                            .attr("pointer-events", "all")
+                            .attr("vector-effect", "non-scaling-stroke")
+                            .style("cursor", "move")
+                            .attr("r", 1e-6)
+                            .call(dragBehavior);
+
+                        points
+                            .attr("cx", function(d) {
+                                pointPosition[d.index] = {x: d.parent.points[d.index].x, y: d.parent.points[d.index].y};
+                                // console.log(d.index);
+                                // console.log(d.parent.points[d.index]);
+                                return x(d.parent.points[d.index].x);
+                            })
+                            .attr("cy", function(d) { return y(d.parent.points[d.index].y); })
+                            .attr("r", 4/scale);
+                    } else {
+                        g.selectAll("circle.vertex").transition()
+                            .attr("r", 1e-6).remove();
                     }
-                })
+
+                    /***
+                     * 新增功能 将每个关键点的位置以 json 的形式输出
+                     * @type {string}
+                     */
+
+                    var json = '每次鼠标移动某个点后\n控制台输出的最后信息才是有用信息!\n';
+                    pointPosition.map(function(value, key) {
+                        if ((key + 1) == pointPosition.length) {
+                            json = json + '{"x": '+ value.x + ', "y": '+ value.y + '}\n';
+                        } else {
+                            json = json + '{"x": '+ value.x + ', "y": '+ value.y + '},\n';
+                        }
+                    })
+                    console.log("%c"+json, "color: #757575");
+                });
             }
 
-            function e() { b && (n.forEach(function(a) { b.parent ? a(b.parent.id, b.parent.points, b.index) : a(b.id, b.points) }), b = null) }
-            var f = d3.scale.linear(),
-                i = d3.scale.linear(),
-                h = "fp-overlays-" + (new Date).valueOf(),
-                l = "overlays",
-                c = [],
-                d = [],
-                n = [],
-                j = !1,
-                k = d3.svg.line().x(function(a) {
-                    return f(a.x) }).y(function(a) {
-                    return i(a.y) }),
-                o = d3.behavior.drag().on("dragstart", function(a) { j && (b = a) }).on("drag",
-                    function() {
-                        if (b) {
-                            var d = f.invert(d3.event.dx) - f.invert(0),
-                                c = i.invert(d3.event.dy) - i.invert(0);
-                            b.parent ? (b.parent.points[b.index].x += d, b.parent.points[b.index].y += c) : b.points && b.points.forEach(function(a) { a.x += d;
-                                    a.y += c });
-                            a(d3.select(this.parentNode)) } }).on("dragend", e),
-                b = null;
-            a.xScale = function(b) {
-                if (!arguments.length) return f;
-                f = b;
-                return a };
-            a.yScale = function(b) {
-                if (!arguments.length) return i;
-                i = b;
-                return a };
-            a.id = function() {
-                return h };
-            a.title = function(b) {
-                if (!arguments.length) return l;
-                l = b;
-                return a };
-            a.editMode =
-                function(b) {
-                    if (!arguments.length) return j;
-                    j = b;
-                    return a };
-            a.registerCanvasCallback = function(b) { arguments.length && c.push(b);
-                return a };
-            a.registerSelectCallback = function(b) { arguments.length && select.Callbacks.push(b);
-                return a };
-            a.registerMoveCallback = function(b) { arguments.length && n.push(b);
-                return a };
-            return a
+            overlays.xScale = function(scale) {
+                if (! arguments.length) return x;
+                x = scale;
+                return overlays;
+            };
+
+            overlays.yScale = function(scale) {
+                if (! arguments.length) return y;
+                y = scale;
+                return overlays;
+            };
+
+            overlays.id = function() {
+                return id;
+            };
+
+            overlays.title = function(n) {
+                if (! arguments.length) return name;
+                name = n;
+                return overlays;
+            };
+
+            overlays.editMode = function(enable) {
+                if (! arguments.length) return editMode;
+                editMode = enable;
+                return overlays;
+            };
+
+            overlays.registerCanvasCallback = function(cb) {
+                if (arguments.length) canvasCallbacks.push(cb);
+                return overlays;
+            };
+
+            overlays.registerSelectCallback = function(cb) {
+                if (arguments.length) select.Callbacks.push(cb);
+                return overlays;
+            };
+
+            overlays.registerMoveCallback = function(cb) {
+                if (arguments.length) moveCallbacks.push(cb);
+                return overlays;
+            };
+
+            function __dragItem(d) {
+                if (editMode) dragged = d;
+            }
+
+            function __mousemove() {
+                if (dragged) {
+                    var dx = x.invert(d3.event.dx) - x.invert(0);
+                    var dy = y.invert(d3.event.dy) - y.invert(0);
+                    if (dragged.parent) { // a point
+                        dragged.parent.points[dragged.index].x += dx;
+                        dragged.parent.points[dragged.index].y += dy;
+
+                        /***
+                         * // %c 用于自定义 控制台输出的颜色
+                         */
+                        console.log("%cNo. " + dragged.index +"\nx: " +
+                            dragged.parent.points[dragged.index].x +
+                            " y: " + dragged.parent.points[dragged.index].y, "color: #F44336");
+
+                        // console.log(dragged.parent.points[dragged.index].x + ' ' + dragged.parent.points[dragged.index].x);
+                    } else if (dragged.points) { // a composite object
+                        dragged.points.forEach(function(pt) {
+                            pt.x += dx;
+                            pt.y += dy;
+                        });
+                    }
+                    // parent is container for overlays
+                    overlays(d3.select(this.parentNode));
+                }
+            }
+
+            function __mouseup() {
+                if (dragged) {
+                    moveCallbacks.forEach(function(cb) {
+                        dragged.parent ? cb(dragged.parent.id, dragged.parent.points, dragged.index) :
+                            cb(dragged.id, dragged.points);
+                    });
+                    dragged = null;
+                }
+            }
+
+            return overlays;
         };
         d3.floorplan.vectorfield = function() {
             function a(a) {
@@ -455,39 +735,161 @@ export default class Draw extends Component {
             return a
         };
         d3.floorplan.pathplot = function() {
-            function a(a) { a.each(function(a) { a && (a = d3.select(this).selectAll("path").data(a, function(a) {
-                return a.id }), a.exit().transition().style("opacity", 1E-6).remove(), a.enter().append("path").attr("vector-effect", "non-scaling-stroke").attr("fill", "none").style("opacity", 1E-6).append("title"), a.attr("class", function(a) {
-                return a.classes || a.id }).attr("d", function(a, d) {
-                return i(c(a, d)) }).select("title").text(function(a) {
-                return a.title || a.id }), a.transition().style("opacity", 1)) }) }
-            var e = d3.scale.linear(),
-                f = d3.scale.linear(),
-                i = d3.svg.line().x(function(a) {
-                    return e(a.x) }).y(function(a) {
-                    return f(a.y) }),
-                h = "fp-pathplot-" + (new Date).valueOf(),
-                l = "pathplot",
-                c = function(a) {
-                    return a.points };
-            a.xScale = function(c) {
-                if (!arguments.length) return e;
-                e = c;
-                return a };
-            a.yScale = function(c) {
-                if (!arguments.length) return f;
-                f = c;
-                return a };
-            a.id = function() {
-                return h };
-            a.title = function(c) {
-                if (!arguments.length) return l;
-                l = c;
-                return a };
-            a.pointFilter = function(d) {
-                if (!arguments.length) return c;
-                c = d;
-                return a };
-            return a
+            var x = d3.scale.linear(),
+                y = d3.scale.linear(),
+                line = d3.svg.line()
+                    .x(function(d) {
+                        return x(d.x); })
+                    .y(function(d) { return y(d.y); }),
+                id = "fp-pathplot-" + new Date().valueOf(),
+                name = "pathplot",
+                pointFilter = function(d) { return d.points; };
+
+            function pathplot(g) {
+                g.each(function(data) {
+                    if (!data) return;
+
+                    var g = d3.select(this),
+                        paths = g.selectAll("path")
+                            .data(data, function(d) { return d.id; });
+
+                    paths.exit().transition()
+                        .style("opacity", 1e-6).remove();
+
+                    paths.enter().append("path")
+                        .attr("vector-effect", "non-scaling-stroke")
+                        .attr("fill", "none")
+                        .style("opacity", 1e-6)
+                        .append("title");
+
+                    console.log(new Date());
+
+                    paths
+                        .attr("class", function(d) { return d.classes || d.id; })
+                        .attr("d", function(d,i) { line(pointFilter(d,i)); })
+                        .select("title")
+                        .text(function(d) { return d.title || d.id; });
+
+                    console.log(new Date());
+
+                    paths.transition().style("opacity", 1);
+                });
+            }
+
+            pathplot.xScale = function(scale) {
+                if (! arguments.length) return x;
+                x = scale;
+                return pathplot;
+            };
+
+            pathplot.yScale = function(scale) {
+                if (! arguments.length) return y;
+                y = scale;
+                return pathplot;
+            };
+
+            pathplot.id = function() {
+                return id;
+            };
+
+            pathplot.title = function(n) {
+                if (! arguments.length) return name;
+                name = n;
+                return pathplot;
+            };
+
+            pathplot.pointFilter = function(fn) {
+                if (! arguments.length) return pointFilter;
+                pointFilter = fn;
+                return pathplot;
+            };
+
+            return pathplot;
+        };
+        /***
+         * 自定义方法 用于在某个点放置一个三角形
+         * @returns {monitor}
+         */
+        d3.floorplan.monitor = function() {
+            var x = d3.scale.linear(),
+                y = d3.scale.linear(),
+                id = "fp-overlays-" + new Date().valueOf(),
+                name = "monitor",
+                editMode = false,
+                pointPosition = [];
+
+            function monitor(g) {
+                g.each(function(data){
+                    if (! data) return;
+                    var g = d3.select(this);
+
+                    var pointData = [];
+                    if (data.polygons) {
+                        data.polygons.forEach(function(polygon) {
+                            polygon.points.forEach(function(pt, i) {
+                                pointData.push({"index":i,
+                                    "parent":polygon});
+                            });
+                        });
+                    }
+
+                    // determine current view scale to make appropriately
+                    // sized points to drag
+                    var scale = 1;
+
+
+                    var points = g.selectAll("circle.vertex")
+                        .data(pointData, function(d) {
+                            return d.parent.id + "-" + d.index;});
+
+                    points.enter().append("circle")
+                        .attr("class", "vertex")
+                        .attr("pointer-events", "all")
+                        .attr("vector-effect", "non-scaling-stroke")
+                        .style("cursor", "move")
+                        .attr("r", 1e-6)
+
+                    points
+                        .attr("cx", function(d) {
+                            pointPosition[d.index] = {x: d.parent.points[d.index].x, y: d.parent.points[d.index].y};
+                            return x(d.parent.points[d.index].x);
+                        })
+                        .attr("cy", function(d) { return y(d.parent.points[d.index].y); })
+                        .attr("r", 4/scale);
+
+                });
+            }
+
+            monitor.xScale = function(scale) {
+                if (! arguments.length) return x;
+                x = scale;
+                return monitor;
+            };
+
+            monitor.yScale = function(scale) {
+                if (! arguments.length) return y;
+                y = scale;
+                return overlays;
+            };
+
+            monitor.id = function() {
+                return id;
+            };
+
+            monitor.title = function(n) {
+                if (! arguments.length) return name;
+                name = n;
+                return monitor;
+            };
+
+            monitor.editMode = function(enable) {
+                if (! arguments.length) return editMode;
+                editMode = enable;
+                return monitor;
+            };
+
+
+            return monitor;
         };
         // d3 floorplan end
 
@@ -499,10 +901,11 @@ export default class Draw extends Component {
                 .range([0,this.getHeight()]), // 339
             map = d3.floorplan().xScale(xscale).yScale(yscale), // 设置平面图，使其有缩放／平移功能
             imagelayer = d3.floorplan.imagelayer(),             // 创建新的图像图层
-            heatmap = d3.floorplan.heatmap(),
-            vectorfield = d3.floorplan.vectorfield(),
-            pathplot = d3.floorplan.pathplot(),
+            // heatmap = d3.floorplan.heatmap(),
+            // vectorfield = d3.floorplan.vectorfield(),
+            // pathplot = d3.floorplan.pathplot(),
             overlays = d3.floorplan.overlays().editMode(false),
+            monitor = d3.floorplan.monitor(),
             mapdata = {};
 
         mapdata[imagelayer.id()] = [{
@@ -514,13 +917,14 @@ export default class Draw extends Component {
         }];
 
         // 负责初始图层绘制
-        map//.addLayer(imagelayer) // 背景图片 使用的时候打开即可
-            .addLayer(overlays);
+        map.addLayer(imagelayer) // 背景图片 使用的时候打开即可
+            .addLayer(overlays)
+            .addLayer(monitor);
 
         d3.json("/data", function(data) {
-            console.log(data);
             //mapdata[heatmap.id()] = data.overlays; // 渲染淡红色的区域
             mapdata[overlays.id()] = data.overlays; // 渲染淡红色后的背景
+            mapdata[monitor.id()] = data.monitor;
             //mapdata[vectorfield.id()] = data.vectorfield; // Entrance 区域的斜线
             //mapdata[pathplot.id()] = data.pathplot; // 蓝色虚线绘制
 
@@ -529,155 +933,333 @@ export default class Draw extends Component {
                 .datum(mapdata).call(map);
         }.bind(this));
 
-        // 移除右上角的 控制条
-        this.removeMapControls();
-
         console.log("background-image:","finished");
     }
 
     handleAddLayer(row, event) {
 
         d3.floorplan = function() {
-            function a(a) {
-                var d = h.range()[1] - h.range()[0],
-                    n = l.range()[1] - l.range()[0];
-                a.each(function(a) {
-                    if (a) {
-                        var k = d3.select(this);
-                        k.selectAll("defs").data([0]).enter().append("defs").each(function() {
-                            var a = d3.select(this),
-                                b = a.append("radialGradient").attr("id", "metal-bump").attr("cx", "50%").attr("cy", "50%").attr("r", "50%").attr("fx", "50%").attr("fy", "50%");
-                            b.append("stop").attr("offset", "0%").style("stop-color", "rgb(170,170,170)").style("stop-opacity", 0.6);
-                            b.append("stop").attr("offset",
-                                "100%").style("stop-color", "rgb(204,204,204)").style("stop-opacity", 0.5);
-                            a = a.append("pattern").attr("id", "grip-texture").attr("patternUnits", "userSpaceOnUse").attr("x", 0).attr("y", 0).attr("width", 3).attr("height", 3);
-                            a.append("rect").attr("height", 3).attr("width", 3).attr("stroke", "none").attr("fill", "rgba(204,204,204,0.5)");
-                            a.append("circle").attr("cx", 1.5).attr("cy", 1.5).attr("r", 1).attr("stroke", "none").attr("fill", "url(#metal-bump)")
-                        });
-                        var c = k.selectAll(".map-layers").data([0]),
-                            b = c.enter().append("g").attr("class",
-                                "map-layers"),
-                            g = d3.transition(c);
-                        b.append("rect").attr("class", "canvas").attr("pointer-events", "all").style("opacity", 0);
-                        g.attr("width", d).attr("height", n).attr("x", h.range()[0]).attr("y", l.range()[0]);
-                        b = k.selectAll(".map-controls").data([0]);
-                        b.enter().append("g").attr("class", "map-controls").each(function() {
-                            var a = d3.select(this);
-                            a.append("path").attr("class", "ui-show-hide").attr("d", "M10,3 v40 h-7 a3,3 0 0,1 -3,-3 v-34 a3,3 0 0,1 3,-3 Z").attr("fill", "url(#grip-texture)").attr("stroke", "none").style("opacity",
-                                0.5);
-                            a.append("path").attr("class", "show ui-show-hide").attr("d", "M2,23 l6,-15 v30 Z").attr("fill", "rgb(204,204,204)").attr("stroke", "none").style("opacity", 0.5);
-                            a.append("path").attr("class", "hide").attr("d", "M8,23 l-6,-15 v30 Z").attr("fill", "rgb(204,204,204)").attr("stroke", "none").style("opacity", 0);
-                            a.append("path").attr("d", "M10,3 v40 h-7 a3,3 0 0,1 -3,-3 v-34 a3,3 0 0,1 3,-3 Z").attr("pointer-events", "all").attr("fill", "none").attr("stroke", "none").style("cursor", "pointer").on("mouseover", function() {
-                                a.selectAll("path.ui-show-hide").style("opacity",
-                                    1)
-                            }).on("mouseout", function() { a.selectAll("path.ui-show-hide").style("opacity", 0.5) }).on("click", function() {
-                                a.select(".hide").classed("ui-show-hide") ? a.transition().duration(1E3).attr("transform", "translate(" + (a.attr("view-width") - 10) + ",0)").each("end", function() { a.select(".hide").style("opacity", 0).classed("ui-show-hide", !1);
-                                    a.select(".show").style("opacity", 1).classed("ui-show-hide", !0);
-                                    a.selectAll("path.ui-show-hide").style("opacity", 0.5) }) : a.transition().duration(1E3).attr("transform", "translate(" +
-                                    (a.attr("view-width") - 95) + ",0)").each("end", function() { a.select(".show").style("opacity", 0).classed("ui-show-hide", !1);
-                                    a.select(".hide").style("opacity", 1).classed("ui-show-hide", !0);
-                                    a.selectAll("path.ui-show-hide").style("opacity", 0.5) })
-                            });
-                            a.append("rect").attr("x", 10).attr("y", 0).attr("width", 85).attr("fill", "rgba(204,204,204,0.9)").attr("stroke", "none");
-                            a.append("g").attr("class", "layer-controls").attr("transform", "translate(15,5)")
-                        });
-                        var g = b.select(".hide").classed("ui-show-hide") ? 95 : 10,
-                            p = Math.max(45,
-                                10 + 20 * e.length);
-                        b.attr("view-width", d).attr("transform", "translate(" + (d - g) + ",0)").select("rect").attr("height", p);
-                        b = b.select("g.layer-controls").selectAll("g").data(e, function(a) {
-                            return a.id() });
-                        g = b.enter().append("g").attr("class", "ui-active").style("cursor", "pointer").on("click", function(a) {
-                            var b = d3.select(this),
-                                a = k.selectAll("g." + a.id());
-                            b.classed("ui-active") ? (a.style("display", "none"), b.classed("ui-active", !1).classed("ui-default", !0)) : (a.style("display", "inherit"), b.classed("ui-active", !0).classed("ui-default", !1))
-                        });
-                        g.append("rect").attr("x", 0).attr("y", 1).attr("rx", 5).attr("ry", 5).attr("width", 75).attr("height", 18).attr("stroke-width", "1px");
-                        g.append("text").attr("x", 10).attr("y", 15).style("font-size", "12px").style("font-family", "Helvetica, Arial, sans-serif").text(function(a) {
-                            return a.title() });
-                        b.transition().duration(1E3).attr("transform", function(a, b) {
-                            return "translate(0," + 20 * (e.length - (b + 1)) + ")" });
-                        c = c.selectAll(".maplayer").data(e, function(a) {
-                            return a.id() });
-                        c.enter().append("g").attr("class", function(a) {
-                            return "maplayer " +
-                                a.title()
-                        }).append("g").attr("class", function(a) {
-                            return a.id() }).datum(null);
-                        c.exit().remove();
-                        c.order();
-                        c.each(function(b) { d3.select(this).select("g." + b.id()).datum(a[b.id()]).call(b) });
-                        k.call(d3.behavior.zoom().scaleExtent([1, i]).on("zoom", function() {
-                            if (f) {
-                                var a = d3.event.scale,
-                                    b = d3.event.translate;
-                                k && (a && (k.__scale__ = a), b && 1 < b.length && (k.__translate__ = b), a = (1 - k.__scale__) * (h.range()[1] - h.range()[0]), b = (1 - k.__scale__) * (l.range()[1] - l.range()[0]), k.__translate__[0] = Math.min(h.range()[0], Math.max(k.__translate__[0],
-                                    a)), k.__translate__[1] = Math.min(l.range()[0], Math.max(k.__translate__[1], b)), k.selectAll(".map-layers").attr("transform", "translate(" + k.__translate__ + ")scale(" + k.__scale__ + ")"))
+            var layers = [],
+                panZoomEnabled = true,
+                maxZoom = 5,
+                xScale = d3.scale.linear(),
+                yScale = d3.scale.linear();
+
+            function map(g) {
+                var width = xScale.range()[1] - xScale.range()[0],
+                    height = yScale.range()[1] - yScale.range()[0];
+
+                g.each(function(data){
+                    if (! data) return;
+
+                    var g = d3.select(this);
+
+                    // define common graphical elements
+                    __init_defs(g.selectAll("defs").data([0]).enter().append("defs"));
+
+                    // setup container for layers and area to capture events
+                    var vis = g.selectAll(".map-layers").data([0]),
+                        visEnter = vis.enter().append("g").attr("class","map-layers"),
+                        visUpdate = d3.transition(vis);
+
+                    visEnter.append("rect")
+                        .attr("class", "canvas")
+                        .attr("pointer-events","all")
+                        .style("opacity",0);
+
+                    visUpdate.attr("width", width)
+                        .attr("height", height)
+                        .attr("x",xScale.range()[0])
+                        .attr("y",yScale.range()[0]);
+
+
+                    // render and reorder layers
+                    var maplayers = vis.selectAll(".maplayer")
+                        .data(layers, function(l) {return l.id();});
+                    maplayers.enter()
+                        .append("g")
+                        .attr("class", function(l) {return "maplayer " + l.title();})
+                        .append("g")
+                        .attr("class", function(l) {return l.id();})
+                        .datum(null);
+                    maplayers.exit().remove();
+                    maplayers.order();
+
+                    // redraw layers
+                    maplayers.each(function(layer) {
+                        d3.select(this).select("g." + layer.id()).datum(data[layer.id()]).call(layer);
+                    });
+
+                    // add pan - zoom behavior
+                    g.call(d3.behavior.zoom().scaleExtent([1,maxZoom])
+                        .on("zoom", function() {
+                            if (panZoomEnabled) {
+                                __set_view(g, d3.event.scale, d3.event.translate);
                             }
-                        }))
-                    }
-                })
+                        }));
+
+                });
             }
-            var e = [],
-                f = !0,
-                i = 5,
-                h = d3.scale.linear(),
-                l = d3.scale.linear();
-            a.xScale = function(c) {
-                if (!arguments.length) return h;
-                h = c;
-                e.forEach(function(a) { a.xScale(h) });
-                return a };
-            a.yScale = function(c) {
-                if (!arguments.length) return l;
-                l = c;
-                e.forEach(function(a) { a.yScale(l) });
-                return a };
-            a.panZoom = function(c) {
-                if (!arguments.length) return f;
-                f = c;
-                return a
+
+            map.xScale = function(scale) {
+                if (! arguments.length) return xScale;
+                xScale = scale;
+                layers.forEach(function(l) { l.xScale(xScale); });
+                return map;
             };
-            a.addLayer = function(c, d) { c.xScale(h);
-                c.yScale(l);
-                1 < arguments.length && 0 <= d ? e.splice(d, 0, c) : e.push(c);
-                return a };
-            return a
+
+            map.yScale = function(scale) {
+                if (! arguments.length) return yScale;
+                yScale = scale;
+                layers.forEach(function(l) { l.yScale(yScale); });
+                return map;
+            };
+
+            map.panZoom = function(enabled) {
+                if (! arguments.length) return panZoomEnabled;
+                panZoomEnabled = enabled;
+                return map;
+            };
+
+            map.addLayer = function(layer, index) {
+                layer.xScale(xScale);
+                layer.yScale(yScale);
+
+                if (arguments.length > 1 && index >=0) {
+                    layers.splice(index, 0, layer);
+                } else {
+                    layers.push(layer);
+                }
+
+                return map;
+            };
+
+            function __set_view(g, s, t) {
+                if (! g) return;
+                if (s) g.__scale__ = s;
+                if (t && t.length > 1) g.__translate__ = t;
+
+                // limit translate to edges of extents
+                var minXTranslate = (1 - g.__scale__) *
+                    (xScale.range()[1] - xScale.range()[0]);
+                var minYTranslate = (1 - g.__scale__) *
+                    (yScale.range()[1] - yScale.range()[0]);
+
+                g.__translate__[0] = Math.min(xScale.range()[0],
+                    Math.max(g.__translate__[0], minXTranslate));
+                g.__translate__[1] = Math.min(yScale.range()[0],
+                    Math.max(g.__translate__[1], minYTranslate));
+                g.selectAll(".map-layers")
+                    .attr("transform",
+                        "translate(" + g.__translate__ +
+                        ")scale(" + g.__scale__ + ")");
+            };
+
+            function __init_defs(selection) {
+                selection.each(function() {
+                    var defs = d3.select(this);
+
+                    var grad = defs.append("radialGradient")
+                        .attr("id","metal-bump")
+                        .attr("cx","50%")
+                        .attr("cy","50%")
+                        .attr("r","50%")
+                        .attr("fx","50%")
+                        .attr("fy","50%");
+
+                    grad.append("stop")
+                        .attr("offset","0%")
+                        .style("stop-color","rgb(170,170,170)")
+                        .style("stop-opacity",0.6);
+
+                    grad.append("stop")
+                        .attr("offset","100%")
+                        .style("stop-color","rgb(204,204,204)")
+                        .style("stop-opacity",0.5);
+
+                    var grip = defs.append("pattern")
+                        .attr("id", "grip-texture")
+                        .attr("patternUnits", "userSpaceOnUse")
+                        .attr("x",0)
+                        .attr("y",0)
+                        .attr("width",3)
+                        .attr("height",3);
+
+                    grip.append("rect")
+                        .attr("height",3)
+                        .attr("width",3)
+                        .attr("stroke","none")
+                        .attr("fill", "rgba(204,204,204,0.5)");
+
+                    grip.append("circle")
+                        .attr("cx", 1.5)
+                        .attr("cy", 1.5)
+                        .attr("r", 1)
+                        .attr("stroke", "none")
+                        .attr("fill", "url(#metal-bump)");
+                });
+            }
+
+            function __init_controls(selection) {
+                selection.each(function() {
+                    var controls = d3.select(this);
+
+                    controls.append("path")
+                        .attr("class", "ui-show-hide")
+                        .attr("d", "M10,3 v40 h-7 a3,3 0 0,1 -3,-3 v-34 a3,3 0 0,1 3,-3 Z")
+                        .attr("fill","url(#grip-texture)")
+                        .attr("stroke", "none")
+                        .style("opacity", 0.5);
+
+                    controls.append("path")
+                        .attr("class", "show ui-show-hide")
+                        .attr("d", "M2,23 l6,-15 v30 Z")
+                        .attr("fill","rgb(204,204,204)")
+                        .attr("stroke", "none")
+                        .style("opacity", 0.5);
+
+                    controls.append("path")
+                        .attr("class", "hide")
+                        .attr("d", "M8,23 l-6,-15 v30 Z")
+                        .attr("fill","rgb(204,204,204)")
+                        .attr("stroke", "none")
+                        .style("opacity", 0);
+
+                    controls.append("path")
+                        .attr("d", "M10,3 v40 h-7 a3,3 0 0,1 -3,-3 v-34 a3,3 0 0,1 3,-3 Z")
+                        .attr("pointer-events", "all")
+                        .attr("fill","none")
+                        .attr("stroke", "none")
+                        .style("cursor","pointer")
+                        .on("mouseover", function() {
+                            controls.selectAll("path.ui-show-hide").style("opacity", 1);
+                        })
+                        .on("mouseout", function() {
+                            controls.selectAll("path.ui-show-hide").style("opacity", 0.5);
+                        })
+                        .on("click", function() {
+                            if (controls.select(".hide").classed("ui-show-hide")) {
+                                controls.transition()
+                                    .duration(1000)
+                                    .attr("transform", "translate("+(controls.attr("view-width")-10)+",0)")
+                                    .each("end", function() {
+                                        controls.select(".hide")
+                                            .style("opacity",0)
+                                            .classed("ui-show-hide",false);
+                                        controls.select(".show")
+                                            .style("opacity",1)
+                                            .classed("ui-show-hide",true);
+                                        controls.selectAll("path.ui-show-hide")
+                                            .style("opacity",0.5);
+                                    });
+                            } else {
+                                controls.transition()
+                                    .duration(1000)
+                                    .attr("transform", "translate("+(controls.attr("view-width")-95)+",0)")
+                                    .each("end", function() {
+                                        controls.select(".show")
+                                            .style("opacity",0)
+                                            .classed("ui-show-hide",false);
+                                        controls.select(".hide")
+                                            .style("opacity",1)
+                                            .classed("ui-show-hide",true);
+                                        controls.selectAll("path.ui-show-hide")
+                                            .style("opacity",0.5);
+                                    });
+                            }
+                        });
+
+                    controls.append("rect")
+                        .attr("x",10)
+                        .attr("y",0)
+                        .attr("width", 85)
+                        .attr("fill", "rgba(204,204,204,0.9)")
+                        .attr("stroke", "none");
+
+                    controls.append("g")
+                        .attr("class", "layer-controls")
+                        .attr("transform", "translate(15,5)");
+                });
+            }
+
+            return map;
         };
         d3.floorplan.pathplot = function() {
-            function a(a) { a.each(function(a) { a && (a = d3.select(this).selectAll("path").data(a, function(a) {
-                return a.id }), a.exit().transition().style("opacity", 1E-6).remove(), a.enter().append("path").attr("vector-effect", "non-scaling-stroke").attr("fill", "none").style("opacity", 1E-6).append("title"), a.attr("class", function(a) {
-                return a.classes || a.id }).attr("d", function(a, d) {
-                return i(c(a, d)) }).select("title").text(function(a) {
-                return a.title || a.id }), a.transition().style("opacity", 1)) }) }
-            var e = d3.scale.linear(),
-                f = d3.scale.linear(),
-                i = d3.svg.line().x(function(a) {
-                    return e(a.x) }).y(function(a) {
-                    return f(a.y) }),
-                h = "fp-pathplot-" + (new Date).valueOf(),
-                l = "pathplot",
-                c = function(a) {
-                    return a.points };
-            a.xScale = function(c) {
-                if (!arguments.length) return e;
-                e = c;
-                return a };
-            a.yScale = function(c) {
-                if (!arguments.length) return f;
-                f = c;
-                return a };
-            a.id = function() {
-                return h };
-            a.title = function(c) {
-                if (!arguments.length) return l;
-                l = c;
-                return a };
-            a.pointFilter = function(d) {
-                if (!arguments.length) return c;
-                c = d;
-                return a };
-            return a
+            var x = d3.scale.linear(),
+                y = d3.scale.linear(),
+                line = d3.svg.line()
+                    .x(function(d) {
+                        return x(d.x); })
+                    .y(function(d) { return y(d.y); })
+                id = "fp-pathplot-" + new Date().valueOf(),
+                name = "pathplot",
+                pointFilter = function(d) { return d.points; };
+
+
+            function pathplot(g) {
+                g.each(function(data) {
+                    if (!data) return;
+
+                    var g = d3.select(this),
+                        paths = g.selectAll("path")
+                            .data(data, function(d) { return d.id; });
+
+                    paths.exit().transition()
+                        .style("opacity", 1e-6).remove();
+
+                    paths.enter().append("path")
+                        .attr("vector-effect", "non-scaling-stroke")
+                        .attr("fill", "none")
+                        .style("opacity", 1e-6)
+                        .append("title");
+
+                    paths
+                        .attr("class", function(d) { return d.classes || d.id; })
+                        .attr("d", function(d,i) { return line(pointFilter(d,i)); })
+                        .select("title")
+                        .text(function(d) { return d.title || d.id; });
+
+                    paths.transition()
+                        .delay(100)
+                        .duration(1000)
+                        .ease("linear")
+                        .each("start", function (d,i) {
+                            console.log(d + i);
+                            console.log("start");
+                        })
+                        .style("opacity", 1);
+                });
+            }
+
+            pathplot.xScale = function(scale) {
+                if (! arguments.length) return x;
+                x = scale;
+                return pathplot;
+            };
+
+            pathplot.yScale = function(scale) {
+                if (! arguments.length) return y;
+                y = scale;
+                return pathplot;
+            };
+
+            pathplot.id = function() {
+                return id;
+            };
+
+            pathplot.title = function(n) {
+                if (! arguments.length) return name;
+                name = n;
+                return pathplot;
+            };
+
+            pathplot.pointFilter = function(fn) {
+                if (! arguments.length) return pointFilter;
+                pointFilter = fn;
+                return pathplot;
+            };
+
+            return pathplot;
         };
 
 
@@ -699,7 +1281,7 @@ export default class Draw extends Component {
         var pathData;
 
         switch (row) {
-            case 1: pathData = [{"id": "flt-1", "classes": "planned",
+            case 1: pathData = [{"id": "flt-2", "classes": "planned","title": "测试",
                         "points": [{"x": 12.9, "y": 25}, {"x": 12.9, "y": 20},
                             {"x": 8.95, "y": 17.3}, {"x": 8.95, "y": 11.3}]}];
             break;
@@ -732,13 +1314,14 @@ export default class Draw extends Component {
         console.log("add-path: #test"+ row + " finished");
     }
 
+    handlePathToggle(row, event) {
+        console.log(row);
+        console.log(event.target.getAttribute("value"));
+    }
+
     remove (row, event) {
         d3.select("#test" + row).remove();
         console.log("remove-path: #test" + row + " finished");
-    }
-
-    removeMapControls() {
-        d3.select(".map-controls").remove();
     }
 
 
@@ -770,7 +1353,6 @@ export default class Draw extends Component {
                 wscript.SendKeys("{F11}");
             }
         }
-        // console.log(Tracks.find().fetch());
     }
 
     render() {
@@ -811,9 +1393,13 @@ export default class Draw extends Component {
                                     <TableRowColumn>{data.depart}</TableRowColumn>
                                     <TableRowColumn>{data.isExit}</TableRowColumn>
                                     <TableRowColumn>
-                                        <IconButton onTouchTap={this.handleAddLayer.bind(this, index + 1)}>
-                                            <ModeEdit color="#00bcd4"/>
-                                        </IconButton>
+                                        <Toggle
+                                            labelPosition="left"
+                                            onToggle={this.handlePathToggle.bind(this, index + 1 )}
+                                        />
+                                        {/*<IconButton onTouchTap={this.handleAddLayer.bind(this, index + 1)}>*/}
+                                            {/*<ModeEdit color="#00bcd4"/>*/}
+                                        {/*</IconButton>*/}
                                     </TableRowColumn>
                                     <TableRowColumn>
                                         <IconButton onTouchTap={this.remove.bind(this, index + 1)}>
