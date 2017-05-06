@@ -38,3 +38,27 @@ tracks
 
 
 db.tracks.insert({ "macAddress" : "00-01-6C-06-A6-29", "point" : "2,3", "timeStamp" : Math.round(new Date().getTime()/1000) })
+
+db.guests.insert({
+    "macAddress" : "3c-2d-5f-f9-2f-d1",
+    "tracks" : [
+        {"point" : 2, "timeStamp" : 1492859737 },
+        { "point" : 47, "timeStamp" : 1492859747 },
+        { "point" : 48, "timeStamp" : 1492859757 },
+        { "point" : 49, "timeStamp" : 1492859767 },
+        { "point" : 50, "timeStamp" : 1492859777 },
+        { "point" : 51, "timeStamp" : 1492859787 },
+        { "point" : 52, "timeStamp" : 1492859797 },
+        { "point" : 53, "timeStamp" : 1492859807 },
+        { "point" : 54, "timeStamp" : 1492859817 },
+        { "point" : 55, "timeStamp" : 1492859827 },
+        { "point" : 56, "timeStamp" : 1492859837 },
+        { "point" : 58, "timeStamp" : 1492859847 }
+    ]}
+);
+
+
+
+{ "_id" : ObjectId("590dca0edac4ca13f3b211b4"), "macAddress" : "00-01-6C-06-A6-29", "tracks" : [ { "point" : 2, "timeStamp" : 1492859737 }, { "point" : 47, "timeStamp" : 1492859747 }, { "point" : 48, "timeStamp" : 1492859757 }, { "point" : 49, "timeStamp" : 1492859767 }, { "point" : 50, "timeStamp" : 1492859777 }, { "point" : 51, "timeStamp" : 1492859787 }, { "point" : 52, "timeStamp" : 1492859797 }, { "point" : 53, "timeStamp" : 1492859807 }, { "point" : 54, "timeStamp" : 1492859817 }, { "point" : 55, "timeStamp" : 1492859827 }, { "point" : 56, "timeStamp" : 1492859837 }, { "point" : 57, "timeStamp" : 1492859847 } ] }
+{ "_id" : ObjectId("590dca6adac4ca13f3b211b5"), "macAddress" : "30-01-6C-06-A6-29", "tracks" : [ { "point" : 5, "timeStamp" : 1492759737 }, { "point" : 6, "timeStamp" : 1492759747 }, { "point" : 7, "timeStamp" : 1492759757 }, { "point" : 8, "timeStamp" : 1492759767 }, { "point" : 9, "timeStamp" : 1492759777 }, { "point" : 10, "timeStamp" : 1492759787 }, { "point" : 11, "timeStamp" : 1492759797 }, { "point" : 12, "timeStamp" : 1492759807 }, { "point" : 13, "timeStamp" : 1492759817 }, { "point" : 14, "timeStamp" : 1492759827 }, { "point" : 15, "timeStamp" : 1492759837 } ] }
+{ "_id" : ObjectId("590dfdeb9200e78afd96a743"), "macAddress" : "ec-db-5f-f9-2f-d1", "tracks" : [ { "point" : 2, "timeStamp" : 1492859737 }, { "point" : 47, "timeStamp" : 1492859747 }, { "point" : 48, "timeStamp" : 1492859757 }, { "point" : 49, "timeStamp" : 1492859767 }, { "point" : 50, "timeStamp" : 1492859777 }, { "point" : 51, "timeStamp" : 1492859787 }, { "point" : 52, "timeStamp" : 1492859797 }, { "point" : 53, "timeStamp" : 1492859807 }, { "point" : 54, "timeStamp" : 1492859817 }, { "point" : 55, "timeStamp" : 1492859827 }, { "point" : 56, "timeStamp" : 1492859837 }, { "point" : 57, "timeStamp" : 1492859847 } ] }

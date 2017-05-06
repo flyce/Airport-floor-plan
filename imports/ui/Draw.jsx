@@ -14,41 +14,6 @@ import { Guests } from '../api/guests.js';
 
 import { createContainer } from 'meteor/react-meteor-data';
 
-// 测试数据
-const testData = [
-    {
-        id: '10001',
-        mac: 'e0:db:55:f9:2f:51',
-        getIn: '2017-03-17 11:32',
-        depart: '2017-03-17 11:32',
-        isExit: '是'
-    },
-    {
-        id: '10002',
-        mac: 'e1:cb:25:f4:1f:5a',
-        getIn: '2017-03-17 11:32',
-        depart: '2017-03-17 11:32',
-        isExit: '是'
-    },{
-        id: '10003',
-        mac: 'e0:db:55:f9:2f:51',
-        getIn: '2017-03-17 11:32',
-        depart: '2017-03-17 11:32',
-        isExit: '是'
-    },{
-        id: '10004',
-        mac: '30:fb:54:59:ff:31',
-        getIn: '2017-03-17 11:32',
-        depart: '2017-03-17 11:32',
-        isExit: '是'
-    },{
-        id: '10005',
-        mac: 'f0:df:25:9f:31:e1',
-        getIn: '2017-03-17 11:32',
-        depart: '2017-03-17 11:32',
-        isExit: '是'
-    },
-];
 
 class Draw extends Component {
 
@@ -617,6 +582,80 @@ class Draw extends Component {
     getData(macAddress) {
         let result = Guests.find({"macAddress": macAddress}, {}).fetch()[0];
         return result;
+    }
+
+    getAllData() {
+        return Guests.find().fetch();
+    }
+
+    calcSimilar(macAddress) {
+        let baseInfo = this.getData(macAddress);
+        let basePoint =[];
+        let similarUser = [];
+        baseInfo.tracks.map(function (value, key) {
+           basePoint.push(value.point + ','+ value.timeStamp);
+        });
+
+        let allInfo = this.getAllData();
+        let userInfo = [];
+        let userData = [];
+        for (var i=0; i < allInfo.length; ++i) {
+            let currentUserMacAddress = allInfo[i].macAddress;
+            if (currentUserMacAddress === baseInfo.macAddress) {
+                continue;
+            }
+            userInfo[currentUserMacAddress] = [];
+            // 从数据库获得的每一个用户信息改变格式
+            allInfo[i].tracks.map(function (value, key) {
+                userData.push(value.point + ','+ value.timeStamp);
+            });
+            let result = this.checkSimilar(basePoint, userData, 3, 30);
+            if(result[0]["status"] === 1) {
+                similarUser.push(currentUserMacAddress);
+            }
+            userData = [];
+        }
+        console.log(similarUser);
+
+    }
+
+    checkSimilar(data, anotherData, minSimilarPointNum, time) {
+        let result = [];
+        let similarPointCount = 0;
+        for (var j = 0; j < data.length; ++j) {
+            let dataPoint = data[j].split(',');
+            for (var i = 0; i < anotherData.length; ++i) {
+                let anotherDataPoint = anotherData[i].split(',');
+                if (dataPoint[0] === anotherDataPoint[0]
+                    && ( Math.abs(parseInt(dataPoint[1]) - parseInt(anotherDataPoint[1])) < time )
+                ) {
+                    similarPointCount++;
+                    result.push({
+                        point: dataPoint[0],
+                        time: dataPoint[1],
+                        anotherTime: anotherDataPoint[1],
+                        timeDifference: Math.abs(parseInt(dataPoint[1]) - parseInt(anotherDataPoint[1])),
+                    });
+                }
+            }
+        }
+
+        if (similarPointCount <=  minSimilarPointNum) {
+            return [{
+                status: 0,
+                info: "不满足最小限制条件"
+            }];
+        }
+
+
+        // parseFloat(((similarPointCount/data.length) * 100).toString().match(/^\d+(?:\.\d{0,2})?/)[0])把 0-1 的小数转换成 0-100 的数，保留小数点后两位
+        return [{
+            status: 1,
+            similarPonintNumber: similarPointCount,
+            SimilarityBtoA: similarPointCount/data.length,
+            SimilarityAtoB: similarPointCount/anotherData.length,
+            info: result
+        }];
     }
 
     // 编号到 x, y 的转换
@@ -1507,6 +1546,7 @@ class Draw extends Component {
                                 <TableHeaderColumn>离开时间</TableHeaderColumn>
                                 <TableHeaderColumn>绘制</TableHeaderColumn>
                                 <TableHeaderColumn>取消绘制</TableHeaderColumn>
+                                <TableHeaderColumn>同行用户</TableHeaderColumn>
                             </TableRow>
                         </TableHeader>
                         <TableBody
@@ -1517,7 +1557,7 @@ class Draw extends Component {
 
                             {this.props.guests.map((data, index) => (
                                 <TableRow key={index} selected={data.selected}>
-                                    <TableRowColumn>{index + 1}{console.log(data)}</TableRowColumn>
+                                    <TableRowColumn>{index + 1}</TableRowColumn>
                                     <TableRowColumn>{data.macAddress}</TableRowColumn>
                                     <TableRowColumn>{new Date(data.tracks[1]["timeStamp"] * 1000 ).toLocaleString('chinese', {hour12:false})}</TableRowColumn>
                                     <TableRowColumn>{new Date(data.tracks[data.tracks.length - 1]["timeStamp"] * 1000).toLocaleString('chinese', {hour12:false})}</TableRowColumn>
@@ -1528,6 +1568,11 @@ class Draw extends Component {
                                     </TableRowColumn>
                                     <TableRowColumn>
                                         <IconButton onTouchTap={this.handleRemoveLayer.bind(this, data.macAddress)}>
+                                            <Clear color="#00bcd4"/>
+                                        </IconButton>
+                                    </TableRowColumn>
+                                    <TableRowColumn>
+                                        <IconButton onTouchTap={this.calcSimilar.bind(this, data.macAddress)}>
                                             <Clear color="#00bcd4"/>
                                         </IconButton>
                                     </TableRowColumn>
