@@ -14,9 +14,26 @@ a:active, a:visited, a:hover {
 
 /* path plot */
 .pathplot path {stroke-width:2px;stroke:steelblue}
-.planned {stroke-dasharray:9, 5}
+/*.planned {stroke-dasharray:10;}*/
 
+/*@keyframes strokeanim {*/
+    /*to { stroke-dashoffset: 0; }*/
+/*}*/
 
+/*路径动画*/
+@keyframes marchingants {
+    to { stroke-dashoffset: 19; }
+}
+
+.planned {
+    /*stroke-dasharray: 300;*/
+    /*stroke-dashoffset: 300;*/
+    /*animation: strokeanim 2s alternate infinite;*/
+
+    stroke-width: 7;
+    stroke-dasharray: 10;
+    animation: marchingants 1s forwards infinite linear;
+}
 /* path plot color*/
 #test1 path{stroke-width:2px;stroke:blue}
 #test2 path{stroke-width:2px;stroke:chocolate}

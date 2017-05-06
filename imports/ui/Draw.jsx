@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn, TableFooter } from 'material-ui/Table';
 import IconButton from 'material-ui/IconButton';
@@ -8,6 +8,11 @@ import d3 from 'd3';
 // icon
 import ModeEdit from "material-ui/svg-icons/editor/mode-edit";
 import Clear from "material-ui/svg-icons/content/clear";
+
+// Database
+import { Guests } from '../api/guests.js';
+
+import { createContainer } from 'meteor/react-meteor-data';
 
 // 测试数据
 const testData = [
@@ -45,7 +50,7 @@ const testData = [
     },
 ];
 
-export default class Draw extends Component {
+class Draw extends Component {
 
     constructor(props) {
         super(props);
@@ -60,6 +65,7 @@ export default class Draw extends Component {
         this.InitView();
     }
 
+    // 初始化机场图层
     InitView(){
 
         // d3 floorplan v0.1.0
@@ -572,91 +578,6 @@ export default class Draw extends Component {
 
             return overlays;
         };
-        /***
-         * 自定义方法 用于在某个点放置一个三角形
-         * @returns {monitor}
-         */
-        d3.floorplan.monitor = function() {
-            var x = d3.scale.linear(),
-                y = d3.scale.linear(),
-                id = "fp-overlays-" + new Date().valueOf(),
-                name = "monitor",
-                editMode = false,
-                pointPosition = [];
-
-            function monitor(g) {
-                g.each(function(data){
-                    if (! data) return;
-                    var g = d3.select(this);
-
-                    var pointData = [];
-                    if (data.polygons) {
-                        data.polygons.forEach(function(polygon) {
-                            polygon.points.forEach(function(pt, i) {
-                                pointData.push({"index":i,
-                                    "parent":polygon});
-                            });
-                        });
-                    }
-
-                    // determine current view scale to make appropriately
-                    // sized points to drag
-                    var scale = 1;
-
-
-                    var points = g.selectAll("circle.vertex")
-                        .data(pointData, function(d) {
-                            return d.parent.id + "-" + d.index;});
-
-                    points.enter().append("circle")
-                        .attr("class", "vertex")
-                        .attr("pointer-events", "all")
-                        .attr("vector-effect", "non-scaling-stroke")
-                        .style("cursor", "move")
-                        .attr("r", 1e-6)
-
-                    points
-                        .attr("cx", function(d) {
-                            pointPosition[d.index] = {x: d.parent.points[d.index].x, y: d.parent.points[d.index].y};
-                            return x(d.parent.points[d.index].x);
-                        })
-                        .attr("cy", function(d) { return y(d.parent.points[d.index].y); })
-                        .attr("r", 4/scale);
-
-                });
-            }
-
-            monitor.xScale = function(scale) {
-                if (! arguments.length) return x;
-                x = scale;
-                return monitor;
-            };
-
-            monitor.yScale = function(scale) {
-                if (! arguments.length) return y;
-                y = scale;
-                return overlays;
-            };
-
-            monitor.id = function() {
-                return id;
-            };
-
-            monitor.title = function(n) {
-                if (! arguments.length) return name;
-                name = n;
-                return monitor;
-            };
-
-            monitor.editMode = function(enable) {
-                if (! arguments.length) return editMode;
-                editMode = enable;
-                return monitor;
-            };
-
-
-            return monitor;
-        };
         // d3 floorplan end
 
         var xscale = d3.scale.linear()
@@ -689,12 +610,117 @@ export default class Draw extends Component {
                 .attr("height", this.getHeight()).attr("width",this.getWidth()).attr("id", "draw")
                 .datum(mapdata).call(map);
         }.bind(this));
-
         console.log("background-image:","finished");
     }
 
-    handleAddLayer(row, event) {
+    // 通过 macAdress 获取用户信息
+    getData(macAddress) {
+        let result = Guests.find({"macAddress": macAddress}, {}).fetch()[0];
+        return result;
+    }
 
+    // 编号到 x, y 的转换
+    convertLocation(point) {
+        let location = [
+            {"x": 18.811155404737598, "y": 21.315690433186127},
+            {"x": 20.94086251770829, "y": 22.077985806851608},
+            {"x": 22.986887622310796, "y": 22.13811036201175},
+            {"x": 25.325799756202017, "y": 21.236242034609596},
+            {"x": 27.915757915197837, "y": 22.077985806851594},
+            {"x": 29.96178301980033, "y": 22.077985806851604},
+            {"x": 32.13333113695516, "y": 21.236242034609578},
+            {"x": 32.12914703653671, "y": 19.432505379805367},
+            {"x": 33.29651105327311, "y": 16.726900397598904},
+            {"x": 34.63123908674596, "y": 15.764907515036612},
+            {"x": 37.01199222482124, "y": 15.764907515036615},
+            {"x": 39.94086251770824, "y": 17.467718902936987},
+            {"x": 40.81533950515599, "y": 19.131882604004552},
+            {"x": 40.76931440055346, "y": 22.37860858265229},
+            {"x": 40.649490989358526, "y": 25.22933832865398},
+            {"x": 38.666425065067685, "y": 24.773016118552437},
+            {"x": 39.255427799558525, "y": 26.46002855320495},
+            {"x": 40.42773366718278, "y": 27.181523215126635},
+            {"x": 42.09718973412837, "y": 26.46707833354198},
+            {"x": 42.67877969228737, "y": 25.32471178549929},
+            {"x": 42.167561690771905, "y": 21.420140590258526},
+            {"x": 42.2421177478338, "y": 17.087647728559773},
+            {"x": 42.15843573946558, "y": 12.236882604004613},
+            {"x": 42.865548710176924, "y": 7.7082171235775725},
+            {"x": 42.861364609758475, "y": 5.3633594723320055},
+            {"x": 42.145883438210376, "y": 3.8001210381683093},
+            {"x": 40.426218166243835, "y": 3.138750931406736},
+            {"x": 38.74839389846142, "y": 4.341242034609592},
+            {"x": 38.70236879385889, "y": 7.708217123577567},
+            {"x": 40.70655289427734, "y": 6.625975130694996},
+            {"x": 40.660527789674816, "y": 10.053074774823102},
+            {"x": 40.6563436892564, "y": 12.87892886734981},
+            {"x": 40.65215958883798, "y": 15.644658404716328},
+            {"x": 39.56429348005131, "y": 14.220992924289293},
+            {"x": 38.84881230850325, "y": 15.464284739235898},
+            {"x": 35.45550686917272, "y": 14.321918191193198},
+            {"x": 35.4513227687543, "y": 11.375814988346239},
+            {"x": 37.329983856620416, "y": 11.49606409866652},
+            {"x": 36.279774651599475, "y": 10.113199329983253},
+            {"x": 35.52245247586725, "y": 10.113199329983251},
+            {"x": 34.09567423318941, "y": 13.359925308630926},
+            {"x": 32.417849965407015, "y": 13.359925308630944},
+            {"x": 31.28395875201793, "y": 17.688893280161185},
+            {"x": 29.64797548841956, "y": 17.688893280161164},
+            {"x": 27.974335321055563, "y": 17.648092568417425},
+            {"x": 26.380193061641336, "y": 17.688893280161192},
+            {"x": 24.74420979804301, "y": 17.628768725001056},
+            {"x": 22.899021513524183, "y": 17.62876872500107},
+            {"x": 21.34672025829404, "y": 17.62876872500108},
+            {"x": 19.710736994695722, "y": 17.688893280161203},
+            {"x": 17.740025697624596, "y": 17.56864416984094},
+            {"x": 16.982703521892386, "y": 15.584533849556182},
+            {"x": 14.133331136955144, "y": 15.70478295987647},
+            {"x": 11.702368793858922, "y": 15.764907515036612},
+            {"x": 9.982703521892399, "y": 18.711010717883614},
+            {"x": 10.108226534444698, "y": 22.037185095107823},
+            {"x": 10.187724442394481, "y": 23.641224241015284},
+            {"x": 11.625901887787036, "y": 25.98255700209233},
+            {"x": 10.782426778242666, "y": 26.827825664502843},
+            {"x": 9.547557078377745, "y": 26.827825664502843},
+            {"x": 8.62287088590913, "y": 26.286704668061557},
+            {"x": 8.116594735281518, "y": 24.723466233897852},
+            {"x": 8.028728626494905, "y": 22.25835947233204},
+            {"x": 8.694000593022107, "y": 18.350263386922787},
+            {"x": 8.731657496787804, "y": 14.622540966993908},
+            {"x": 8.811155404737587, "y": 11.015067657385371},
+            {"x": 8.058017329423782, "y": 6.945921749912075},
+            {"x": 8.30487925410997, "y": 4.641864810410295},
+            {"x": 9.011992224821261, "y": 3.6197473726878804},
+            {"x": 10.806971304319172, "y": 3.3792491520473074},
+            {"x": 11.681448291766872, "y": 4.220992924289306},
+            {"x": 12.221197245741772, "y": 5.724106803292855},
+            {"x": 10.12496293611836, "y": 6.08485413425372},
+            {"x": 10.162619839884028, "y": 7.648092568417418},
+            {"x": 11.162619839884021, "y": 8.068964454538412},
+            {"x": 12.790234902645532, "y": 8.730334561299973},
+            {"x": 13.413665864988625, "y": 9.752451999022385},
+            {"x": 13.622870885909139, "y": 11.335014276602479},
+            {"x": 12.572661680888197, "y": 12.097309650267933},
+            {"x": 9.974335321055586, "y": 8.790459116460127},
+            {"x": 10.011992224821268, "y": 11.616313208986798},
+            {"x": 10.091490132771062, "y": 13.540298974111359},
+            {"x": 10.003624023984448, "y": 15.764907515036615},
+            {"x": 11.840444107666466, "y": 12.999177977670083},
+            {"x": 17.777682601390318, "y": 13.420049863791075},
+            {"x": 24.17098804072084, "y": 13.420049863791066},
+            {"x": 27.430402266662263, "y": 13.420049863791078},
+            {"x": 30.678955026449103, "y": 15.274340106682281},
+            {"x": 27.885179592277023, "y": 15.154322226711287},
+            {"x": 25.513730823625284, "y": 15.241882258497903},
+            {"x": 21.738315757042674, "y": 15.28011680571139},
+            {"x": 18.79995959265914, "y": 15.28011680571139}
+        ];
+        return location[point];
+    }
+
+    // 新增旅客轨迹
+    handleAddLayer(macAddress, event) {
+        this.getData();
         d3.floorplan = function() {
             var layers = [],
                 panZoomEnabled = true,
@@ -977,8 +1003,8 @@ export default class Draw extends Component {
                         .text(function(d) { return d.title || d.id; });
 
                     paths.transition()
-                        .delay(100)
-                        .duration(1000)
+                        // .delay(100)
+                        // .duration(5000)
                         .ease("linear")
                         .style("opacity", 1);
                 });
@@ -1015,7 +1041,7 @@ export default class Draw extends Component {
             return pathplot;
         };
 
-        if (!document.getElementById("test" + row)) {
+        if (!document.getElementById("path-" + macAddress)) {
             var xscale = d3.scale.linear()
                     .domain([0,50.0])
                     .range([0,this.getWidth()]), //730
@@ -1027,50 +1053,36 @@ export default class Draw extends Component {
                 mapdata = {};
 
 
-
             // 负责初始图层绘制
             map.addLayer(pathplot);
 
-            var pathData;
+            let points = this.getData(macAddress);
+            let pathData = [{"id": "flt-2", "classes": "planned","title": "测试",
+                "points": []}];
 
-            switch (row) {
-                case 1: pathData = [{"id": "flt-2", "classes": "planned","title": "测试",
-                    "points": [{"x": 12.9, "y": 25}, {"x": 12.9, "y": 20},
-                        {"x": 8.95, "y": 17.3}, {"x": 8.95, "y": 11.3}]}];
-                    break;
-                case 2: pathData = [{"id": "flt-1", "classes": "planned",
-                    "points": [{"x": 15, "y": 15}, {"x": 15.9, "y": 21},
-                        {"x": 19.5, "y": 22}, {"x": 20.4, "y": 13}]}];
-                    break;
-                case 3: pathData = [{"id": "flt-1", "classes": "planned",
-                    "points": [{"x": 1, "y": 2}, {"x": 1.9, "y": 2.1},
-                        {"x": 9.5, "y": 9.3}, {"x": 5.4, "y": 1.3}]}];
-                    break;
-                case 4: pathData = [{"id": "flt-1", "classes": "planned",
-                    "points": [{"x": 25, "y": 0}, {"x": 2.9, "y": 2.9},
-                        {"x": 7, "y": 7}, {"x": 6, "y": 6}]}];
-                    break;
-                default:
-                    pathData = [{"id": "flt-1", "classes": "planned",
-                        "points": [{"x": 30, "y": 30}, {"x": 30, "y": 21},
-                            {"x": 16.66, "y": 7.36}, {"x": 17.4, "y": 13}]}];
+            let pathPoint = [];
+
+            for (let i = points.tracks.length - 1; i >= 0 ; --i) {
+                pathPoint.push(this.convertLocation(points.tracks[i].point));
             }
+
+            pathData[0]["points"] = pathPoint;
 
             mapdata[pathplot.id()] = pathData; // 蓝色虚线绘制
 
             d3.select("#draw").append("g")
-                .attr("height", this.getHeight()).attr("width",this.getWidth()).attr("id", "test" + row)
+                .attr("height", this.getHeight()).attr("width",this.getWidth()).attr("id", "path-" + macAddress)
                 .datum(mapdata).call(map);
 
-
-            console.log("add-path: #test"+ row + " finished");
+            console.log("add-path: #path-"+ macAddress + " finished");
         }
     }
 
-    handleRemoveLayer(row, event) {
-        if (document.getElementById("test" + row)) {
-            d3.select("#test" + row).remove();
-            console.log("remove-path: #test" + row + " finished");
+    // 移除旅客轨迹
+    handleRemoveLayer(macAddress, event) {
+        if (document.getElementById("path-" + macAddress)) {
+            d3.select("#path-" + macAddress).remove();
+            console.log("remove-path: #path-" + macAddress + " finished");
         }
     }
 
@@ -1493,7 +1505,6 @@ export default class Draw extends Component {
                                 <TableHeaderColumn>Mac</TableHeaderColumn>
                                 <TableHeaderColumn>进入时间</TableHeaderColumn>
                                 <TableHeaderColumn>离开时间</TableHeaderColumn>
-                                <TableHeaderColumn>是否离开</TableHeaderColumn>
                                 <TableHeaderColumn>绘制</TableHeaderColumn>
                                 <TableHeaderColumn>取消绘制</TableHeaderColumn>
                             </TableRow>
@@ -1504,20 +1515,19 @@ export default class Draw extends Component {
                             displayRowCheckbox={false}
                         >
 
-                            {testData.map((data, index) => (
+                            {this.props.guests.map((data, index) => (
                                 <TableRow key={index} selected={data.selected}>
-                                    <TableRowColumn>{index + 1}</TableRowColumn>
-                                    <TableRowColumn>{data.mac}</TableRowColumn>
-                                    <TableRowColumn>{data.getIn}</TableRowColumn>
-                                    <TableRowColumn>{data.depart}</TableRowColumn>
-                                    <TableRowColumn>{data.isExit}</TableRowColumn>
+                                    <TableRowColumn>{index + 1}{console.log(data)}</TableRowColumn>
+                                    <TableRowColumn>{data.macAddress}</TableRowColumn>
+                                    <TableRowColumn>{new Date(data.tracks[1]["timeStamp"] * 1000 ).toLocaleString('chinese', {hour12:false})}</TableRowColumn>
+                                    <TableRowColumn>{new Date(data.tracks[data.tracks.length - 1]["timeStamp"] * 1000).toLocaleString('chinese', {hour12:false})}</TableRowColumn>
                                     <TableRowColumn>
-                                        <IconButton onTouchTap={this.handleAddLayer.bind(this, index + 1)}>
+                                        <IconButton onTouchTap={this.handleAddLayer.bind(this, data.macAddress)}>
                                             <ModeEdit color="#00bcd4"/>
                                         </IconButton>
                                     </TableRowColumn>
                                     <TableRowColumn>
-                                        <IconButton onTouchTap={this.handleRemoveLayer.bind(this, index + 1)}>
+                                        <IconButton onTouchTap={this.handleRemoveLayer.bind(this, data.macAddress)}>
                                             <Clear color="#00bcd4"/>
                                         </IconButton>
                                     </TableRowColumn>
@@ -1537,3 +1547,14 @@ export default class Draw extends Component {
         );
     }
 }
+
+
+Draw.propTypes = {
+    guests: PropTypes.array.isRequired,
+};
+
+export default createContainer(() => {
+    return {
+        guests: Guests.find().fetch(),
+    };
+}, Draw);

@@ -14,6 +14,7 @@ import Looks5 from 'material-ui/svg-icons/image/looks-5';
 import Avatar from 'material-ui/Avatar';
 import { Peoples } from '../api/peoples.js';
 import { Tracks } from '../api/tracks.js';
+import { Guests } from '../api/guests.js'
 import { createContainer } from 'meteor/react-meteor-data';
 
 import ModeEdit from "material-ui/svg-icons/editor/mode-edit";
@@ -99,6 +100,7 @@ class PeopleTest extends Component {
     // 异步，不能直接给赋值
     getDbData() {
         // Meteor.call("getNoRepeatMacAddress");
+        console.log(Guests.find().fetch());
         let result = Peoples.find({},{skip:this.state.skipPageNum * 10, limit: 10});
         //Tracks.mapReduce(function() {emit(this.macAddress,1);},function(key,values) {return Array.sum(values)},{out: 'peoples'} ).find()
         //

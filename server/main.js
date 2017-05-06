@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import '../imports/api/users.js';
 import '../imports/api/tracks.js';
 import '../imports/api/peoples.js';
+import '../imports/api/guests.js';
 
 var fs = require( 'fs' );
 import { Users } from '../imports/api/users.js';
