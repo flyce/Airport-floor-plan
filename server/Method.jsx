@@ -1,10 +1,11 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { Users } from '../imports/api/users.js';
-import {Tracks} from '../imports/api/tracks.js';
 import bcrypt from 'bcrypt';
 
 const Login = new Mongo.Collection('login');
+
+const AdminOperation = new Mongo.Collection('AdminOperation');
 
 // 数据二次验证，数据库操作
 Meteor.methods({
@@ -37,8 +38,13 @@ Meteor.methods({
         return false;
     },
 
-    addUser: (uid, username, password, group) => {
+    addUser: (uid, username, password, group, sourceUid) => {
         if(uid && username && password, group) {
+            AdminOperation.insert({
+                sourceUid: sourceUid,
+                behavior: "add user " + uid,
+                descUid: uid
+            });
             return Users.insert({
                 uid: uid,
                 username: username,
@@ -51,8 +57,13 @@ Meteor.methods({
         return false;
     },
 
-    updateUser: (uid, username, password, group) => {
+    updateUser: (uid, username, password, group, sourceUid) => {
         let u,p,g;
+        AdminOperation.insert({
+            sourceUid: sourceUid,
+            behavior: "update user " + uid,
+            descUid: uid
+        });
         if (username) {
             u = Users.update({uid:uid}, {$set: {username: username}});
         }
@@ -65,8 +76,13 @@ Meteor.methods({
         return (u || p || g);
     },
 
-    deleteUser: (uid) => {
+    deleteUser: (uid, sourceUid) => {
         if (uid) {
+            AdminOperation.insert({
+                sourceUid: sourceUid,
+                behavior: "delete user " + uid,
+                descUid: uid
+            });
             return Users.remove({uid: uid});
         }
         return false;

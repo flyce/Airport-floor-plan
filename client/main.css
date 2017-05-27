@@ -35,10 +35,10 @@ a:active, a:visited, a:hover {
     animation: marchingants 1s forwards infinite linear;
 }
 /* path plot color*/
-#test1 path{stroke-width:2px;stroke:blue}
-#test2 path{stroke-width:2px;stroke:chocolate}
-#test3 path{stroke-width:2px;stroke:darkviolet}
-#test4 path{stroke-width:2px;stroke: #7f821f}
+#path-00-01-6C-06-A6-29 path{stroke-width:2px;stroke:blue}
+#path-30-01-6C-06-A6-29 path{stroke-width:2px;stroke:chocolate}
+#path-ec-db-5f-f9-2f-d1 path{stroke-width:2px;stroke:darkviolet}
+#path-3c-2d-5f-f9-2f-d1 path{stroke-width:2px;stroke: #7f821f}
 #test5 path{stroke-width:2px;stroke:green}
 
 #demo {

@@ -2,9 +2,31 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f349ef7a-fcdd-4ebd-813b-1a996ee07b8f" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/react/.meteor-portable-1.json" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/main.css" afterPath="$PROJECT_DIR$/client/main.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/ui/App.jsx" afterPath="$PROJECT_DIR$/imports/ui/App.jsx" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/ui/Draw.jsx" afterPath="$PROJECT_DIR$/imports/ui/Draw.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/ui/db.sql" afterPath="$PROJECT_DIR$/imports/ui/db.sql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/ui/Routers.jsx" afterPath="$PROJECT_DIR$/imports/ui/Routers.jsx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/ui/User.jsx" afterPath="$PROJECT_DIR$/imports/ui/User.jsx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react/README.md" afterPath="$PROJECT_DIR$/node_modules/react/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react/dist/react-with-addons.js" afterPath="$PROJECT_DIR$/node_modules/react/dist/react-with-addons.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react/dist/react-with-addons.min.js" afterPath="$PROJECT_DIR$/node_modules/react/dist/react-with-addons.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react/dist/react.js" afterPath="$PROJECT_DIR$/node_modules/react/dist/react.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react/dist/react.min.js" afterPath="$PROJECT_DIR$/node_modules/react/dist/react.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react/lib/React.js" afterPath="$PROJECT_DIR$/node_modules/react/lib/React.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react/lib/ReactCSSTransitionGroup.js" afterPath="$PROJECT_DIR$/node_modules/react/lib/ReactCSSTransitionGroup.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react/lib/ReactCSSTransitionGroupChild.js" afterPath="$PROJECT_DIR$/node_modules/react/lib/ReactCSSTransitionGroupChild.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react/lib/ReactClass.js" afterPath="$PROJECT_DIR$/node_modules/react/lib/ReactClass.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react/lib/ReactElementValidator.js" afterPath="$PROJECT_DIR$/node_modules/react/lib/ReactElementValidator.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react/lib/ReactPropTypes.js" afterPath="$PROJECT_DIR$/node_modules/react/lib/ReactPropTypes.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react/lib/ReactTransitionGroup.js" afterPath="$PROJECT_DIR$/node_modules/react/lib/ReactTransitionGroup.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react/lib/ReactUMDEntry.js" afterPath="$PROJECT_DIR$/node_modules/react/lib/ReactUMDEntry.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react/lib/ReactVersion.js" afterPath="$PROJECT_DIR$/node_modules/react/lib/ReactVersion.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react/lib/ReactWithAddonsUMDEntry.js" afterPath="$PROJECT_DIR$/node_modules/react/lib/ReactWithAddonsUMDEntry.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react/package.json" afterPath="$PROJECT_DIR$/node_modules/react/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/Method.jsx" afterPath="$PROJECT_DIR$/server/Method.jsx" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -22,13 +44,12 @@
       <file leaf-file-name="Draw.jsx" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/imports/ui/Draw.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="945">
-              <caret line="617" column="33" lean-forward="false" selection-start-line="617" selection-start-column="33" selection-end-line="617" selection-end-column="33" />
+            <state relative-caret-position="-910">
+              <caret line="614" column="36" lean-forward="false" selection-start-line="614" selection-start-column="36" selection-end-line="614" selection-end-column="36" />
               <folding>
                 <element signature="e#0#52#0" expanded="true" />
                 <element signature="e#360#422#0" expanded="true" />
                 <element signature="e#493#535#0" expanded="true" />
-                <element signature="n#!!block;n#constructor#0;n#Draw#0" expanded="false" />
                 <element signature="n#!!block;n#componentDidMount#0;n#Draw#0" expanded="false" />
                 <element signature="n#!!block;n#InitView#0;n#Draw#0" expanded="false" />
                 <element signature="e#969#11450#0" expanded="false" />
@@ -36,45 +57,92 @@
                 <element signature="e#11497#13008#0" expanded="false" />
                 <element signature="e#13053#24764#0" expanded="false" />
                 <element signature="e#13837#21664#0" expanded="false" />
-                <element signature="n#!!block;n#convertLocation#0;n#Draw#0" expanded="false" />
-                <element signature="e#28801#34618#0" expanded="false" />
+                <element signature="e#28838#34655#0" expanded="false" />
                 <element signature="n#!!block;n#handleAddLayer#0;n#Draw#0" expanded="false" />
-                <element signature="e#34771#45252#0" expanded="false" />
-                <element signature="e#45297#47734#0" expanded="false" />
+                <element signature="e#34784#45265#0" expanded="false" />
+                <element signature="e#45310#47747#0" expanded="false" />
                 <element signature="n#!!block;n#handleRemoveLayer#0;n#Draw#0" expanded="false" />
                 <element signature="n#!!block;n#handleMapToggle#0;n#Draw#0" expanded="false" />
                 <element signature="n#!!block;n#handleAddMonitor#0;n#Draw#0" expanded="false" />
-                <element signature="e#49677#60158#0" expanded="false" />
-                <element signature="e#60202#62957#0" expanded="false" />
+                <element signature="e#49690#60171#0" expanded="false" />
+                <element signature="e#60215#62970#0" expanded="false" />
                 <element signature="n#!!block;n#handleRemoveMonitor#0;n#Draw#0" expanded="false" />
                 <element signature="n#!!block;n#getWidth#0;n#Draw#0" expanded="false" />
                 <element signature="n#!!block;n#getHeight#0;n#Draw#0" expanded="false" />
                 <element signature="n#!!block;n#fullScreen#0;n#Draw#0" expanded="false" />
                 <element signature="n#!!block;n#requestFullScreen#0;n#Draw#0" expanded="false" />
                 <element signature="n#!!block;n#render#0;n#Draw#0" expanded="false" />
-                <element signature="e#68002#68185#0" expanded="false" />
+                <element signature="e#68019#68202#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/main.js">
+      <file leaf-file-name="SimilarTable.jsx" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/imports/ui/SimilarTable.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="41">
-              <caret line="4" column="34" lean-forward="false" selection-start-line="4" selection-start-column="34" selection-end-line="4" selection-end-column="34" />
+            <state relative-caret-position="594">
+              <caret line="1393" column="108" lean-forward="true" selection-start-line="1393" selection-start-column="108" selection-end-line="1393" selection-end-column="108" />
               <folding>
-                <element signature="e#0#39#0" expanded="true" />
+                <element signature="e#0#52#0" expanded="true" />
+                <element signature="e#360#422#0" expanded="true" />
+                <element signature="e#493#535#0" expanded="true" />
+                <element signature="n#!!block;n#constructor#0;n#SimilarTable#0" expanded="false" />
+                <element signature="n#!!block;n#componentDidMount#0;n#SimilarTable#0" expanded="false" />
+                <element signature="n#!!block;n#InitView#0;n#SimilarTable#0" expanded="false" />
+                <element signature="e#978#11459#0" expanded="false" />
+                <element signature="e#7243#11424#0" expanded="false" />
+                <element signature="e#11506#13017#0" expanded="false" />
+                <element signature="e#13062#24773#0" expanded="false" />
+                <element signature="e#13846#21673#0" expanded="false" />
+                <element signature="n#!!block;n#handleAddLayer#0;n#SimilarTable#0" expanded="false" />
+                <element signature="e#26055#36536#0" expanded="false" />
+                <element signature="e#36581#39006#0" expanded="false" />
+                <element signature="n#!!block;n#handleRemoveLayer#0;n#SimilarTable#0" expanded="false" />
+                <element signature="n#!!block;n#handleMapToggle#0;n#SimilarTable#0" expanded="false" />
+                <element signature="n#!!block;n#handleAddMonitor#0;n#SimilarTable#0" expanded="false" />
+                <element signature="e#40949#51430#0" expanded="false" />
+                <element signature="e#51474#54229#0" expanded="false" />
+                <element signature="n#!!block;n#handleRemoveMonitor#0;n#SimilarTable#0" expanded="false" />
+                <element signature="n#!!block;n#getWidth#0;n#SimilarTable#0" expanded="false" />
+                <element signature="n#!!block;n#getHeight#0;n#SimilarTable#0" expanded="false" />
+                <element signature="n#!!block;n#fullScreen#0;n#SimilarTable#0" expanded="false" />
+                <element signature="n#!!block;n#requestFullScreen#0;n#SimilarTable#0" expanded="false" />
+                <element signature="e#59159#59342#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="db.sql" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/imports/ui/db.sql">
+      <file leaf-file-name="Routers.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/imports/ui/Routers.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="122">
-              <caret line="41" column="0" lean-forward="false" selection-start-line="41" selection-start-column="0" selection-end-line="57" selection-end-column="2" />
+            <state relative-caret-position="433">
+              <caret line="29" column="21" lean-forward="true" selection-start-line="29" selection-start-column="21" selection-end-line="29" selection-end-column="21" />
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="App.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/imports/ui/App.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="195">
+              <caret line="65" column="65" lean-forward="false" selection-start-line="65" selection-start-column="58" selection-end-line="65" selection-end-column="65" />
+              <folding>
+                <element signature="e#239#269#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Index.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/imports/ui/Index.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="225">
+              <caret line="25" column="1" lean-forward="false" selection-start-line="25" selection-start-column="1" selection-end-line="25" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -83,8 +151,68 @@
       <file leaf-file-name="User.jsx" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/imports/ui/User.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5835">
-              <caret line="407" column="106" lean-forward="false" selection-start-line="407" selection-start-column="81" selection-end-line="407" selection-end-column="106" />
+            <state relative-caret-position="-26">
+              <caret line="227" column="23" lean-forward="false" selection-start-line="227" selection-start-column="23" selection-end-line="227" selection-end-column="23" />
+              <folding>
+                <element signature="n#!!block;n#constructor#0;n#User#0" expanded="false" />
+                <element signature="n#!!block;n#handleOpen#0;n#User#0" expanded="false" />
+                <element signature="n#!!block;n#handleClose#0;n#User#0" expanded="false" />
+                <element signature="n#!!block;n#handleConfirm#0;n#User#0" expanded="false" />
+                <element signature="n#!!block;n#handleChange#0;n#User#0" expanded="false" />
+                <element signature="n#!!block;n#handleChoose#0;n#User#0" expanded="false" />
+                <element signature="n#!!block;n#handleSnackBarOpen#0;n#User#0" expanded="false" />
+                <element signature="n#!!block;n#handleSnackBarClose#0;n#User#0" expanded="false" />
+                <element signature="n#!!block;n#handleAddUser#0;n#User#0" expanded="false" />
+                <element signature="n#!!block;n#handleDeleteUser#0;n#User#0" expanded="false" />
+                <element signature="n#!!block;n#handleDeleteClose#0;n#User#0" expanded="false" />
+                <element signature="n#!!block;n#handleDeleteConfirm#0;n#User#0" expanded="false" />
+                <element signature="n#!!block;n#handlePageBefore#0;n#User#0" expanded="false" />
+                <element signature="n#!!block;n#handlePageNext#0;n#User#0" expanded="false" />
+                <element signature="n#!!block;n#handlePageNumClicked#0;n#User#0" expanded="false" />
+                <element signature="n#!!block;n#getDbData#0;n#User#0" expanded="false" />
+                <element signature="n#!!block;n#getDbCount#0;n#User#0" expanded="false" />
+                <element signature="n#!!block;n#render#0;n#User#0" expanded="false" />
+                <element signature="e#11109#11874#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PeopleTest.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/imports/ui/PeopleTest.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="349">
+              <caret line="196" column="26" lean-forward="false" selection-start-line="196" selection-start-column="26" selection-end-line="196" selection-end-column="26" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Sidebar.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/imports/ui/Sidebar.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="4091">
+              <caret line="301" column="59" lean-forward="false" selection-start-line="301" selection-start-column="59" selection-end-line="301" selection-end-column="59" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/main.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="13" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/main.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="210">
+              <caret line="14" column="15" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -104,6 +232,7 @@
       <find>line</find>
       <find>strokedasharray</find>
       <find>{&quot;x&quot;: 20.635983263598312, &quot;y&quot;: 13.366975088967964},</find>
+      <find>getDbData</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -112,7 +241,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/imports/ui/Header.jsx" />
         <option value="$PROJECT_DIR$/imports/ui/ViewTitle.jsx" />
         <option value="$PROJECT_DIR$/imports/ui/Datagrid.jsx" />
         <option value="$PROJECT_DIR$/imports/ui/Card.jsx" />
@@ -132,7 +260,6 @@
         <option value="$PROJECT_DIR$/imports/api/tasks.js" />
         <option value="$PROJECT_DIR$/server/admin.jsx" />
         <option value="$PROJECT_DIR$/imports/api/users.js" />
-        <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/server/Login.jsx" />
         <option value="$PROJECT_DIR$/imports/ui/Component/SnackBar.jsx" />
         <option value="$PROJECT_DIR$/imports/ui/Test.jsx" />
@@ -140,29 +267,31 @@
         <option value="$PROJECT_DIR$/imports/api/tracks.js" />
         <option value="$PROJECT_DIR$/imports/ui/Page.jsx" />
         <option value="$PROJECT_DIR$/imports/api/peoples.jsx" />
-        <option value="$PROJECT_DIR$/server/Method.jsx" />
         <option value="$PROJECT_DIR$/client/main.html" />
         <option value="$PROJECT_DIR$/imports/ui/Login.jsx" />
-        <option value="$PROJECT_DIR$/imports/ui/User.jsx" />
         <option value="$PROJECT_DIR$/imports/ui/Calc.jsx" />
         <option value="$PROJECT_DIR$/imports/ui/Similar.jsx" />
         <option value="$PROJECT_DIR$/imports/ui/Index.jsx" />
-        <option value="$PROJECT_DIR$/imports/ui/App.jsx" />
         <option value="$PROJECT_DIR$/imports/ui/Sidebar.jsx" />
         <option value="$PROJECT_DIR$/imports/ui/Error.jsx" />
-        <option value="$PROJECT_DIR$/imports/ui/Routers.jsx" />
         <option value="$PROJECT_DIR$/imports/ui/Plot.jsx" />
         <option value="$PROJECT_DIR$/imports/ui/test.js" />
         <option value="$PROJECT_DIR$/imports/data/test.json" />
         <option value="$PROJECT_DIR$/imports/ui/News.jsx" />
-        <option value="$PROJECT_DIR$/client/main.css" />
         <option value="$PROJECT_DIR$/imports/data/source.json" />
         <option value="$PROJECT_DIR$/imports/api/guests.js" />
         <option value="$PROJECT_DIR$/server/main.js" />
         <option value="$PROJECT_DIR$/imports/ui/PeopleTest.jsx" />
-        <option value="$PROJECT_DIR$/imports/data/demo-data.json" />
-        <option value="$PROJECT_DIR$/imports/ui/Draw.jsx" />
         <option value="$PROJECT_DIR$/imports/ui/db.sql" />
+        <option value="$PROJECT_DIR$/server/Method.jsx" />
+        <option value="$PROJECT_DIR$/client/main.css" />
+        <option value="$PROJECT_DIR$/imports/ui/User.jsx" />
+        <option value="$PROJECT_DIR$/imports/data/demo-data.json" />
+        <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/imports/ui/App.jsx" />
+        <option value="$PROJECT_DIR$/imports/ui/Routers.jsx" />
+        <option value="$PROJECT_DIR$/imports/ui/Draw.jsx" />
+        <option value="$PROJECT_DIR$/imports/ui/SimilarTable.jsx" />
       </list>
     </option>
   </component>
@@ -178,8 +307,8 @@
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="61" />
-    <option name="y" value="24" />
+    <option name="x" value="73" />
+    <option name="y" value="23" />
     <option name="width" value="1262" />
     <option name="height" value="676" />
   </component>
@@ -223,6 +352,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -232,20 +363,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Echo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Echo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Echo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="server" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -281,10 +398,22 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Echo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Echo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="client" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -448,12 +577,32 @@
       <workItem from="1493994994044" duration="346000" />
       <workItem from="1494054876859" duration="1704000" />
       <workItem from="1494061316257" duration="9786000" />
-      <workItem from="1494087374338" duration="3135000" />
+      <workItem from="1494087374338" duration="3372000" />
+      <workItem from="1494139255098" duration="2767000" />
+      <workItem from="1494217217013" duration="1669000" />
+      <workItem from="1494296383506" duration="499000" />
+      <workItem from="1494305659582" duration="286000" />
+      <workItem from="1494310613406" duration="443000" />
+      <workItem from="1494389377052" duration="2457000" />
+      <workItem from="1494407449450" duration="735000" />
+      <workItem from="1494428539702" duration="307000" />
+      <workItem from="1494589677519" duration="585000" />
+      <workItem from="1494678672846" duration="106000" />
+      <workItem from="1494910602541" duration="44000" />
+      <workItem from="1494910669978" duration="132000" />
+      <workItem from="1495350322604" duration="2096000" />
+      <workItem from="1495454782654" duration="191000" />
+      <workItem from="1495470520092" duration="392000" />
+      <workItem from="1495612475112" duration="484000" />
+      <workItem from="1495626794345" duration="521000" />
+      <workItem from="1495782720024" duration="904000" />
+      <workItem from="1495813879847" duration="255000" />
+      <workItem from="1495853979048" duration="2115000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="233283000" />
+    <option name="totallyTimeSpent" value="250508000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -465,7 +614,8 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="61" y="24" width="1262" height="676" extended-state="0" />
+    <frame x="73" y="23" width="1262" height="676" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.49395648" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="DB Browser" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32957292" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -474,7 +624,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.7380137" sideWeight="0.47945204" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.7380137" sideWeight="0.47945204" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2256245" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="MaxCompute Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="MaxCompute Job Explorer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -545,18 +695,11 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="29" />
+      <option name="time" value="32" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/server/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/imports/ui/db.sql">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
@@ -660,13 +803,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/server/Login.jsx" />
     <entry file="file://$PROJECT_DIR$/imports/ui/Component/SnackBar.jsx" />
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="10" lean-forward="false" selection-start-line="2" selection-start-column="10" selection-end-line="2" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/imports/api/users.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
@@ -678,20 +814,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="2" column="18" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="2" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/main.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="7" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -711,34 +833,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/imports/ui/Test.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-311">
-          <caret line="0" column="1" lean-forward="false" selection-start-line="0" selection-start-column="1" selection-end-line="0" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/imports/ui/Sidebar.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-266">
-          <caret line="301" column="59" lean-forward="false" selection-start-line="301" selection-start-column="59" selection-end-line="301" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/imports/ui/Routers.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-86">
-          <caret line="19" column="51" lean-forward="false" selection-start-line="19" selection-start-column="51" selection-end-line="19" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/imports/ui/Index.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="19" column="48" lean-forward="false" selection-start-line="19" selection-start-column="48" selection-end-line="19" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/imports/ui/Error.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
@@ -753,47 +847,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/imports/ui/App.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="569">
-          <caret line="80" column="0" lean-forward="false" selection-start-line="80" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/imports/ui/News.jsx" />
-    <entry file="file://$PROJECT_DIR$/imports/ui/Login.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="53">
-          <caret line="166" column="13" lean-forward="false" selection-start-line="166" selection-start-column="13" selection-end-line="166" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/Method.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="529">
-          <caret line="80" column="52" lean-forward="false" selection-start-line="80" selection-start-column="52" selection-end-line="80" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/main.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="48">
-          <caret line="11" column="28" lean-forward="true" selection-start-line="11" selection-start-column="28" selection-end-line="11" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/imports/data/source.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/imports/ui/Similar.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1587">
-          <caret line="118" column="10" lean-forward="true" selection-start-line="118" selection-start-column="10" selection-end-line="118" selection-end-column="10" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -804,21 +862,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/imports/ui/Plot.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="5" column="29" lean-forward="false" selection-start-line="5" selection-start-column="29" selection-end-line="5" selection-end-column="29" />
-          <folding>
-            <element signature="n#Plot#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/imports/api/guests.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="2" column="33" lean-forward="false" selection-start-line="2" selection-start-column="33" selection-end-line="2" selection-end-column="33" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -829,39 +876,176 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/imports/ui/PeopleTest.jsx">
+    <entry file="file://$PROJECT_DIR$/imports/ui/db.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="35" column="124" lean-forward="false" selection-start-line="35" selection-start-column="124" selection-end-line="35" selection-end-column="124" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="34" lean-forward="false" selection-start-line="4" selection-start-column="34" selection-end-line="4" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/Method.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1200">
+          <caret line="80" column="35" lean-forward="true" selection-start-line="80" selection-start-column="35" selection-end-line="80" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/imports/ui/Test.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="36" lean-forward="false" selection-start-line="0" selection-start-column="27" selection-end-line="0" selection-end-column="36" />
-          <folding />
+          <caret line="0" column="1" lean-forward="false" selection-start-line="0" selection-start-column="1" selection-end-line="0" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/imports/ui/Plot.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="5" column="29" lean-forward="false" selection-start-line="5" selection-start-column="29" selection-end-line="5" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/imports/ui/Login.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="529">
+          <caret line="166" column="13" lean-forward="false" selection-start-line="166" selection-start-column="13" selection-end-line="166" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/imports/data/demo-data.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="123">
-          <caret line="88" column="63" lean-forward="false" selection-start-line="88" selection-start-column="63" selection-end-line="88" selection-end-column="63" />
+        <state relative-caret-position="2550">
+          <caret line="170" column="48" lean-forward="false" selection-start-line="170" selection-start-column="48" selection-end-line="170" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="10" lean-forward="false" selection-start-line="2" selection-start-column="10" selection-end-line="2" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/main.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="7" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="8" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="15" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="13" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/imports/ui/Index.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="25" column="1" lean-forward="false" selection-start-line="25" selection-start-column="1" selection-end-line="25" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/imports/ui/PeopleTest.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="349">
+          <caret line="196" column="26" lean-forward="false" selection-start-line="196" selection-start-column="26" selection-end-line="196" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/imports/ui/Similar.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-581">
+          <caret line="53" column="19" lean-forward="true" selection-start-line="53" selection-start-column="19" selection-end-line="53" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/imports/ui/Sidebar.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4091">
+          <caret line="301" column="59" lean-forward="false" selection-start-line="301" selection-start-column="59" selection-end-line="301" selection-end-column="59" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/imports/ui/User.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5835">
-          <caret line="407" column="106" lean-forward="false" selection-start-line="407" selection-start-column="81" selection-end-line="407" selection-end-column="106" />
-          <folding />
+        <state relative-caret-position="-26">
+          <caret line="227" column="23" lean-forward="false" selection-start-line="227" selection-start-column="23" selection-end-line="227" selection-end-column="23" />
+          <folding>
+            <element signature="n#!!block;n#constructor#0;n#User#0" expanded="false" />
+            <element signature="n#!!block;n#handleOpen#0;n#User#0" expanded="false" />
+            <element signature="n#!!block;n#handleClose#0;n#User#0" expanded="false" />
+            <element signature="n#!!block;n#handleConfirm#0;n#User#0" expanded="false" />
+            <element signature="n#!!block;n#handleChange#0;n#User#0" expanded="false" />
+            <element signature="n#!!block;n#handleChoose#0;n#User#0" expanded="false" />
+            <element signature="n#!!block;n#handleSnackBarOpen#0;n#User#0" expanded="false" />
+            <element signature="n#!!block;n#handleSnackBarClose#0;n#User#0" expanded="false" />
+            <element signature="n#!!block;n#handleAddUser#0;n#User#0" expanded="false" />
+            <element signature="n#!!block;n#handleDeleteUser#0;n#User#0" expanded="false" />
+            <element signature="n#!!block;n#handleDeleteClose#0;n#User#0" expanded="false" />
+            <element signature="n#!!block;n#handleDeleteConfirm#0;n#User#0" expanded="false" />
+            <element signature="n#!!block;n#handlePageBefore#0;n#User#0" expanded="false" />
+            <element signature="n#!!block;n#handlePageNext#0;n#User#0" expanded="false" />
+            <element signature="n#!!block;n#handlePageNumClicked#0;n#User#0" expanded="false" />
+            <element signature="n#!!block;n#getDbData#0;n#User#0" expanded="false" />
+            <element signature="n#!!block;n#getDbCount#0;n#User#0" expanded="false" />
+            <element signature="n#!!block;n#render#0;n#User#0" expanded="false" />
+            <element signature="e#11109#11874#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/imports/ui/App.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="65" column="65" lean-forward="false" selection-start-line="65" selection-start-column="58" selection-end-line="65" selection-end-column="65" />
+          <folding>
+            <element signature="e#239#269#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/imports/ui/Routers.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="433">
+          <caret line="29" column="21" lean-forward="true" selection-start-line="29" selection-start-column="21" selection-end-line="29" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/imports/ui/Draw.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="945">
-          <caret line="617" column="33" lean-forward="false" selection-start-line="617" selection-start-column="33" selection-end-line="617" selection-end-column="33" />
+        <state relative-caret-position="-910">
+          <caret line="614" column="36" lean-forward="false" selection-start-line="614" selection-start-column="36" selection-end-line="614" selection-end-column="36" />
           <folding>
             <element signature="e#0#52#0" expanded="true" />
             <element signature="e#360#422#0" expanded="true" />
             <element signature="e#493#535#0" expanded="true" />
-            <element signature="n#!!block;n#constructor#0;n#Draw#0" expanded="false" />
             <element signature="n#!!block;n#componentDidMount#0;n#Draw#0" expanded="false" />
             <element signature="n#!!block;n#InitView#0;n#Draw#0" expanded="false" />
             <element signature="e#969#11450#0" expanded="false" />
@@ -869,42 +1053,57 @@
             <element signature="e#11497#13008#0" expanded="false" />
             <element signature="e#13053#24764#0" expanded="false" />
             <element signature="e#13837#21664#0" expanded="false" />
-            <element signature="n#!!block;n#convertLocation#0;n#Draw#0" expanded="false" />
-            <element signature="e#28801#34618#0" expanded="false" />
+            <element signature="e#28838#34655#0" expanded="false" />
             <element signature="n#!!block;n#handleAddLayer#0;n#Draw#0" expanded="false" />
-            <element signature="e#34771#45252#0" expanded="false" />
-            <element signature="e#45297#47734#0" expanded="false" />
+            <element signature="e#34784#45265#0" expanded="false" />
+            <element signature="e#45310#47747#0" expanded="false" />
             <element signature="n#!!block;n#handleRemoveLayer#0;n#Draw#0" expanded="false" />
             <element signature="n#!!block;n#handleMapToggle#0;n#Draw#0" expanded="false" />
             <element signature="n#!!block;n#handleAddMonitor#0;n#Draw#0" expanded="false" />
-            <element signature="e#49677#60158#0" expanded="false" />
-            <element signature="e#60202#62957#0" expanded="false" />
+            <element signature="e#49690#60171#0" expanded="false" />
+            <element signature="e#60215#62970#0" expanded="false" />
             <element signature="n#!!block;n#handleRemoveMonitor#0;n#Draw#0" expanded="false" />
             <element signature="n#!!block;n#getWidth#0;n#Draw#0" expanded="false" />
             <element signature="n#!!block;n#getHeight#0;n#Draw#0" expanded="false" />
             <element signature="n#!!block;n#fullScreen#0;n#Draw#0" expanded="false" />
             <element signature="n#!!block;n#requestFullScreen#0;n#Draw#0" expanded="false" />
             <element signature="n#!!block;n#render#0;n#Draw#0" expanded="false" />
-            <element signature="e#68002#68185#0" expanded="false" />
+            <element signature="e#68019#68202#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/main.js">
+    <entry file="file://$PROJECT_DIR$/imports/ui/SimilarTable.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="41">
-          <caret line="4" column="34" lean-forward="false" selection-start-line="4" selection-start-column="34" selection-end-line="4" selection-end-column="34" />
+        <state relative-caret-position="594">
+          <caret line="1393" column="108" lean-forward="true" selection-start-line="1393" selection-start-column="108" selection-end-line="1393" selection-end-column="108" />
           <folding>
-            <element signature="e#0#39#0" expanded="true" />
+            <element signature="e#0#52#0" expanded="true" />
+            <element signature="e#360#422#0" expanded="true" />
+            <element signature="e#493#535#0" expanded="true" />
+            <element signature="n#!!block;n#constructor#0;n#SimilarTable#0" expanded="false" />
+            <element signature="n#!!block;n#componentDidMount#0;n#SimilarTable#0" expanded="false" />
+            <element signature="n#!!block;n#InitView#0;n#SimilarTable#0" expanded="false" />
+            <element signature="e#978#11459#0" expanded="false" />
+            <element signature="e#7243#11424#0" expanded="false" />
+            <element signature="e#11506#13017#0" expanded="false" />
+            <element signature="e#13062#24773#0" expanded="false" />
+            <element signature="e#13846#21673#0" expanded="false" />
+            <element signature="n#!!block;n#handleAddLayer#0;n#SimilarTable#0" expanded="false" />
+            <element signature="e#26055#36536#0" expanded="false" />
+            <element signature="e#36581#39006#0" expanded="false" />
+            <element signature="n#!!block;n#handleRemoveLayer#0;n#SimilarTable#0" expanded="false" />
+            <element signature="n#!!block;n#handleMapToggle#0;n#SimilarTable#0" expanded="false" />
+            <element signature="n#!!block;n#handleAddMonitor#0;n#SimilarTable#0" expanded="false" />
+            <element signature="e#40949#51430#0" expanded="false" />
+            <element signature="e#51474#54229#0" expanded="false" />
+            <element signature="n#!!block;n#handleRemoveMonitor#0;n#SimilarTable#0" expanded="false" />
+            <element signature="n#!!block;n#getWidth#0;n#SimilarTable#0" expanded="false" />
+            <element signature="n#!!block;n#getHeight#0;n#SimilarTable#0" expanded="false" />
+            <element signature="n#!!block;n#fullScreen#0;n#SimilarTable#0" expanded="false" />
+            <element signature="n#!!block;n#requestFullScreen#0;n#SimilarTable#0" expanded="false" />
+            <element signature="e#59159#59342#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/imports/ui/db.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="122">
-          <caret line="41" column="0" lean-forward="false" selection-start-line="41" selection-start-column="0" selection-end-line="57" selection-end-column="2" />
-          <folding />
         </state>
       </provider>
     </entry>

@@ -87,7 +87,7 @@ class User extends Component {
     handleConfirm() {
         this.setState({open: false});
         if(this.state.addUser) {
-            Meteor.call("addUser", this.state.uid, this.state.username, this.state.password, this.state.group,
+            Meteor.call("addUser", this.state.uid, this.state.username, this.state.password, this.state.group, Session.get("uid"),
                 function (err, result) {
                     if (result) {
                         this.handleSnackBarOpen("添加成功！");
@@ -97,7 +97,7 @@ class User extends Component {
                 }.bind(this)
             );
         } else {
-            Meteor.call("updateUser", this.state.uid, this.state.username, this.state.password, this.state.group,
+            Meteor.call("updateUser", this.state.uid, this.state.username, this.state.password, this.state.group, Session.get("uid"),
                 function (err, result) {
                     if (result) {
                         this.handleSnackBarOpen("修改成功！");
@@ -243,7 +243,7 @@ class User extends Component {
         this.setState({
             deleteOpen: false,
         });
-        Meteor.call("deleteUser", this.state.uid, function (err, result) {
+        Meteor.call("deleteUser", this.state.uid, Session.get("uid"), function (err, result) {
             if (result) {
                 this.handleSnackBarOpen("删除成功");
             } else {
@@ -455,7 +455,7 @@ class User extends Component {
                         </TableFooter>
                     </Table>
                     <Dialog
-                        title="修改用户信息"
+                        title={this.state.addUser ? "新增用户" : "修改用户信息"}
                         actions={this.state.addUser ? actions : modeifyActions}
                         modal={false}
                         open={this.state.open}

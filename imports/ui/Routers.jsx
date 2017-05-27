@@ -28,6 +28,11 @@ export const renderRoutes = () => (
                         <App redirect="Draw" title="活动轨迹监测"/>
                     </div>
                 )} />
+                <Route path="/simi" render={props => (
+                    <div>
+                        <App redirect="similar" title="用户管理"/>
+                    </div>
+                )} />
                 <Route component={NoMatch}/>
             </Switch>
         </div>

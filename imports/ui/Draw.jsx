@@ -612,6 +612,7 @@ class Draw extends Component {
             let result = this.checkSimilar(basePoint, userData, 3, 30);
             if(result[0]["status"] === 1) {
                 similarUser.push(currentUserMacAddress);
+                console.log(result);
             }
             userData = [];
         }
@@ -759,7 +760,6 @@ class Draw extends Component {
 
     // 新增旅客轨迹
     handleAddLayer(macAddress, event) {
-        this.getData();
         d3.floorplan = function() {
             var layers = [],
                 panZoomEnabled = true,
@@ -1542,8 +1542,8 @@ class Draw extends Component {
                             <TableRow>
                                 <TableHeaderColumn>编号</TableHeaderColumn>
                                 <TableHeaderColumn>Mac</TableHeaderColumn>
-                                <TableHeaderColumn>进入时间</TableHeaderColumn>
-                                <TableHeaderColumn>离开时间</TableHeaderColumn>
+                                <TableHeaderColumn>首次出现时间</TableHeaderColumn>
+                                <TableHeaderColumn>最后出现时间</TableHeaderColumn>
                                 <TableHeaderColumn>绘制</TableHeaderColumn>
                                 <TableHeaderColumn>取消绘制</TableHeaderColumn>
                                 <TableHeaderColumn>同行用户</TableHeaderColumn>
