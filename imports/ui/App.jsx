@@ -10,7 +10,6 @@ import Sidebar from './Sidebar';
 import Draw from './Draw.jsx';
 import User from './User.jsx';
 import Index from "./Index.jsx";
-import SimilarTable from './SimilarTable.jsx';
 
 const styles = {
     wrapper: {
@@ -63,7 +62,6 @@ export default class App extends Component {
                                 {this.props.redirect ? null : <Index />}
                                 {this.props.redirect === "Draw" ? <Draw /> : null}
                                 {this.props.redirect === "User" ? <User /> : null}
-                                {this.props.redirect === "similar" ? <SimilarTable /> : null}
                             </div>
                         </div>
                         {/* 右上加载 */}

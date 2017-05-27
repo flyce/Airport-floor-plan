@@ -12,8 +12,8 @@ export const renderRoutes = () => (
     <Router>
         <div>
             <Switch>
-                <Route exact path="/" component={Home}/>
-                <Route path="/app" component={App} />
+                <Route exact path="/" component={App}/>
+                <Route path="/home" component={Home} />
                 <Route path="/login" component={Login} />
                 <Route path="/people" component={People}/>
                 <Route path="/similar" component={Similar}/>
@@ -26,11 +26,6 @@ export const renderRoutes = () => (
                 <Route path="/draw" render={props => (
                     <div>
                         <App redirect="Draw" title="活动轨迹监测"/>
-                    </div>
-                )} />
-                <Route path="/simi" render={props => (
-                    <div>
-                        <App redirect="similar" title="用户管理"/>
                     </div>
                 )} />
                 <Route component={NoMatch}/>

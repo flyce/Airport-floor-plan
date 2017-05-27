@@ -8,6 +8,8 @@ import d3 from 'd3';
 // icon
 import ModeEdit from "material-ui/svg-icons/editor/mode-edit";
 import Clear from "material-ui/svg-icons/content/clear";
+import ArrowBack from "material-ui/svg-icons/navigation/arrow-back";
+import Group from "material-ui/svg-icons/social/group";
 
 // Database
 import { Guests } from '../api/guests.js';
@@ -20,7 +22,10 @@ class Draw extends Component {
     constructor(props) {
         super(props);
         this.state = {
-           isShowMonitor: false
+            isShowMonitor: false,
+            isShowSimilar: false,
+            checkMac: null,
+            similarData: null,
         };
 
         this.handleAddLayer = this.handleAddLayer.bind(this);
@@ -589,6 +594,8 @@ class Draw extends Component {
     }
 
     calcSimilar(macAddress) {
+        this.handleRemoveAllUserLayer();
+        this.handleAddLayer(macAddress);
         let baseInfo = this.getData(macAddress);
         let basePoint =[];
         let similarUser = [];
@@ -599,6 +606,9 @@ class Draw extends Component {
         let allInfo = this.getAllData();
         let userInfo = [];
         let userData = [];
+
+        let test = [];
+
         for (var i=0; i < allInfo.length; ++i) {
             let currentUserMacAddress = allInfo[i].macAddress;
             if (currentUserMacAddress === baseInfo.macAddress) {
@@ -609,18 +619,23 @@ class Draw extends Component {
             allInfo[i].tracks.map(function (value, key) {
                 userData.push(value.point + ','+ value.timeStamp);
             });
-            let result = this.checkSimilar(basePoint, userData, 3, 30);
+            let result = this.checkSimilar(basePoint, userData, 3, 30, currentUserMacAddress);
             if(result[0]["status"] === 1) {
                 similarUser.push(currentUserMacAddress);
-                console.log(result);
+                test.push(result[0]);
             }
             userData = [];
         }
-        console.log(similarUser);
+        this.setState({
+            isShowSimilar: !this.state.isShowSimilar,
+            checkMac: macAddress,
+            similarData: test,
+        });
+        // console.log(similarUser);
 
     }
 
-    checkSimilar(data, anotherData, minSimilarPointNum, time) {
+    checkSimilar(data, anotherData, minSimilarPointNum, time, mac) {
         let result = [];
         let similarPointCount = 0;
         for (var j = 0; j < data.length; ++j) {
@@ -652,11 +667,21 @@ class Draw extends Component {
         // parseFloat(((similarPointCount/data.length) * 100).toString().match(/^\d+(?:\.\d{0,2})?/)[0])把 0-1 的小数转换成 0-100 的数，保留小数点后两位
         return [{
             status: 1,
+            mac: mac,
             similarPonintNumber: similarPointCount,
             SimilarityBtoA: similarPointCount/data.length,
             SimilarityAtoB: similarPointCount/anotherData.length,
             info: result
         }];
+    }
+
+    handleBack() {
+        this.setState({
+            isShowSimilar: !this.state.isShowSimilar,
+            checkMac: null,
+            similarData: null,
+        });
+        this.handleRemoveAllUserLayer();
     }
 
     // 编号到 x, y 的转换
@@ -1110,7 +1135,8 @@ class Draw extends Component {
             mapdata[pathplot.id()] = pathData; // 蓝色虚线绘制
 
             d3.select("#draw").append("g")
-                .attr("height", this.getHeight()).attr("width",this.getWidth()).attr("id", "path-" + macAddress)
+                .attr("height", this.getHeight()).attr("width",this.getWidth())
+                .attr("id", "path-" + macAddress).attr("class", 'userTracks')
                 .datum(mapdata).call(map);
 
             console.log("add-path: #path-"+ macAddress + " finished");
@@ -1123,6 +1149,12 @@ class Draw extends Component {
             d3.select("#path-" + macAddress).remove();
             console.log("remove-path: #path-" + macAddress + " finished");
         }
+    }
+
+    // 移除旅客轨迹
+    handleRemoveAllUserLayer() {
+        d3.select(".userTracks").remove();
+        console.log("remove-path: All user traks finished");
     }
 
     /***
@@ -1526,6 +1558,72 @@ class Draw extends Component {
     }
 
     render() {
+        if(!this.state.isShowSimilar) {
+            return (
+                <Card>
+                    <CardText>
+                        <Table
+                            selectable={false} // 可选
+                            fixedHeader={false}
+                            multiSelectable={false}
+                        >
+                            <TableHeader
+                                displaySelectAll={false}
+                                adjustForCheckbox={false}
+                                enableSelectAll={false}
+                            >
+                                <TableRow>
+                                    <TableHeaderColumn>编号</TableHeaderColumn>
+                                    <TableHeaderColumn>Mac</TableHeaderColumn>
+                                    <TableHeaderColumn>首次出现时间</TableHeaderColumn>
+                                    <TableHeaderColumn>最后出现时间</TableHeaderColumn>
+                                    <TableHeaderColumn>绘制</TableHeaderColumn>
+                                    <TableHeaderColumn>取消绘制</TableHeaderColumn>
+                                    <TableHeaderColumn>同行用户</TableHeaderColumn>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody
+                                stripedRows={false} // 隔行高亮
+                                showRowHover={true}
+                                displayRowCheckbox={false}
+                            >
+
+                                {this.props.guests.map((data, index) => (
+                                    <TableRow key={index} selected={data.selected}>
+                                        <TableRowColumn>{index + 1}</TableRowColumn>
+                                        <TableRowColumn>{data.macAddress}</TableRowColumn>
+                                        <TableRowColumn>{new Date(data.tracks[1]["timeStamp"] * 1000 ).toLocaleString('chinese', {hour12:false})}</TableRowColumn>
+                                        <TableRowColumn>{new Date(data.tracks[data.tracks.length - 1]["timeStamp"] * 1000).toLocaleString('chinese', {hour12:false})}</TableRowColumn>
+                                        <TableRowColumn>
+                                            <IconButton onTouchTap={this.handleAddLayer.bind(this, data.macAddress)}>
+                                                <ModeEdit color="#00bcd4"/>
+                                            </IconButton>
+                                        </TableRowColumn>
+                                        <TableRowColumn>
+                                            <IconButton onTouchTap={this.handleRemoveLayer.bind(this, data.macAddress)}>
+                                                <Clear color="#00bcd4"/>
+                                            </IconButton>
+                                        </TableRowColumn>
+                                        <TableRowColumn>
+                                            <IconButton onTouchTap={this.calcSimilar.bind(this, data.macAddress)}>
+                                                <Group color="#00bcd4"/>
+                                            </IconButton>
+                                        </TableRowColumn>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                        {/*<button onClick={this.fullScreen.bind(this)}>全屏</button>*/}
+                        <Toggle
+                            label="显示采集设备位置"
+                            labelPosition="left"
+                            onToggle={this.handleMapToggle.bind(this)}
+                        />
+                        <div id="demo"></div>
+                    </CardText>
+                </Card>
+            );
+        }
         return (
             <Card>
                 <CardText>
@@ -1540,13 +1638,23 @@ class Draw extends Component {
                             enableSelectAll={false}
                         >
                             <TableRow>
+                                <TableHeaderColumn colSpan="1">
+                                    <IconButton onTouchTap={this.handleBack.bind(this)}>
+                                        <ArrowBack color="#00bcd4"/>
+                                    </IconButton>
+                                </TableHeaderColumn>
+                                <TableHeaderColumn colSpan="4" style={{textAlign: 'center', fontSize: 30}}>
+                                    疑似与{this.state.checkMac}同行的用户
+                                </TableHeaderColumn>
+                                <TableHeaderColumn/>
+                            </TableRow>
+                            <TableRow>
                                 <TableHeaderColumn>编号</TableHeaderColumn>
                                 <TableHeaderColumn>Mac</TableHeaderColumn>
-                                <TableHeaderColumn>首次出现时间</TableHeaderColumn>
-                                <TableHeaderColumn>最后出现时间</TableHeaderColumn>
+                                <TableHeaderColumn>相似度</TableHeaderColumn>
+                                <TableHeaderColumn>相同轨迹点数</TableHeaderColumn>
                                 <TableHeaderColumn>绘制</TableHeaderColumn>
                                 <TableHeaderColumn>取消绘制</TableHeaderColumn>
-                                <TableHeaderColumn>同行用户</TableHeaderColumn>
                             </TableRow>
                         </TableHeader>
                         <TableBody
@@ -1555,24 +1663,19 @@ class Draw extends Component {
                             displayRowCheckbox={false}
                         >
 
-                            {this.props.guests.map((data, index) => (
+                            {this.state.similarData.map((data, index) => (
                                 <TableRow key={index} selected={data.selected}>
                                     <TableRowColumn>{index + 1}</TableRowColumn>
-                                    <TableRowColumn>{data.macAddress}</TableRowColumn>
-                                    <TableRowColumn>{new Date(data.tracks[1]["timeStamp"] * 1000 ).toLocaleString('chinese', {hour12:false})}</TableRowColumn>
-                                    <TableRowColumn>{new Date(data.tracks[data.tracks.length - 1]["timeStamp"] * 1000).toLocaleString('chinese', {hour12:false})}</TableRowColumn>
+                                    <TableRowColumn>{data.mac}</TableRowColumn>
+                                    <TableRowColumn>{parseFloat(((data.SimilarityAtoB) * 100).toString().match(/^\d+(?:\.\d{0,2})?/)[0])} %</TableRowColumn>
+                                    <TableRowColumn>{data.similarPonintNumber}</TableRowColumn>
                                     <TableRowColumn>
-                                        <IconButton onTouchTap={this.handleAddLayer.bind(this, data.macAddress)}>
+                                        <IconButton onTouchTap={this.handleAddLayer.bind(this, data.mac)}>
                                             <ModeEdit color="#00bcd4"/>
                                         </IconButton>
                                     </TableRowColumn>
                                     <TableRowColumn>
-                                        <IconButton onTouchTap={this.handleRemoveLayer.bind(this, data.macAddress)}>
-                                            <Clear color="#00bcd4"/>
-                                        </IconButton>
-                                    </TableRowColumn>
-                                    <TableRowColumn>
-                                        <IconButton onTouchTap={this.calcSimilar.bind(this, data.macAddress)}>
+                                        <IconButton onTouchTap={this.handleRemoveLayer.bind(this, data.mac)}>
                                             <Clear color="#00bcd4"/>
                                         </IconButton>
                                     </TableRowColumn>
@@ -1589,7 +1692,7 @@ class Draw extends Component {
                     <div id="demo"></div>
                 </CardText>
             </Card>
-        );
+        )
     }
 }
 
