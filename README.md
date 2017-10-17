@@ -8,7 +8,7 @@ React + Meteor + React Router + material-ui + D3.js
 
 可绘制旅客轨迹，计算同行旅客
 
-截图[Echo's Blog](http://www.flyce.cn/index.php/archives/airport-floor-plan.html "Echo's Blog")
+截图[Echo's Blog](http://www.flyce.cn/airport-floor-plan.html "Echo's Blog")
 
 Graduation design of the project
 
@@ -20,4 +20,4 @@ Using d3.floorplan to achieve the array drawing svg map, drawing the airport flo
 
 Can draw the passenger trajectory, calculate the peers
 
-Screenshot [Echo's Blog](http://www.flyce.cn/index.php/archives/airport-floor-plan.html "Echo's Blog")
+Screenshot [Echo's Blog](http://www.flyce.cn/airport-floor-plan.html "Echo's Blog")
